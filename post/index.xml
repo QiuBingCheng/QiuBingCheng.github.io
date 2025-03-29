@@ -6,14 +6,14 @@
     <description>Recent content in Posts on BingCheng</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Feb 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Markdown Syntax Guide</title>
-      <link>http://localhost:1313/post/markdown-syntax/</link>
-      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/markdown-syntax/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
+      <title>歐氏距離與餘弦相似度的比較</title>
+      <link>http://localhost:1313/post/euclidean_vs_cosine/</link>
+      <pubDate>Sun, 09 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/euclidean_vs_cosine/</guid>
+      <description>&lt;p&gt;在數據挖掘中，相似性度量是個基礎且重要的問題，我們經常想得知兩個個體之間存在的差異大小，藉由一個合適的度量方式，幫助我們執行分群、分類等任務。在眾多度量方式，最耳熟能詳的莫過於&lt;strong&gt;歐式距離&lt;/strong&gt;、&lt;strong&gt;餘弦相似度&lt;/strong&gt;，這篇文章將帶領讀者初探兩者的原理及應用場景。&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

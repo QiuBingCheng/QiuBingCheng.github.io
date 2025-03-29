@@ -2,17 +2,13 @@
 <html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><script>const t=localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t);} </script><meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
-  <meta name="theme-color" content="#0969e6"><title>Emoji Support | BingCheng</title>
-  <meta property="og:title" content="Emoji Support - BingCheng">
+  <meta name="theme-color" content="#0969e6"><title>數學 | BingCheng</title>
+  <meta property="og:title" content="數學 - BingCheng">
   <meta property="og:type" content="article">
   
-  <meta property="article:published_time" content="2019-03-05T00:00:00&#43;08:00">
   
-  
-  <meta property="article:modified_time" content="2019-03-05T00:00:00&#43;08:00">
-  
-  <meta name="keywords" content="HTML, hugo, CSS">
-  <meta name="description" content="Guide to emoji usage in Hugo"><meta name="author" content="Hugo Authors">
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="數學"><meta name="author" content="BingCheng">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -25,7 +21,7 @@
   <div class="hero-head">
     <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
   <div class="container">
-    <div class="navbar-brand"><a class="navbar-item " href="/">
+    <div class="navbar-brand"><a class="navbar-item is-invisible" href="/">
         BingCheng
       </a>
       <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
@@ -78,39 +74,66 @@
 
   </div>
   <div class="hero-body">
-    <header class="container has-text-centered" data-pagefind-body>
-      <h1 class="title post-title is-spaced">
-        Emoji Support
+    <div class="container has-text-centered">
+      <h1 class="title">
+        BingCheng
       </h1>
-      <h2 class="subtitle"><time>2019/03/05</time></h2>
       
-      <div>
-        <span class="post-tag mr-2 post-cat">
-          <a href="/tags/emoji/">#Emoji</a>
-        </span>
-      </div>
+      <h2 class="subtitle">
+        Share my learning journey
+      </h2>
       
-    </header>
+    </div>
   </div>
 </section>
 <section class="section">
   <div class="container">
     <div class="columns">
-      
-      <div class="column is-three-fifths is-offset-one-fifth">
-      
-        <article class="content" id="post-content" data-pagefind-body><p>Emoji can be enabled in a Hugo project in a number of ways.</p>
-<p>The <a href="https://gohugo.io/functions/emojify/"><code>emojify</code></a> function can be called directly in templates or <a href="https://gohugo.io/templates/shortcode-templates/#inline-shortcodes">Inline Shortcodes</a>.</p>
-<p>To enable emoji globally, set <code>enableEmoji</code> to <code>true</code> in your site&rsquo;s <a href="https://gohugo.io/getting-started/configuration/">configuration</a> and then you can type emoji shorthand codes directly in content files; e.g.</p>
-<!-- raw HTML omitted -->
-<p>The <a href="http://www.emoji-cheat-sheet.com/">Emoji cheat sheet</a> is a useful reference for emoji shorthand codes.</p>
-<hr>
-<p><strong>N.B.</strong> The above steps enable Unicode Standard emoji characters and sequences in Hugo, however the rendering of these glyphs depends on the browser and the platform. To style the emoji you can either use a third party emoji font or a font stack; e.g.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">.emoji {
-</span></span><span class="line"><span class="cl">  font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols;
-</span></span><span class="line"><span class="cl">}</span></span></code></pre></div></article>
+      <div class="column is-8 is-offset-2">
+        
+        <nav class="breadcrumb is-centered is-medium" aria-label="breadcrumbs">
+          <ul>
+            <li><a href=/categories>Categories</a></li>
+            <li class="is-active"><a href="#">數學</a></li>
+          </ul>
+        </nav>
+        
+        <div class="post-lists">
+          
+          
+            <div class="box post-box">
+              <div class="mb-2">
+                <a href="/post/euclidean_vs_cosine/" class="title is-size-5">歐氏距離與餘弦相似度的比較</a>
+              </div>
+              <div class="post-box-meta">
+                <div>
+                  2020/02/09
+                   ・
+                    
+                      <span class="post-tag mr-2 post-cat">
+                        <a href="/categories/%E6%95%B8%E5%AD%B8/">數學</a>
+                      </span>
+                    
+                  
+                </div>
+              </div>
+              
+              <div class="post-box-tags">
+                
+                  <span class="post-tag post-box-tag mr-2">
+                    <a href="/tags/%E6%95%B8%E5%AD%B8/">#數學</a>
+                  </span>
+                
+              </div>
+              
+            </div>
+          
+          
+
+
+        </div>
       </div>
-      
+      <div class="column is-2"></div>
     </div>
   </div>
 </section>
@@ -133,40 +156,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
 
 <script src="http://localhost:1313/js/hulga.min.js" defer></script>
-
-  
-<link id="hlcss" rel="stylesheet" href="/css/monokai.min.css" type="text/css">
-<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
-  anchors.options = {
-    placement: 'left',
-    
-    icon: '#'
-  };
-  anchors.add('.content h1, .content h2, .content h3');
-</script>
-
-
-  
-
-
-<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
-<script>
-    tocbot.init({
-        
-        tocSelector: '.post-toc',
-        
-        contentSelector: '#post-content',
-        
-        headingSelector: 'h1, h2, h3',
-        collapseDepth:  0 ,
-        scrollSmooth: true,
-        positionFixedSelector: '.post-toc',
-        
-        
-        fixedSidebarOffset: 273,
-    });
-</script>
-
 
 </body>
 
