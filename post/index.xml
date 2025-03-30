@@ -6,8 +6,22 @@
     <description>Recent content in Posts on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我在聚陽資訊部擔任暑期實習生的心得分享 (二)</title>
+      <link>http://localhost:1313/post/makalot-internship-2/</link>
+      <pubDate>Wed, 27 May 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/makalot-internship-2/</guid>
+      <description>&lt;p&gt;在經過書審、筆試、面試層層關卡後，我有幸在大三暑假成為聚陽人，開始這趟非凡的旅程。有興趣的讀者可以參考我&lt;a href=&#34;%5Cpost%5Cmakalot-internship&#34;&gt;第一篇&lt;/a&gt;的分享，希望對你面試準備有些許幫助。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>我在聚陽資訊部擔任暑期實習生的心得分享 (一)</title>
+      <link>http://localhost:1313/post/makalot-internship/</link>
+      <pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/makalot-internship/</guid>
+      <description>&lt;p&gt;我是邱秉誠，就讀台灣科技大學工業管理系，於2019年暑假成為短暫的聚陽人，在聚陽台北總部資訊部擔任實習生。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>SQL Injection 原理及範例</title>
       <link>http://localhost:1313/post/sql-injection/</link>

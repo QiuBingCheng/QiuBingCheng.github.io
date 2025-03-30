@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>工作心得 on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/categories/%E5%B7%A5%E4%BD%9C%E5%BF%83%E5%BE%97/</link>
+    <description>Recent content in 工作心得 on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 27 May 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/%E5%B7%A5%E4%BD%9C%E5%BF%83%E5%BE%97/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我在聚陽資訊部擔任暑期實習生的心得分享 (二)</title>
+      <link>http://localhost:1313/post/makalot-internship-2/</link>
+      <pubDate>Wed, 27 May 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/makalot-internship-2/</guid>
+      <description>&lt;p&gt;在經過書審、筆試、面試層層關卡後，我有幸在大三暑假成為聚陽人，開始這趟非凡的旅程。有興趣的讀者可以參考我&lt;a href=&#34;%5Cpost%5Cmakalot-internship&#34;&gt;第一篇&lt;/a&gt;的分享，希望對你面試準備有些許幫助。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>我在聚陽資訊部擔任暑期實習生的心得分享 (一)</title>
+      <link>http://localhost:1313/post/makalot-internship/</link>
+      <pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/makalot-internship/</guid>
+      <description>&lt;p&gt;我是邱秉誠，就讀台灣科技大學工業管理系，於2019年暑假成為短暫的聚陽人，在聚陽台北總部資訊部擔任實習生。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
