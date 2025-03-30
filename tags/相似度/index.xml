@@ -6,13 +6,13 @@
     <description>Recent content in 相似度 on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 11 Feb 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>歐氏距離與餘弦相似度的比較</title>
-      <link>http://localhost:1313/post/euclidean_vs_cosine/</link>
-      <pubDate>Sun, 09 Feb 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/euclidean_vs_cosine/</guid>
+      <link>http://localhost:1313/post/euclidean-vs-cosine/</link>
+      <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/euclidean-vs-cosine/</guid>
       <description>&lt;p&gt;在數據挖掘中，相似性度量是個基礎且重要的問題，我們經常想得知兩個個體之間存在的差異大小，藉由一個合適的度量方式，幫助我們執行分群、分類等任務。在眾多度量方式，最耳熟能詳的莫過於&lt;strong&gt;歐式距離&lt;/strong&gt;、&lt;strong&gt;餘弦相似度&lt;/strong&gt;，這篇文章將帶領讀者初探兩者的原理及應用場景。&lt;/p&gt;</description>
     </item>
   </channel>

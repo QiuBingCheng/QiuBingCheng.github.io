@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SQL on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/tags/sql/</link>
+    <description>Recent content in SQL on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 05 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/sql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SQL Injection 原理及範例</title>
+      <link>http://localhost:1313/post/sql-injection/</link>
+      <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/sql-injection/</guid>
+      <description>&lt;p&gt;SQL Injection 是一種常見的網路攻擊手法，藉由在輸入字串中夾帶惡意指令，試圖改變SQL語法上的邏輯，得以非法破壞、入侵資料庫伺服器，例如竊取使用者機密資料，帳戶資料，密碼等，倘若駭客取得系統權限，甚至可能癱瘓全系統，傷害之大，不可不慎。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

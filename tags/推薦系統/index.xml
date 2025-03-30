@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>推薦系統 on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/tags/%E6%8E%A8%E8%96%A6%E7%B3%BB%E7%B5%B1/</link>
+    <description>Recent content in 推薦系統 on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 09 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E6%8E%A8%E8%96%A6%E7%B3%BB%E7%B5%B1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>以Python打造簡單實用的電影推薦系統 (Content-based Recommendation)</title>
+      <link>http://localhost:1313/post/content-based-recommendation/</link>
+      <pubDate>Sun, 09 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/content-based-recommendation/</guid>
+      <description>&lt;p&gt;筆者在大四時擔任資策會數創所工讀生，其中一項任務是負責實作影音平台的推薦系統，概念通俗易懂，沒有使用複雜的演算法或是高深的數學原理，只要有一點距離度量的概念即可(可以參考筆者撰寫的&lt;a href=&#34;http://localhost:1313/post/euclidean-vs-cosine/&#34;&gt;歐氏距離與餘弦相似度的比較&lt;/a&gt;)，因此本篇分享對象適合對於推薦系統剛入門的朋友&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
