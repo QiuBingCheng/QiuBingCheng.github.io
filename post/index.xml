@@ -9,11 +9,18 @@
     <lastBuildDate>Wed, 27 May 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>以 Python 實現推薦系統的協同過濾算法 (User-based Collaborative Filtering)</title>
+      <link>http://localhost:1313/post/user-based-recommendation/</link>
+      <pubDate>Wed, 27 May 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/user-based-recommendation/</guid>
+      <description>&lt;p&gt;今天我要為各位介紹的是協同過濾的其中一種算法，基於使用者的協同過濾推薦 (User-based Collaborative Filtering)，通過不同用戶對 item 的評分來評測用戶之間的相似性，基於使用者之間的相似性做出推薦。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>我在聚陽資訊部擔任暑期實習生的心得分享 (二)</title>
       <link>http://localhost:1313/post/makalot-internship-2/</link>
       <pubDate>Wed, 27 May 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/makalot-internship-2/</guid>
-      <description>&lt;p&gt;在經過書審、筆試、面試層層關卡後，我有幸在大三暑假成為聚陽人，開始這趟非凡的旅程。有興趣的讀者可以參考我&lt;a href=&#34;%5Cpost%5Cmakalot-internship&#34;&gt;第一篇&lt;/a&gt;的分享，希望對你面試準備有些許幫助。&lt;/p&gt;</description>
+      <description>&lt;p&gt;在經過書審、筆試、面試層層關卡後，我有幸在大三暑假成為聚陽人，開始這趟非凡的旅程。有興趣的讀者可以參考我 &lt;a href=&#34;http://localhost:1313/post/makalot-internship&#34;&gt;第一篇&lt;/a&gt; 的分享，希望對你面試準備有些許幫助。&lt;/p&gt;</description>
     </item>
     <item>
       <title>我在聚陽資訊部擔任暑期實習生的心得分享 (一)</title>

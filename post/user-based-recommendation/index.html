@@ -1,0 +1,208 @@
+<!DOCTYPE html> 
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><script>const t=localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t);} </script><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
+  <meta name="theme-color" content="#0969e6"><title>以 Python 實現推薦系統的協同過濾算法 (User-based Collaborative Filtering) | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="以 Python 實現推薦系統的協同過濾算法 (User-based Collaborative Filtering) - 邱秉誠 (BingCheng)">
+  <meta property="og:type" content="article">
+  
+  <meta property="article:published_time" content="2020-05-27T00:00:00&#43;08:00">
+  
+  
+  <meta property="article:modified_time" content="2020-05-27T00:00:00&#43;08:00">
+  
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="介紹推薦系統的協同過濾算法"><meta name="author" content="Bingcheng">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hulga.min.css">
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+  <div id="main"><section class="hero is-primary shadow-hero ">
+  <div class="hero-head">
+    <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
+  <div class="container">
+    <div class="navbar-brand"><a class="navbar-item " href="/">
+        邱秉誠 (BingCheng)
+      </a>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-end"><div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link" href="#">
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em" height="1em"
+    fill="currentColor"
+    viewBox="0 0 32 32"
+    >
+    <path d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+  </svg>
+  </a>
+  <div class="navbar-dropdown" id="navDropdown">
+    <a class="navbar-item theme-toggle" data-value="light" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"></path></svg>
+      </span>Light</a>
+    <a class="navbar-item theme-toggle" data-value="dark" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"></path></svg>
+      </span>Dark</a>
+    <a class="navbar-item theme-toggle" data-value="system" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"></path></svg>
+      </span>System</a>
+  </div>
+</div>
+
+        <a class="navbar-item" href="/" title="index">Home</a>
+      
+        <a class="navbar-item" href="/archives/" title="archives">Archives</a>
+      
+        <a class="navbar-item" href="/about/" title="about">About</a>
+      
+        <a class="navbar-item" href="/search/" title="search">Search</a>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+  </div>
+  <div class="hero-body">
+    <header class="container has-text-centered" data-pagefind-body>
+      <h1 class="title post-title is-spaced">
+        以 Python 實現推薦系統的協同過濾算法 (User-based Collaborative Filtering)
+      </h1>
+      <h2 class="subtitle"><time>2020/05/27</time> ・<span class="post-cat mr-2">
+              <a href="/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/">資料分析</a>
+            </span></h2>
+      
+      <div>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E6%8E%A8%E8%96%A6%E7%B3%BB%E7%B5%B1/">#推薦系統</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E5%9F%BA%E6%96%BC%E4%BD%BF%E7%94%A8%E8%80%85%E6%8E%A8%E8%96%A6/">#基於使用者推薦</a>
+        </span>
+      </div>
+      
+    </header>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      
+      <div class="column is-7 is-offset-2">
+      
+        <article class="content" id="post-content" data-pagefind-body><p>今天我要為各位介紹的是協同過濾的其中一種算法，基於使用者的協同過濾推薦 (User-based Collaborative Filtering)，通過不同用戶對 item 的評分來評測用戶之間的相似性，基於使用者之間的相似性做出推薦。</p>
+<h1 id="前言">前言</h1>
+<p>推薦系統可粗分為兩大類，一類是<strong>基於內容推薦</strong>(Content-based Recommendations, CB)，另一類是<strong>協同過濾推薦</strong>(Collaborative Filtering, CF)。</p>
+<p><strong>基於內容推薦</strong></p>
+<p>筆者在 <a href="/post/content-based-recommendation">以Python打造簡單實用的電影推薦系統(Content-based Recommendation)</a> 一文中，為各位介紹的便是一種基於內容推薦 (Content-based Recommendations, CB) 的方式，將使用者與電影嵌入在同一個向量空間，按照使用者和電影的相似度，為使用者推薦相似度高的影片，也可以反過來將影片推播給相似度高的用戶。</p>
+<p>今天我要為各位介紹的是協同過濾的其中一種算法。</p>
+<h1 id="基於使用者的協同過濾推薦user-based-collaborative-filtering">基於使用者的協同過濾推薦(User-based Collaborative Filtering)</h1>
+<p>什麼是協同過濾(Collaborative Filtering)？根據擁有共同經驗的群體的喜好來推薦使用者感興趣的資訊，最經典的例子就是電影推薦。</p>
+<p>我們用以下圖片來說明，圖上散布點分別代表使用者ABCD，X軸和Y軸則分別是使用者對Movie 2和Movie 1的評價，<strong>直線之間的夾角愈大，則兩個使用者的相似度愈低；直線之間的夾角愈小，則兩個使用者愈相似</strong>。我們發現圖表上顯示使用者A和B代表的直線所構成的夾角幾乎為0，因此表示使用者A和B在對電影的品味上非常接近，如果要推薦影片給使用者A，我們會優先考慮<strong>使用者B觀看過且使用者A尚未觀看過的影片來做推薦</strong>。</p>
+<p><img src="image.png" alt="使用者對Movie 1, Movie 2的評分"></p>
+<p>舉個生活上的實際例子，我喜歡《海角七號》、《等一個人咖啡》、《與神同行》；你喜歡《海角七號》、《等一個人咖啡》，因此我們在觀看電影的品味上是相似的，因此合理推測你也會喜歡《與神同行》，這就是協同過濾基本的精神。</p>
+<p>綜上所述，在推薦電影給使用者的場景中，<strong>基於內容推薦是基於自身歷史觀看紀錄的電影類型，來推測相似的電影</strong>；<strong>而協同過濾是參考其他相似使用者的經驗，因此有機會挖掘到使用者潛藏的喜歡品項</strong>，但是缺點是新的使用者因為觀看紀錄較少，難以匹配合適的相似者，推薦效果較差，這類型的問題也稱為冷啟動。</p>
+<h1 id="實現流程">實現流程</h1>
+<p>協同過濾算法粗淺來說主要有以下三個步驟：</p>
+<p>找到與使用者擁有相同電影愛好(相似度高)的人
+找到該相似使用者們觀看的其他電影
+將這些相似使用者的平均電影評分最高幾部推薦給該使用者</p></article>
+      </div>
+      
+      <div class="column is-hidden-mobile">
+        <div class="sidebar pl-4" id="toc">
+          <div class="post post-toc" id="post-toc">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+  </div><footer class="footer">
+  <div class="content has-text-centered">
+    <p>Powered by <a href="https://gohugo.io">Hugo</a>. Theme <a href="https://github.com/wlh320/hugo-theme-hulga">Hulga</a></p>
+    <p>
+    
+    </p>
+  </div>
+</footer>
+
+
+
+<script src="http://localhost:1313/js/pwa.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+
+<script src="http://localhost:1313/js/hulga.min.js" defer></script>
+
+  
+<link id="hlcss" rel="stylesheet" href="/css/monokai.min.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
+  anchors.options = {
+    placement: 'left',
+    
+    icon: '#'
+  };
+  anchors.add('.content h1, .content h2, .content h3');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  });
+</script>
+
+
+  
+
+
+<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.post-toc',
+        
+        contentSelector: '#post-content',
+        
+        headingSelector: 'h1, h2, h3',
+        collapseDepth:  6 ,
+        scrollSmooth: true,
+        positionFixedSelector: '.post-toc',
+        
+        
+        fixedSidebarOffset: 273,
+    });
+</script>
+
+
+</body>
+
+</html>
