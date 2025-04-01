@@ -9,13 +9,28 @@
     <lastmod>2023-01-01T08:00:00-07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2020-07-18T00:00:00+00:00</lastmod>
+    <lastmod>2020-08-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/</loc>
-    <lastmod>2020-07-18T00:00:00+00:00</lastmod>
+    <lastmod>2020-08-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2020-07-18T00:00:00+00:00</lastmod>
+    <lastmod>2020-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/tf-idf/</loc>
+    <lastmod>2020-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/tf-idf-lyrics/</loc>
+    <lastmod>2020-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E6%96%87%E5%AD%97%E6%8E%A2%E5%8B%98/</loc>
+    <lastmod>2020-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E6%96%87%E5%AD%97%E9%9B%B2/</loc>
+    <lastmod>2020-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2020-08-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/short-url/</loc>
     <lastmod>2020-07-18T00:00:00+00:00</lastmod>
@@ -30,9 +45,6 @@
     <lastmod>2020-07-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/%E7%B6%B2%E8%B7%AF%E7%88%AC%E8%9F%B2/</loc>
-    <lastmod>2020-07-08T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/</loc>
     <lastmod>2020-07-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/user-based-recommendation/</loc>

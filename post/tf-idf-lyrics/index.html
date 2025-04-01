@@ -1,0 +1,306 @@
+<!DOCTYPE html> 
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><script>const t = localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t); } </script><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
+  <meta name="theme-color" content="#0969e6"><title>以 Python 實作 tf-idf 算法，並以文字雲視覺化呈現 | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="以 Python 實作 tf-idf 算法，並以文字雲視覺化呈現 - 邱秉誠 (BingCheng)">
+  <meta property="og:type" content="article">
+  
+  <meta property="article:published_time" content=" 2020-08-01T00:00:00&#43;08:00">
+  
+  
+  <meta property="article:modified_time" content=" 2020-08-01T00:00:00&#43;08:00">
+  
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="以 Python 實作 tf-idf 算法，並以文字雲視覺化呈現"><meta name="author" content="Bingcheng">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hulga.min.css">
+  <link rel="manifest" href="/manifest.json">
+</head><body>
+  <div id="main"><section class="hero is-primary shadow-hero ">
+  <div class="hero-head">
+    <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
+  <div class="container">
+    <div class="navbar-brand"><a class="navbar-item " href="/">
+        邱秉誠 (BingCheng)
+      </a>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-end"><div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link" href="#">
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em" height="1em"
+    fill="currentColor"
+    viewBox="0 0 32 32"
+    >
+    <path d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+  </svg>
+  </a>
+  <div class="navbar-dropdown" id="navDropdown">
+    <a class="navbar-item theme-toggle" data-value="light" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"></path></svg>
+      </span>Light</a>
+    <a class="navbar-item theme-toggle" data-value="dark" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"></path></svg>
+      </span>Dark</a>
+    <a class="navbar-item theme-toggle" data-value="system" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"></path></svg>
+      </span>System</a>
+  </div>
+</div>
+
+        <a class="navbar-item" href="/" title="index">Home</a>
+      
+        <a class="navbar-item" href="/archives/" title="archives">Archives</a>
+      
+        <a class="navbar-item" href="/about/" title="about">About</a>
+      
+        <a class="navbar-item" href="/search/" title="search">Search</a>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+  </div>
+  <div class="hero-body">
+    <header class="container has-text-centered" data-pagefind-body>
+      <h1 class="title post-title is-spaced">
+        以 Python 實作 tf-idf 算法，並以文字雲視覺化呈現
+      </h1>
+      <h2 class="subtitle"><time>2020/08/01</time> ・<span class="post-cat mr-2">
+              <a href="/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/">資料分析</a>
+            </span></h2>
+      
+      <div>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/tf-idf/">#Tf-Idf</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E6%96%87%E5%AD%97%E6%8E%A2%E5%8B%98/">#文字探勘</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E6%96%87%E5%AD%97%E9%9B%B2/">#文字雲</a>
+        </span>
+      </div>
+      
+    </header>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      
+      <div class="column is-7 is-offset-2">
+      
+        <article class="content" id="post-content" data-pagefind-body><p>這篇文章會用周杰倫、五月天、林俊傑三者的歌詞文本作為資料集，以 tf-idf 加權技術萃取三者歌詞文本的關鍵字，並且以文字雲的方式呈現。</p>
+<h1 id="文本關鍵字">文本關鍵字</h1>
+<p>一個文本的關鍵字，應該具備何種性質？常理判斷該語詞倘若出現最多次，便越可能成為關鍵字，否則何必反覆在文中提起，語詞次數來衡量關鍵字，這是一個看似合理的方法，可惜會面臨到以下兩種缺失：</p>
+<ol>
+<li><strong>文本長度不一致</strong>，衡量便不再可靠，因為長篇幅的文章出現特定語詞的次數相對來說比較高。</li>
+<li><strong>語詞普遍性問題</strong>。如果一個詞語在大多數檔案都有出現，顯然這個語詞對該篇文章也不是那麼關鍵，比如說『我們』、『然後』，這類常見的語詞，雖然在一篇文章次數很高，但這類人稱代名詞或轉折詞往往不具備資訊含量，因此我們通常不會認為這些是關鍵詞。</li>
+</ol>
+<p>因為上述兩個缺失，在探索關鍵字上便出現一種加權技術，可以更客觀合理的衡量文字的權重。</p>
+<h1 id="tf-idf">tf-idf</h1>
+<p>tf-idf是一種加權技術，可以用來衡量文本語詞的權重，他是由以下兩個要件相乘得出的結果，這兩個元件恰好依序克服上述所及單純以『語詞次數』衡量權重的兩個缺失。</p>
+<h2 id="詞頻term-frequencytf">詞頻（term frequency，tf）</h2>
+<p>指的是某一個給定的詞語在該文本中出現的『頻率』，算法是該語詞在文本的出現次數，除以文本中所有語詞的出現次數之合，便可以得出該此語詞的『頻率』，如此可以防止偏向較長的文本。</p>
+<p><img src="image.png" alt="alt text"></p>
+<p>ex：周杰倫的歌詞中，『微笑』語詞出現70次，周杰倫歌詞所有語詞的數量是 25000 個左右，則『微笑』語詞的詞頻就是70/25000=0.0028。</p>
+<h2 id="逆向文件頻率inverse-document-frequencyidf">逆向文件頻率（inverse document frequency，idf）</h2>
+<p>旨在衡量一個詞語普遍重要程度，算法是文本的數量除以包含該語詞的文本數量，並將結果取以10為底的對數。由公式可知悉如果該語詞在其他文本很少見到，表示該語詞對於本文越關鍵。</p>
+<p><img src="image-1.png" alt="alt text"></p>
+<p>ex：周杰倫的歌詞的『中世紀』語詞，因為五月天、林俊傑的歌詞都沒有出現過該語詞，因此逆文件頻率會是log(3/1)，約為0.4771。</p>
+<h1 id="資料來源">資料來源</h1>
+<p>資料來源是透過爬蟲擷取魔鏡歌詞網的網頁得到，該網頁的結構沒有一致，歌詞頁面會參雜附註段落，卻沒有與歌詞區隔開來，例如七里香的歌詞中前面是七里香植物的科普，與歌詞本身並無關連，版面沒有一致，導致在清理資料階段十分漫長痛苦，資料梳理的困難也直接造就本文的限制，只以僅僅三者的歌詞文本來探索。過濾不必要的雜訊後以csv檔案儲存在clean data資料夾裡面。</p>
+<p><strong>七里香歌詞摻揉附註</strong></p>
+<p><img src="image-2.png" alt="alt text"></p>
+<p><strong>以csv格式儲存不同歌手的歌詞</strong></p>
+<p><img src="image-3.png" alt="alt text"></p>
+<p>以下正式進入到實作環節，完整程式碼請見文末。</p>
+<h1 id="實作">實作</h1>
+<h2 id="讀取資料集">讀取資料集</h2>
+<p>首先歷遍 clean data 內所有歌手的歌詞，每位歌手的歌詞以字串形式連接，裝納進 <code>singers</code> 這個字典中，得到的結果會如下圖所示。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">storage_folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#每位歌手的歌詞以字串形式連接</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lyric</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span><span class="k">continue</span>
+</span></span><span class="line"><span class="cl">            <span class="n">title</span><span class="p">,</span> <span class="n">content</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">lyric</span> <span class="o">+=</span> <span class="n">content</span>
+</span></span><span class="line"><span class="cl">        <span class="n">singer</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;.&#34;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">singers</span><span class="p">[</span><span class="n">singer</span><span class="p">]</span> <span class="o">=</span> <span class="n">lyric</span>
+</span></span></code></pre></div><p><strong>singers</strong></p>
+<p><img src="image-4.png" alt="alt text"></p>
+<h2 id="以-jieba-套件分詞">以 jieba 套件分詞</h2>
+<p>tf-idf實現是本文重點，礙於篇幅限制，關於jieba套件用法在此不表，會另外寫一篇講解。我將分詞的動作直接包裝成 <code>WordSegment</code> 類別去呼叫，這裡發生了三件事情：</p>
+<ol>
+<li><code>read_dictionary</code>。讀取字典，除了 <code>jieba</code> 內建字典，我尚且手動新增了字典在dictionary資料夾內。</li>
+<li><code>read_stop_words</code>。讀取停用詞，停用詞是不必要、無意義的語詞，比如說『然後』、『因此』、『了』等語助詞。</li>
+<li><code>remove_stop_words</code>。移除上述讀取的停用詞。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">ws</span> <span class="o">=</span> <span class="n">WordSegment</span><span class="p">(</span><span class="n">singers</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span><span class="n">stop_words_path</span><span class="o">=</span><span class="n">stop_words_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">ws</span><span class="o">.</span><span class="n">read_dictionary</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">ws</span><span class="o">.</span><span class="n">read_stop_words</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">ws</span><span class="o">.</span><span class="n">remove_stop_words</span><span class="p">()</span>
+</span></span></code></pre></div><p><strong>分詞結果</strong></p>
+<p><img src="image-5.png" alt="alt text"></p>
+<h2 id="統計詞頻">統計詞頻</h2>
+<p><code>words_count</code> 是列表，依序代表周杰倫、林俊傑、五月天，列表內是字典，表示歌手語詞的次數，有了次數之後便能統計 <code>words_frequency</code> 頻率。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">words_count</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">text_files</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">count</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">words_count</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+</span></span></code></pre></div><p><img src="image-6.png" alt="alt text"></p>
+<h2 id="統計逆文件頻率">統計逆文件頻率</h2>
+<p><code>occurrences_of_word</code> 是一個字典，鍵值是語詞，值則是該語詞在幾個歌手歌詞中出現過，比如說『中世紀』語詞只有周杰倫的歌詞才有，映射關係就是{&ldquo;中世紀&rdquo;:1}，得到這層映射關係，我們便可用迴圈逐一取得歌手歌詞的語詞，除以文件數量(也就是歌詞文本數量，在此是3)，再將結果取以10為底的對數。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1">#先取得每個語詞在歌手歌詞中&#34;出現過&#34;的次數</span>
+</span></span><span class="line"><span class="cl"><span class="n">all_words</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words_count</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">all_words</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">occurrences_of_word</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">all_words</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">occurrences_of_word</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">occurrences_of_word</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">occurrences_of_word</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl"><span class="n">inverse_document_frequency</span> <span class="o">=</span> <span class="p">[]</span>     
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">word_count</span> <span class="ow">in</span> <span class="n">words_count</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#出現過的次數</span>
+</span></span><span class="line"><span class="cl">    <span class="n">invFre</span> <span class="o">=</span> <span class="p">{}</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_count</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">occurrences</span> <span class="o">=</span> <span class="n">occurrences_of_word</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">invFre</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">words_count</span><span class="p">)</span><span class="o">/</span><span class="n">occurrences</span><span class="p">),</span><span class="mi">4</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">inverse_document_frequency</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">invFre</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="詞頻x逆文件頻率">詞頻x逆文件頻率</h2>
+<p>最後，得到的詞頻和逆文件頻率要記得相乘，得到的<code>all_tf_idf</code>，就是三位歌手的 tf-idf 的值了！</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1">##tf*idf</span>
+</span></span><span class="line"><span class="cl"><span class="n">all_tf_idf</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">words</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">words_frequency</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tf_idf</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span><span class="p">,</span><span class="n">freq</span> <span class="ow">in</span> <span class="n">words</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tf_idf</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">freq</span><span class="o">*</span><span class="n">inverse_document_frequency</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">word</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">all_tf_idf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf_idf</span><span class="p">)</span>
+</span></span></code></pre></div><h1 id="視覺化呈現">視覺化呈現</h1>
+<p>以下是使用 WordCloud 套件視覺化的效果。
+身為周杰倫的腦殘粉，每個語詞看到都會忍不住響起旋律哈哈，周杰倫三個字佔比會那麼重，可不是我沒把歌曲作者資訊刪除，有興趣者請聽周杰倫的完美主義便知道:)。</p>
+<p>這也是值得探討的地方，如果一首歌反覆出現同一個語詞，詞頻會很高，一首歌的語詞數量相較於一篇文章短許多，即便除以總文本語詞數量仍無法客觀衡量，而另一個逆文件頻率也面臨到相同的問題，在文本數量 (歌手數量) 不夠多的情況，逆文件頻率也無法精準衡量&quot;獨特性&quot;。</p>
+<p><strong>周杰倫的歌詞 tf-idf 文字雲</strong></p>
+<p><img src="image-7.png" alt="alt text"></p>
+<p><strong>林俊傑的歌詞 tf-idf 文字雲</strong></p>
+<p><img src="image-8.png" alt="alt text"></p>
+<p><strong>五月天的歌詞 tf-idf 文字雲</strong></p>
+<p><img src="image-9.png" alt="alt text"></p>
+<h1 id="小結">小結</h1>
+<p>今天向各位分享如何從一份結構化的文本，從讀取字典、移除停用詞、分詞、統計tf-id、到最後的視覺化描述等一系列探勘流程。</p>
+<p>關於 tf-idf 效果有在視覺化描述章節提到，因為歌詞文本較短，語詞次數影響會增大，我想到的辦法是可以加入特定限制，例如一首歌的語詞次數有上限，畢竟我們想探索的是一位歌手&quot;整體&quot;會在歌詞中運用到什麼詞彙，多少能夠反映出個人風格，如果僅僅只是一首歌恐怕有失偏頗。</p>
+<p>本文僅作教學示範用途，不保證資料集的品質，未來有時間我會好好梳理歌詞文本，到時樣本數增加，質量也變好，可能會有更有趣的發現！</p>
+<p><strong>資料集/完整代碼：</strong>
+<a href="https://github.com/QiuBingCheng/MediumArticle/tree/main/Text%20Mining/tf-idf">Github Code</a></p></article>
+      </div>
+      
+      <div class="column is-hidden-mobile">
+        <div class="sidebar pl-4" id="toc">
+          <div class="post post-toc" id="post-toc">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+  </div><footer class="footer">
+  <div class="content has-text-centered">
+    <p>Powered by <a href="https://gohugo.io">Hugo</a>. Theme <a href="https://github.com/wlh320/hugo-theme-hulga">Hulga</a></p>
+    <p>
+    
+    </p>
+  </div>
+</footer>
+
+
+
+<script src="http://localhost:1313/js/pwa.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+
+<script src="http://localhost:1313/js/hulga.min.js" defer></script>
+
+  
+<link id="hlcss" rel="stylesheet" href="/css/vs.min.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
+  anchors.options = {
+    placement: 'left',
+    
+    icon: '#'
+  };
+  anchors.add('.content h1, .content h2, .content h3');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  });
+</script>
+
+
+  
+
+
+<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.post-toc',
+        
+        contentSelector: '#post-content',
+        
+        headingSelector: 'h1, h2, h3',
+        collapseDepth:  6 ,
+        scrollSmooth: true,
+        positionFixedSelector: '.post-toc',
+        
+        
+        fixedSidebarOffset: 273,
+    });
+</script>
+
+
+</body>
+
+</html>
