@@ -6,14 +6,14 @@
     <description>Recent content in 網路爬蟲 on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jul 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/%E7%B6%B2%E8%B7%AF%E7%88%AC%E8%9F%B2/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>最香的爬蟲教學文</title>
+      <title>最香的爬蟲教學文 - foodpanda</title>
       <link>http://localhost:1313/post/food-panda-crawler/</link>
-      <pubDate>Sat, 08 Feb 2020 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 08 Jul 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/food-panda-crawler/</guid>
-      <description>&lt;p&gt;在資料科學的領域，資料是一切的基石，而在網際網路蘊藏的大量資料便如同寶藏，等著我們去一一挖掘。挖掘必須有方法，網路爬蟲便是一項實用的技能，透過程式自動擷取、解析網頁上的資訊，並且整理成結構化的格式 (例如上班族離不開的excel等)，如此一來方便做後續的數據分析。&lt;/p&gt;</description>
+      <description>&lt;p&gt;本文將介紹如何使用 Python 實作爬取 foodpanda 網站的網路爬蟲，並將爬取結果儲存到 excel 中。&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

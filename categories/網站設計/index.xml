@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>網站設計 on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/categories/%E7%B6%B2%E7%AB%99%E8%A8%AD%E8%A8%88/</link>
+    <description>Recent content in 網站設計 on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 18 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/%E7%B6%B2%E7%AB%99%E8%A8%AD%E8%A8%88/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 Python 實現縮短網址功能</title>
+      <link>http://localhost:1313/post/short-url/</link>
+      <pubDate>Sat, 18 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/short-url/</guid>
+      <description>&lt;p&gt;短網址，顧名思義就是在形式上比較短的網址，用戶存取縮短後的網址時，重新導向到原來的網址。在web2.0的今天無疑是一個潮流，在網路上已經有很多類似的服務，幫助你將冗長網址精簡成較短的網址以方便分享連結。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
