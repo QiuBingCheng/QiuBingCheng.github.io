@@ -6,8 +6,15 @@
     <description>Recent content in Posts on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>圖像文字辨識：Google Cloud Vision API vs pytesseract</title>
+      <link>http://localhost:1313/post/image-text-recognition/</link>
+      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/image-text-recognition/</guid>
+      <description>&lt;p&gt;這篇會介紹 Google Cloud Vision API 和 pytesseract 套件的環境安裝及使用教學，最後會進行兩者文字辨識效果的比較。辨識效果先講結論，Google Cloud Vision API 屌打 pytesseract 套件。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>以 Python 實作 tf-idf 算法，並以文字雲視覺化呈現</title>
       <link>http://localhost:1313/post/tf-idf-lyrics/</link>

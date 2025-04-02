@@ -1,0 +1,321 @@
+<!DOCTYPE html> 
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C85P61SPWR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C85P61SPWR');
+</script><script>const t = localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t); } </script><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
+  <meta name="theme-color" content="#0969e6"><title>圖像文字辨識：Google Cloud Vision API vs pytesseract | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="圖像文字辨識：Google Cloud Vision API vs pytesseract - 邱秉誠 (BingCheng)">
+  <meta property="og:type" content="article">
+  
+  <meta property="article:published_time" content=" 2020-08-13T00:00:00&#43;08:00">
+  
+  
+  <meta property="article:modified_time" content=" 2020-08-13T00:00:00&#43;08:00">
+  
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="評比 Google Cloud Vision API 和 pytesseract 對於圖像文字辨識表現 "><meta name="author" content="Bingcheng">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hulga.min.css">
+  <link rel="manifest" href="/manifest.json">
+</head><body>
+  <div id="main"><section class="hero is-primary shadow-hero ">
+  <div class="hero-head">
+    <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
+  <div class="container">
+    <div class="navbar-brand"><a class="navbar-item " href="/">
+        邱秉誠 (BingCheng)
+      </a>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-end"><div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link" href="#">
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em" height="1em"
+    fill="currentColor"
+    viewBox="0 0 32 32"
+    >
+    <path d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+  </svg>
+  </a>
+  <div class="navbar-dropdown" id="navDropdown">
+    <a class="navbar-item theme-toggle" data-value="light" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"></path></svg>
+      </span>Light</a>
+    <a class="navbar-item theme-toggle" data-value="dark" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"></path></svg>
+      </span>Dark</a>
+    <a class="navbar-item theme-toggle" data-value="system" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"></path></svg>
+      </span>System</a>
+  </div>
+</div>
+
+        <a class="navbar-item" href="/" title="index">Home</a>
+      
+        <a class="navbar-item" href="/archives/" title="archives">Archives</a>
+      
+        <a class="navbar-item" href="/about/" title="about">About</a>
+      
+        <a class="navbar-item" href="/search/" title="search">Search</a>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+  </div>
+  <div class="hero-body">
+    <header class="container has-text-centered" data-pagefind-body>
+      <h1 class="title post-title is-spaced">
+        圖像文字辨識：Google Cloud Vision API vs pytesseract
+      </h1>
+      <h2 class="subtitle"><time>2020/08/13</time> ・<span class="post-cat mr-2">
+              <a href="/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/">資料分析</a>
+            </span></h2>
+      
+      <div>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E5%BD%B1%E5%83%8F%E8%BE%A8%E8%AD%98/">#影像辨識</a>
+        </span>
+      </div>
+      
+    </header>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      
+      <div class="column is-7 is-offset-2">
+      
+        <article class="content" id="post-content" data-pagefind-body><p>這篇會介紹 Google Cloud Vision API 和 pytesseract 套件的環境安裝及使用教學，最後會進行兩者文字辨識效果的比較。辨識效果先講結論，Google Cloud Vision API 屌打 pytesseract 套件。</p>
+<h1 id="前言">前言</h1>
+<p>近來在處理一個案子，從PDF擷取公文資料到EXCEL檔案裡面，以方便進行彙整統計，其中住址的部分因為涉及個人隱私，因此住址特別設計成圖片，並非一般文字，防止有心人士萃取，在處理圖片就比較麻煩一點，我採取的做法就是先以PyPDF2套件萃取圖片，再想辦法從圖片辨識出文字。</p>
+<h1 id="pytesseract">pytesseract</h1>
+<p>Tesseract 是一個光學字元辨識(OCR)引擎，目前由Google 贊助開發。python 使用 Tesseract的套件就是 pytesseract。</p>
+<h2 id="1-備妥程式運行環境">1. 備妥程式運行環境</h2>
+<ul>
+<li>pip install pytesseract</li>
+<li>根據電腦環境在該網站下載 tesseract.exe。</li>
+<li>在Github respository下載 best trained model (ex:chi_tra.traineddata)，放入到上述下載 testdata 資料夾裡面，以我的路徑為例：</li>
+</ul>
+<p><code>C:\Program Files\Tesseract-OCR\tessdata</code></p>
+<p><img src="image.png" alt="alt text"></p>
+<ul>
+<li>加入系統環境變數</li>
+</ul>
+<p>記得要加入系統環境變數，否則會噴出error，變數名稱是 TESSDATA_PREFIX，路徑則是剛剛的 testdata 資料夾</p>
+<p><img src="image-1.png" alt="alt text"></p>
+<h2 id="2-測試圖片">2. 測試圖片</h2>
+<p>用以下範例圖片測試：</p>
+<p><img src="image-2.png" alt="alt text"></p>
+<h2 id="3-代碼實現">3. 代碼實現</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytesseract</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#指定剛剛下載tesseract.exe的完整路徑</span>
+</span></span><span class="line"><span class="cl"><span class="n">pytesseract</span><span class="o">.</span><span class="n">pytesseract</span><span class="o">.</span><span class="n">tesseract_cmd</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Program Files\Tesseract-OCR\tesseract.exe&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;test.png&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#這裡的lang就是剛剛下載的model</span>
+</span></span><span class="line"><span class="cl"><span class="n">text</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;chi_tra&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="4-結果">4. 結果</h2>
+<p><code>哈囉你好嗎,衷心感謝,珍’</code></p>
+<h1 id="google-cloud-vision-api">Google Cloud Vision API</h1>
+<p>在使用API之前要申請 Google Cloud Platform 帳號，操作十分直覺，這裡就不贅述，讀者可以先申請看看，有問題再詢問我。</p>
+<h2 id="1-建立服務金鑰">1. 建立服務金鑰</h2>
+<p>使用 Google cloud 服務需要帳戶金鑰，按下建立會自動下載一個json檔案，裏頭就是金鑰，必須妥善保管。</p>
+<p><img src="image-3.png" alt="alt text"></p>
+<h2 id="2-安裝套件">2. 安裝套件</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">pip</span> <span class="n">install</span> <span class="n">google</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">core</span>
+</span></span><span class="line"><span class="cl"><span class="n">pip</span> <span class="n">install</span> <span class="n">google</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">vision</span>
+</span></span></code></pre></div><h2 id="3-運行代碼">3. 運行代碼</h2>
+<p>取自Google Cloud Vision API官方文件簡化而成：</p>
+<h2 id="4-結果-1">4. 結果</h2>
+<p><code>哈囉你好嗎,哀心感謝,珍重再見~</code></p>
+<h2 id="5-附註">5. 附註</h2>
+<p>Google Cloud Vision API 每個月前1000單位免費，超過免費額度則依照不同級距收費，請參閱定價。</p>
+<p><strong>Google Cloud Vision API定價</strong></p>
+<p><img src="image-4.png" alt="alt text"></p>
+<h1 id="辨識評比">辨識評比</h1>
+<p>簡單用幾個範例來實測兩者辨識效果，隱藏格式、標點符號不列入考慮，單純計算字元辨識的正確率，若圖片文字有100個字，成功辨識80個字，則辨識率就是80%~。</p>
+<h2 id="測試1-白底黑字">測試1-白底黑字</h2>
+<p><img src="image-5.png" alt="alt text"></p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>辨識結果</th>
+          <th>辨識率</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>pytesseract</strong></td>
+          <td><code>址:人台責縣了關廟鄉龜洞村9和交龜油\n\x0c</code></td>
+          <td>60%</td>
+      </tr>
+      <tr>
+          <td><strong>Google API</strong></td>
+          <td><code>住址:台南縣關廟鄉龜洞村3鄰龜洞</code></td>
+          <td>100%</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="測試2-黑底白字">測試2-黑底白字</h2>
+<p><img src="image-6.png" alt="alt text"></p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>辨識結果</th>
+          <th>辨識率</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>pytesseract</strong></td>
+          <td><code>而放六合轉呈2(E壤很有看太的感克中的鉛筆在紙上來來回我用幾行形容妳是我的誰</code></td>
+          <td>52%</td>
+      </tr>
+      <tr>
+          <td><strong>Google API</strong></td>
+          <td><code>窗外的麻雀在電線桿上多嘴妳說這一句很有夏天的感覺手中的鉛筆在紙上來來回回我用幾行字形容妳是我的誰</code></td>
+          <td>100%</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="測試3-黑底白字">測試3-黑底白字</h2>
+<p><img src="image-7.png" alt="alt text"></p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>辨識結果</th>
+          <th>辨識率</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>pytesseract</strong></td>
+          <td><code>巖燒店的煙味瀰漫隔壁是國術館語li條E上菩店2教拳腳武術的老闆練鐵沙掌耍楊家槍</code></td>
+          <td>73%</td>
+      </tr>
+      <tr>
+          <td><strong>Google API</strong></td>
+          <td><code>巌燒店的煙味瀰漫 隔壁是國術館店裡面的媽媽桑茶道 有三段教拳腳武術的老闆 練鐵沙掌 耍楊家槍</code></td>
+          <td>100%</td>
+      </tr>
+  </tbody>
+</table>
+<h1 id="小結">小結</h1>
+<p>今天為各位介紹文字辨識常用的兩個工具，一個是 Google Cloud Vision API 另一個是 pytesseract 套件，經過實測，Google Cloud Vision API準確度高到不可思議，pytesseract 相形之下就遜色許多，如果使用量不大，建議直接串 Google API 比較合適，如果使用 pytesseract 就要自己訓練一個 model 來提高準確度！有空再寫一篇要如何訓練model來增加準確度~。</p>
+<h1 id="備註">備註</h1>
+<p>如果程式有調用 Google Cloud Vision API，在使用Pyinstaller 套件打包成執行檔時容易噴出找不到google-cloud-vision 套件的錯誤代碼，解決辦法可以參考這篇。</p></article>
+      </div>
+      
+      <div class="column is-hidden-mobile">
+        <div class="sidebar pl-4" id="toc">
+          <div class="post post-toc" id="post-toc">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+  </div><footer class="footer">
+  <div class="content has-text-centered">
+    <p>Powered by <a href="https://gohugo.io">Hugo</a>. Theme <a href="https://github.com/wlh320/hugo-theme-hulga">Hulga</a></p>
+    <p>
+    
+    </p>
+  </div>
+</footer>
+
+
+
+<script src="http://localhost:1313/js/pwa.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+
+<script src="http://localhost:1313/js/hulga.min.js" defer></script>
+
+  
+<link id="hlcss" rel="stylesheet" href="/css/vs.min.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
+  anchors.options = {
+    placement: 'left',
+    
+    icon: '#'
+  };
+  anchors.add('.content h1, .content h2, .content h3');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  });
+</script>
+
+
+  
+
+
+<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.post-toc',
+        
+        contentSelector: '#post-content',
+        
+        headingSelector: 'h1, h2, h3',
+        collapseDepth:  6 ,
+        scrollSmooth: true,
+        positionFixedSelector: '.post-toc',
+        
+        
+        fixedSidebarOffset: 273,
+    });
+</script>
+
+
+</body>
+
+</html>

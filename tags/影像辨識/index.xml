@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>影像辨識 on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/tags/%E5%BD%B1%E5%83%8F%E8%BE%A8%E8%AD%98/</link>
+    <description>Recent content in 影像辨識 on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E5%BD%B1%E5%83%8F%E8%BE%A8%E8%AD%98/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>以 Python 實作 tf-idf 算法，並以文字雲視覺化呈現</title>
+      <link>http://localhost:1313/post/image-text-recognition/</link>
+      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/image-text-recognition/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
