@@ -1,0 +1,238 @@
+<!DOCTYPE html> 
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C85P61SPWR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C85P61SPWR');
+</script><script>const t = localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t); } </script><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
+  <meta name="theme-color" content="#0969e6"><title>假設檢定基礎觀念 | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="假設檢定基礎觀念 - 邱秉誠 (BingCheng)">
+  <meta property="og:type" content="article">
+  
+  <meta property="article:published_time" content=" 2020-08-18T00:00:00&#43;08:00">
+  
+  
+  <meta property="article:modified_time" content=" 2020-08-18T00:00:00&#43;08:00">
+  
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="用一個簡單實例，引領讀者逐步窺探假設檢定的基礎觀念。"><meta name="author" content="Bingcheng">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hulga.min.css">
+  <link rel="manifest" href="/manifest.json">
+</head><body>
+  <div id="main"><section class="hero is-primary shadow-hero ">
+  <div class="hero-head">
+    <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
+  <div class="container">
+    <div class="navbar-brand"><a class="navbar-item " href="/">
+        邱秉誠 (BingCheng)
+      </a>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-end"><div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link" href="#">
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em" height="1em"
+    fill="currentColor"
+    viewBox="0 0 32 32"
+    >
+    <path d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+  </svg>
+  </a>
+  <div class="navbar-dropdown" id="navDropdown">
+    <a class="navbar-item theme-toggle" data-value="light" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"></path></svg>
+      </span>Light</a>
+    <a class="navbar-item theme-toggle" data-value="dark" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"></path></svg>
+      </span>Dark</a>
+    <a class="navbar-item theme-toggle" data-value="system" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"></path></svg>
+      </span>System</a>
+  </div>
+</div>
+
+        <a class="navbar-item" href="/" title="index">Home</a>
+      
+        <a class="navbar-item" href="/archives/" title="archives">Archives</a>
+      
+        <a class="navbar-item" href="/about/" title="about">About</a>
+      
+        <a class="navbar-item" href="/search/" title="search">Search</a>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+  </div>
+  <div class="hero-body">
+    <header class="container has-text-centered" data-pagefind-body>
+      <h1 class="title post-title is-spaced">
+        假設檢定基礎觀念
+      </h1>
+      <h2 class="subtitle"><time>2020/08/18</time> ・<span class="post-cat mr-2">
+              <a href="/categories/%E7%B5%B1%E8%A8%88%E5%AD%B8/">統計學</a>
+            </span></h2>
+      
+      <div>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E5%81%87%E8%A8%AD%E6%AA%A2%E5%AE%9A/">#假設檢定</a>
+        </span>
+      </div>
+      
+    </header>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      
+      <div class="column is-7 is-offset-2">
+      
+        <article class="content" id="post-content" data-pagefind-body><p>假設檢定就是經由觀察一組數據，推論一個對母數的估計是否正確。我們通常會選擇一個合適的檢定統計量，如果檢定統計量在基於特定分配底下出現的機率很低，我們就會推翻虛無假設，認為對母數的估計是錯誤的。</p>
+<h1 id="簡單的例子">簡單的例子</h1>
+<p>舉個例子。假設有人<strong>宣稱國人的身高均值是168公分</strong>，你要怎麼推翻他的宣稱為錯誤？最直覺的方法就是隨機找30個路人，將他們的身高加總取平均，結果發現<strong>抽樣平均只有167公分</strong>，與他宣稱的168公分有落差，因此你懷疑他的宣稱是錯誤的。</p>
+<p><strong>假設檢定就是透過機率統計，試圖推翻一個對母體的假設的過程。</strong></p>
+<p>針對上述例子，要<strong>如何考量抽樣的誤差</strong>，以及<strong>如何用機率來描述樣本平均167公分和母體均值為168公分這段差距</strong>，需要有更嚴謹的一套流程。例如對方如果不服氣，於是反問你，請問在基於你的觀察樣本底下，國人的身高均值的確是168公分的機率有多少？我相信憑&quot;感覺&quot;是很難繼續回答這個問題了。事實上這是典型的型一錯誤 (Type I Error)，有興趣讀者可以繼續參閱這篇如何計算型一錯誤 (Type I Error)、型二錯誤 (Type II Error) 的機率。</p>
+<p>如果想要知道樣本平均167公分距離母體均值168公分有多&quot;不可能&quot;，我們需要藉助機率分布的概念，因為<strong>機率分布可以告訴我們任何觀測值發生的&quot;可能性&quot;</strong>。</p>
+<h1 id="機率分布">機率分布</h1>
+<p>在毫無頭緒的情況底下，將隨機抽取得到的身高樣本值，視為服從常態分布隨機變數，通常是個不錯的選擇，這就是常態分布如此強大、好用的地方，因為世界上大多數的變數都是服從常態分布。</p>
+<p>每個連續型機率分布都有自己的一個<strong>機率密度函數 (Probability density function)</strong>，輸入就是變數的實現值，輸出就是這個變數發生的&quot;可能性&quot;。常態分佈的機率密度函數為：</p>
+<p style="text-align: center;">
+  <img src="image.png" alt="圖片描述">
+</p>
+<p>其中 $\sigma$ 就是標準差，$μ$ 就是期望值。按照那個人所宣稱的，國人身高平均 $μ=168$公分，假設標準差 $\sigma=3$，則按照這個機率密度函數繪製出來就是一個如下的鐘形分配：</p>
+<p style="text-align: center;">
+  <img src="image-1.png" alt="圖片描述">
+</p>
+<p>再複習一次，常態分布的機率分布能幹嗎？<strong>它告訴我們每個觀察值x發生的可能性，也就是隨機一個路人身高為x的可能性</strong>。但這個可能性並非機率，<strong>因為連續型機率分布的任何一點機率都是0</strong>。但是機率密度函數曲線下的&quot;面積&quot;總和卻是1，代表面積可以用來表示機率。</p>
+<p>我們已經掌握到對方宣稱國人身高 $μ=168$ 的機率分布，但是很不幸的，這個機率分布不會是抽樣時國人身高平均的機率分布，因為我<strong>們是將觀測值 (隨機30個人的身高) 取平均值來估計母體</strong>。</p>
+<p>當然你可以用樣本最大值、最小值、中位數等任何你想得到的統計量來估計國人身高，但是使用樣本平均數來估計母體均值有兩個好處，第一他是<strong>不偏估計</strong> (unbiased estimator)，簡單來說就是<strong>樣本平均的期望值會等於母體期望值</strong>，第二個好處是<strong>樣本數越大 (Sample size)，樣本平均值的標準差會越小</strong>。基於上述這兩個理由我們選擇用平均數來估計母體。(人的直覺背後隱含這麼多有趣的概念！)</p>
+<p>根據公式推導，樣本平均值的標準差是原始母體標準差再除以根號n，表示n越大，標準差越小，因此抽樣的平均值實際上會服從以下比較窄的常態分配。樣本平均值的標準差公式推導請見中央極限定理 (Central Limit Theorem , CLT)。</p>
+<p style="text-align: center;">
+  <img src="image-2.png" alt="圖片描述">
+</p>
+<p>這時讀者可以注意到一件事，就是樣本平均的常態分配竟然變窄了！因為標準差從3變成0.548。不妨思考一下，隨機抽取1人、30人、還是抽取100個人取平均值來估計母體均值比較準？如果讀者可以自然地想到自然是抽取越多人估計越準確的話，表示讀者已經掌握到這個概念。Again，可以參考那篇推導，樣本平均值的標準差是原始母體標準差再除以根號n。</p>
+<p>根據抽樣時的機率分布，我們可以使用積分求取身高平均等於 168 時底下的曲線面積，如下圖的橘色區域，計算結果為 3.4% ，這意味著在<strong>宣稱 $μ=168$ 公分，標準差 $σ=3$ 的常態機率分布底下，隨機抽取30個人身高並取平均的結果，小於167的機率僅有3.4%</strong>，或是以數學式表達 $P(\bar{X}&lt;167)=3.4%$ 。</p>
+<p style="text-align: center;">
+  <img src="image-3.png" alt="圖片描述">
+</p>
+<p>通常，在機率分配底下檢定統計量的機率少於5%，我們就認定它是顯著的，這意味母體參數的宣稱是錯誤的(國人身高平均168公分的宣稱是錯誤的)，否則機率不會那麼低。這個5%就是 <strong>顯著水準 (Level of Significance)</strong>。顯著水準越低，表示希望證據越充分才能推翻對母體的宣稱。</p>
+<p>上述其實已經是一個假設檢定的完成流程，以一個實例來輔助講解，希望讀者能更容易體會假設檢定的精神。在下文就是補充一些細節的部分，關於橘色區域的面積如何計算。</p>
+<h1 id="曲線底下的面積">曲線底下的面積</h1>
+<p>$P(\bar{X}&lt;167)=3.4%$ 也就是曲線底下的橘色面積該如何計算？上述有提到一個數學技巧，那就是積分，將常態分布的機率密度函數積分得到 <strong>累積分布函數 (Cumulative Distribution Function)</strong>。但尷尬的是，常態分布的機率密度函數是無法求出導數的！</p>
+<p>這裡列出幾種輔助計算累積分布函數的方法</p>
+<h2 id="查閱標準常態分佈累積機率表">查閱標準常態分佈累積機率表</h2>
+<p>相信修過統計學的讀者對這張表格一定都不陌生。我們習慣先進行標準化 (standardizing)，簡單來說，我們希望將觀測值轉換成距離母體幾個標準差，也就是服從標準常態分佈 $N(μ=0,σ=1)$，再去對照標準常態分佈累積機率表。</p>
+<p style="text-align: center;">
+  <img src="image-4.png" alt="圖片描述">
+</p>
+<h2 id="使用excel">使用Excel</h2>
+<p>excel是世界上最強的基礎分析軟體之一，幾乎成為每台電腦的標配。打開excel任意在一個格子輸入以下函式
+=NORM.DIST(167,168,3/SQRT(30),TRUE)</p>
+<p>如果 excel 沒壞，就會得到差不多的結果了。</p></article>
+      </div>
+      
+      <div class="column is-hidden-mobile">
+        <div class="sidebar pl-4" id="toc">
+          <div class="post post-toc" id="post-toc">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+  </div><footer class="footer">
+  <div class="content has-text-centered">
+    <p>Powered by <a href="https://gohugo.io">Hugo</a>. Theme <a href="https://github.com/wlh320/hugo-theme-hulga">Hulga</a></p>
+    <p>
+    
+    </p>
+  </div>
+</footer>
+
+
+
+<script src="http://localhost:1313/js/pwa.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+
+<script src="http://localhost:1313/js/hulga.min.js" defer></script>
+
+  
+<link id="hlcss" rel="stylesheet" href="/css/vs.min.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
+  anchors.options = {
+    placement: 'left',
+    
+    icon: '#'
+  };
+  anchors.add('.content h1, .content h2, .content h3');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  });
+</script>
+
+
+  
+
+
+<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.post-toc',
+        
+        contentSelector: '#post-content',
+        
+        headingSelector: 'h1, h2, h3',
+        collapseDepth:  6 ,
+        scrollSmooth: true,
+        positionFixedSelector: '.post-toc',
+        
+        
+        fixedSidebarOffset: 273,
+    });
+</script>
+
+
+</body>
+
+</html>

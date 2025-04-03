@@ -16,25 +16,11 @@
       <description>&lt;p&gt;這篇會介紹 Google Cloud Vision API 和 pytesseract 套件的環境安裝及使用教學，最後會進行兩者文字辨識效果的比較。辨識效果先講結論，Google Cloud Vision API 屌打 pytesseract 套件。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>期貨爬蟲：擷取期貨每日行情資料並寫入 Excel檔案</title>
-      <link>http://localhost:1313/post/option-crawler/</link>
-      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/option-crawler/</guid>
-      <description>&lt;p&gt;臺股期貨沒有提供免費API擷取資料，因此決定手刻一個，順便寫成教學文章，紀錄實作的過程。&lt;/p&gt;</description>
-    </item>
-    <item>
       <title>以 Python 實作 tf-idf 算法，並以文字雲視覺化呈現</title>
       <link>http://localhost:1313/post/tf-idf-lyrics/</link>
       <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/tf-idf-lyrics/</guid>
       <description>&lt;p&gt;這篇文章會用周杰倫、五月天、林俊傑三者的歌詞文本作為資料集，以 tf-idf 加權技術萃取三者歌詞文本的關鍵字，並且以文字雲的方式呈現。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>最香的爬蟲教學文 - foodpanda</title>
-      <link>http://localhost:1313/post/food-panda-crawler/</link>
-      <pubDate>Wed, 08 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/food-panda-crawler/</guid>
-      <description>&lt;p&gt;本文將介紹如何使用 Python 實作爬取 foodpanda 網站的網路爬蟲，並將爬取結果儲存到 excel 中。&lt;/p&gt;</description>
     </item>
     <item>
       <title>以 Python 實現推薦系統的協同過濾算法 (User-based Collaborative Filtering)</title>

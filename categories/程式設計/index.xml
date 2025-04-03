@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>程式設計 on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/categories/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88/</link>
+    <description>Recent content in 程式設計 on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 06 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>期貨爬蟲：擷取期貨每日行情資料並寫入 Excel檔案</title>
+      <link>http://localhost:1313/post/option-crawler/</link>
+      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/option-crawler/</guid>
+      <description>&lt;p&gt;臺股期貨沒有提供免費API擷取資料，因此決定手刻一個，順便寫成教學文章，紀錄實作的過程。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>用 Python 實現縮短網址功能</title>
+      <link>http://localhost:1313/post/short-url/</link>
+      <pubDate>Sat, 18 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/short-url/</guid>
+      <description>&lt;p&gt;短網址，顧名思義就是在形式上比較短的網址，用戶存取縮短後的網址時，重新導向到原來的網址。在web2.0的今天無疑是一個潮流，在網路上已經有很多類似的服務，幫助你將冗長網址精簡成較短的網址以方便分享連結。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>最香的爬蟲教學文 - foodpanda</title>
+      <link>http://localhost:1313/post/food-panda-crawler/</link>
+      <pubDate>Wed, 08 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/food-panda-crawler/</guid>
+      <description>&lt;p&gt;本文將介紹如何使用 Python 實作爬取 foodpanda 網站的網路爬蟲，並將爬取結果儲存到 excel 中。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

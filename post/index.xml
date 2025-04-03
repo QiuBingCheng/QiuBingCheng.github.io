@@ -6,8 +6,15 @@
     <description>Recent content in Posts on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Aug 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>假設檢定基礎觀念</title>
+      <link>http://localhost:1313/post/hypothesis-test/</link>
+      <pubDate>Tue, 18 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/hypothesis-test/</guid>
+      <description>&lt;p&gt;假設檢定就是經由觀察一組數據，推論一個對母數的估計是否正確。我們通常會選擇一個合適的檢定統計量，如果檢定統計量在基於特定分配底下出現的機率很低，我們就會推翻虛無假設，認為對母數的估計是錯誤的。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>圖像文字辨識：Google Cloud Vision API vs pytesseract</title>
       <link>http://localhost:1313/post/image-text-recognition/</link>

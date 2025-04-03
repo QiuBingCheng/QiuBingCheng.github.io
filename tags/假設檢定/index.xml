@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>假設檢定 on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/tags/%E5%81%87%E8%A8%AD%E6%AA%A2%E5%AE%9A/</link>
+    <description>Recent content in 假設檢定 on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 18 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E5%81%87%E8%A8%AD%E6%AA%A2%E5%AE%9A/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>假設檢定基礎觀念</title>
+      <link>http://localhost:1313/post/hypothesis-test/</link>
+      <pubDate>Tue, 18 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/hypothesis-test/</guid>
+      <description>&lt;p&gt;假設檢定就是經由觀察一組數據，推論一個對母數的估計是否正確。我們通常會選擇一個合適的檢定統計量，如果檢定統計量在基於特定分配底下出現的機率很低，我們就會推翻虛無假設，認為對母數的估計是錯誤的。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
