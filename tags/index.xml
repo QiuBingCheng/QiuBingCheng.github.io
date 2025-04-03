@@ -6,8 +6,29 @@
     <description>Recent content in Tags on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>影像辨識</title>
+      <link>http://localhost:1313/tags/%E5%BD%B1%E5%83%8F%E8%BE%A8%E8%AD%98/</link>
+      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E5%BD%B1%E5%83%8F%E8%BE%A8%E8%AD%98/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Openpyx</title>
+      <link>http://localhost:1313/tags/openpyx/</link>
+      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/openpyx/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>網路爬蟲</title>
+      <link>http://localhost:1313/tags/%E7%B6%B2%E8%B7%AF%E7%88%AC%E8%9F%B2/</link>
+      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E7%B6%B2%E8%B7%AF%E7%88%AC%E8%9F%B2/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Tf-Idf</title>
       <link>http://localhost:1313/tags/tf-idf/</link>
@@ -34,13 +55,6 @@
       <link>http://localhost:1313/tags/%E7%9F%AD%E7%B6%B2%E5%9D%80/</link>
       <pubDate>Sat, 18 Jul 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/%E7%9F%AD%E7%B6%B2%E5%9D%80/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>網路爬蟲</title>
-      <link>http://localhost:1313/tags/%E7%B6%B2%E8%B7%AF%E7%88%AC%E8%9F%B2/</link>
-      <pubDate>Wed, 08 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/%E7%B6%B2%E8%B7%AF%E7%88%AC%E8%9F%B2/</guid>
       <description></description>
     </item>
     <item>

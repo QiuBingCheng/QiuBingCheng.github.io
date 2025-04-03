@@ -1,0 +1,346 @@
+<!DOCTYPE html> 
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C85P61SPWR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C85P61SPWR');
+</script><script>const t = localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t); } </script><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
+  <meta name="theme-color" content="#0969e6"><title>期貨爬蟲：擷取期貨每日行情資料並寫入 Excel檔案 | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="期貨爬蟲：擷取期貨每日行情資料並寫入 Excel檔案 - 邱秉誠 (BingCheng)">
+  <meta property="og:type" content="article">
+  
+  <meta property="article:published_time" content=" 2020-08-06T00:00:00&#43;08:00">
+  
+  
+  <meta property="article:modified_time" content=" 2020-08-06T00:00:00&#43;08:00">
+  
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="期貨爬蟲：擷取期貨每日行情資料並寫入 Excel檔案"><meta name="author" content="Bingcheng">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hulga.min.css">
+  <link rel="manifest" href="/manifest.json">
+</head><body>
+  <div id="main"><section class="hero is-primary shadow-hero ">
+  <div class="hero-head">
+    <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
+  <div class="container">
+    <div class="navbar-brand"><a class="navbar-item " href="/">
+        邱秉誠 (BingCheng)
+      </a>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-end"><div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link" href="#">
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em" height="1em"
+    fill="currentColor"
+    viewBox="0 0 32 32"
+    >
+    <path d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+  </svg>
+  </a>
+  <div class="navbar-dropdown" id="navDropdown">
+    <a class="navbar-item theme-toggle" data-value="light" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"></path></svg>
+      </span>Light</a>
+    <a class="navbar-item theme-toggle" data-value="dark" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"></path></svg>
+      </span>Dark</a>
+    <a class="navbar-item theme-toggle" data-value="system" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"></path></svg>
+      </span>System</a>
+  </div>
+</div>
+
+        <a class="navbar-item" href="/" title="index">Home</a>
+      
+        <a class="navbar-item" href="/archives/" title="archives">Archives</a>
+      
+        <a class="navbar-item" href="/about/" title="about">About</a>
+      
+        <a class="navbar-item" href="/search/" title="search">Search</a>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+  </div>
+  <div class="hero-body">
+    <header class="container has-text-centered" data-pagefind-body>
+      <h1 class="title post-title is-spaced">
+        期貨爬蟲：擷取期貨每日行情資料並寫入 Excel檔案
+      </h1>
+      <h2 class="subtitle"><time>2020/08/06</time> ・<span class="post-cat mr-2">
+              <a href="/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/">資料分析</a>
+            </span></h2>
+      
+      <div>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E7%B6%B2%E8%B7%AF%E7%88%AC%E8%9F%B2/">#網路爬蟲</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/openpyx/">#Openpyx</a>
+        </span>
+      </div>
+      
+    </header>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      
+      <div class="column is-7 is-offset-2">
+      
+        <article class="content" id="post-content" data-pagefind-body><p>臺股期貨沒有提供免費API擷取資料，因此決定手刻一個，順便寫成教學文章，紀錄實作的過程。</p>
+<p>這篇文章比較基礎，只是單純爬取每日行情的資料，適合有心想學爬蟲的讀者，透過實際生活上的應用，可以讓人學程式學得越起勁，這也是我喜歡程式的原因，幫助我解決生活上很多難題！</p>
+<h1 id="前言">前言</h1>
+<h2 id="期貨">期貨</h2>
+<p>期貨是一種特別的交易方式，買賣雙方簽訂合約，約定在未來指定的時間、價格或者其他交易條件交出現貨。期貨有很多種契約，今天我欲抓取的是臺股契約(TX)。臺股期貨區分兩個交易時段，依序為盤後時段及一般交易時段，盤後交易時段可視為每日交易的第一個時段，結算作業則是以一般交易時段收盤為劃分點。</p>
+<p><img src="image.png" alt="alt text"></p>
+<h2 id="擷取資料">擷取資料</h2>
+<p>要紀錄每日行情也是麻煩的一件事，能不能透過程式自動擷取資料，並且幫我記錄在excel檔案裏面？下圖是台灣期貨交易行情的表格，我每天想抓的就是：</p>
+<p><strong>盤後交易時段</strong>
+開盤價、最高價、最低價、最後成交價；</p>
+<p><strong>一般交易時段</strong>
+開盤價、最高價、最低價、最後成交價、漲跌價、結算價。</p>
+<p><img src="image-1.png" alt="alt text"></p>
+<h2 id="預計成果">預計成果</h2>
+<p><img src="image-3.png" alt="alt text"></p>
+<p>我的預計成果如上圖，當我執行Python程式時，會先判斷excel紀錄的最新日期，從最新日期的下個營業日擷取到最近一個營業日，每次都會擷取每日行情兩個時段的交易數據，這裡的『夜』、『日』，分別對應的就是盤後時段、一般時段。</p>
+<p>這裡有值得注意的兩點：</p>
+<p><strong>1. 程式執行當天沒有資料，則當天不會出現紀錄</strong></p>
+<p>ex：在2020/7/25 (週六)，臺灣期貨交易所公休，因此當天就不會寫入excel檔案。</p>
+<p><strong>2. 程式會自動判斷最新的紀錄日期，逐一擷取補齊至今</strong>。</p>
+<p>ex：平日上班繁忙忘了更新，excel最新紀錄是2020/7/27 (週一)，程式執行會擷取2020/7/28 (週二)、2020/7/29 (週三)&hellip;執行到今天日期為止。如此就可以避免中間有缺漏情況。</p>
+<h1 id="python代碼實現">Python代碼實現</h1>
+<p>以下講解Python代碼實現，以 2020/8/05 的盤後交易時段為例。</p>
+<h2 id="檢查查詢表格的-html-元素">檢查查詢表格的 html 元素</h2>
+<p>在查詢表格按右鍵，選擇&quot;檢查&quot;，右邊會顯示表格的 html 元素，從中得知這表格是以 post 方式發出請求，紀錄每個輸入框的 name 及 value。</p>
+<p><strong>表單元素</strong></p>
+<p><img src="image-4.png" alt="alt text"></p>
+<p><strong>表格對應的名稱、值</strong></p>
+<p><img src="image-5.png" alt="alt text"></p>
+<h2 id="檢查行情表格的-html-元素">檢查行情表格的 html 元素</h2>
+<p>在臺股期貨 (TX ) 行情表按下右鍵，選擇&quot;檢查&quot;，右邊會顯示如下的html元素</p>
+<p><strong>行情表格的元素</strong></p>
+<p><img src="image-6.png" alt="alt text"></p>
+<p>檢查發現，行情表格的class是 <code>table_f</code>，用 Ctrl+F 搜尋看看有幾個吻合：</p>
+<p><img src="image-7.png" alt="alt text"></p>
+<p>只有兩個吻合，一個是我們要抓的 <strong>臺股期貨 (TX)</strong> 行情表、另一個是<strong>價差行情表</strong>。待會我們用class名稱作為條件搜尋時，就擷取第一張表格即可。</p>
+<h2 id="爬取">爬取</h2>
+<p>至此，我們已經成功找到元素了，接著就是requests套件發出post請求，並且使用熱騰騰的濃湯(BeautifulSoup)為我們解析網頁元素，如果解析後結果的table變數，是如下圖所示，那就表示成功爬取囉！</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span><span class="s2">&#34;https://www.taifex.com.tw/cht/3/futDailyMarketReport&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">myobj</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;queryDate&#39;</span><span class="p">:</span> <span class="s2">&#34;2020/8/05&#34;</span><span class="p">,</span> <span class="s2">&#34;MarketCode&#34;</span><span class="p">:</span><span class="s2">&#34;1&#34;</span><span class="p">,</span><span class="s2">&#34;commodity_id&#34;</span><span class="p">:</span><span class="s2">&#34;TX&#34;</span><span class="p">,</span><span class="s2">&#34;queryType&#34;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">myobj</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="s2">&#34;html.parser&#34;</span><span class="p">)</span>   
+</span></span><span class="line"><span class="cl"><span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;table&#34;</span><span class="p">,</span><span class="n">class_</span><span class="o">=</span><span class="s2">&#34;table_f&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p><img src="image-8.png" alt="alt text"></p>
+<h2 id="萃取交易行情">萃取交易行情</h2>
+<p>擷取整張表格，接著我們進行細部的資料擷取，<code>tr</code> 表示表格的每一列，我們要擷取的是表格的第二列，因此索引值是 1(python索引從0開始)，代碼是 <code>find_all(&quot;tr&quot;)[1]</code>，再繼續使用 <code>find_all(&quot;td&quot;)</code> 擷取該列所有的儲存格。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">row</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&#34;tr&#34;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&#34;td&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+</span></span></code></pre></div><p><strong>萃取行情表格的第二列</strong></p>
+<p><img src="image-9.png" alt="alt text"></p>
+<p><strong>row</strong></p>
+<p><img src="image-10.png" alt="alt text"></p>
+<p>截至目前為止，盤後交易時段已經順利擷取，至於一般交易時段方法如出一轍，唯一差異只是 <code>MarketCode</code>，盤後交易是1；一般交易是0。我們將其包成函式方便調用：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_daily_quotes</span><span class="p">(</span><span class="n">date</span><span class="p">,</span><span class="n">market_code</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    market_code
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1=盤後
+</span></span></span><span class="line"><span class="cl"><span class="s2">    0=一般
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">myobj</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;queryDate&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span> <span class="s2">&#34;MarketCode&#34;</span><span class="p">:</span><span class="n">market_code</span><span class="p">,</span><span class="s2">&#34;commodity_id&#34;</span><span class="p">:</span><span class="s2">&#34;TX&#34;</span><span class="p">,</span><span class="s2">&#34;queryType&#34;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">myobj</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="s2">&#34;html.parser&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;table&#34;</span><span class="p">,</span><span class="n">class_</span><span class="o">=</span><span class="s2">&#34;table_f&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">table</span><span class="p">:</span><span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    <span class="n">row</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&#34;tr&#34;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&#34;td&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">row</span>
+</span></span></code></pre></div><h2 id="爬取一段期間的每日行情">爬取一段期間的每日行情</h2>
+<p>經過上述的嘗試，我們成功抓取單日的每日行情。在寫入excel檔之前，我們回想一下剛剛提到的一個場景，平日可能上班/上課繁忙忘了每日更新，那中間遺漏的部分，豈不也要手動抓取嗎？因此首先，<strong>我們先取得 excel 的最新紀錄，確定最新的那筆紀錄的日期，再寫一個輔助函式，能夠從最新日期直到今日的這段期間，都要執行擷取每日行情的爬蟲任務，確保紀錄沒有缺漏</strong>。</p>
+<p>註記：這裡的日期格式為<strong>年/月/日 (周幾)</strong> ，中間必須有空格，我會用 <code>split</code> 函式擷取前面的年/月/日，如果沒有符合格式會報錯，請參考我的 <em>options.xlsx</em> 檔案。</p>
+<h3 id="取得-excel-的最新紀錄日期">取得 excel 的最新紀錄日期</h3>
+<p><img src="image-11.png" alt="alt text"></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_last_date</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;get excel last date...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">ws</span><span class="o">.</span><span class="n">max_row</span><span class="o">+</span><span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#inspect date</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;A</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#remove weekday</span>
+</span></span><span class="line"><span class="cl">            <span class="n">last_date</span> <span class="o">=</span> <span class="n">ws</span><span class="p">[</span><span class="s2">&#34;A&#34;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#new i and last date</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">last_date</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">last_date</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span></code></pre></div><h3 id="取得最新紀錄日期至今日的這段日期列表">取得最新紀錄日期至今日的這段日期列表</h3>
+<p>我們需要得到最新一筆紀錄至今日這段間的確切日期，<code>get_date_during_the_period</code> 負責的就是這個工作，例如從 <em>2020/7/31</em> 開始到 <em>2020/8/6</em>，則會回傳這段日期的列表，就是這麼簡單。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_date_during_the_period</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">.</span><span class="n">days</span><span class="o">+</span><span class="mi">1</span>  <span class="c1">#相差幾天(包含起始日)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">duration</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[</span><span class="n">start</span><span class="o">+</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">duration</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">None</span>
+</span></span></code></pre></div><p><img src="image-12.png" alt="alt text"></p>
+<h3 id="執行擷取每日行情的爬蟲任務">執行擷取每日行情的爬蟲任務</h3>
+<p>而 <code>get_daily_quotes_by_date_list</code> 則是將上面獲取的那段日期，用一個迴圈依序取出，代入到剛剛<code>get_daily_quotes</code> 函式，此時會得到一個列表，裡面是字典形式，包含日期、盤後交易資料、一般交易資料。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_daily_quotes_by_date_list</span><span class="p">(</span><span class="n">dates</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">weekday_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s2">&#34;(週一)&#34;</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="s2">&#34;(週二)&#34;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s2">&#34;(週三)&#34;</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="s2">&#34;(週四)&#34;</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="s2">&#34;(週五)&#34;</span><span class="p">,</span><span class="mi">5</span><span class="p">:</span><span class="s2">&#34;(週六)&#34;</span><span class="p">,</span><span class="mi">6</span><span class="p">:</span><span class="s2">&#34;(週日)&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">daily_quotes</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">weekday</span> <span class="o">=</span> <span class="n">weekday_mapping</span><span class="p">[</span><span class="n">date</span><span class="o">.</span><span class="n">weekday</span><span class="p">()]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">date_str</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y/%m/</span><span class="si">%d</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">full_date</span> <span class="o">=</span> <span class="n">date_str</span><span class="o">+</span><span class="s2">&#34; &#34;</span><span class="o">+</span> <span class="n">weekday</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">d</span><span class="p">[</span><span class="s2">&#34;date&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">full_date</span>
+</span></span><span class="line"><span class="cl">        <span class="n">d</span><span class="p">[</span><span class="s2">&#34;after_hours&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_daily_quotes</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">d</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_daily_quotes</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">d</span><span class="p">[</span><span class="s2">&#34;after_hours&#34;</span><span class="p">])</span> <span class="o">|</span> <span class="p">(</span><span class="ow">not</span> <span class="n">d</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">        <span class="n">daily_quotes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">daily_quotes</span>
+</span></span></code></pre></div><p><img src="image-13.png" alt="alt text"></p>
+<h2 id="寫入excel檔案">寫入excel檔案</h2>
+<p>資料已經獲取完畢，剩下來的工作便是寫入excel檔案。因為都是整數的緣故，這裡型態直接用 int 轉換，單純閱讀無所謂，但如果是要在 excel 加上自己的公式，用字串型態就會產生錯誤，因此這裡要特別小心。</p>
+<p><code>Worksheet</code> 物件支援多種索引方式，有一種是沿用 excel原生的索引風格，例如A2、B5等，這次範例便是使用該索引方式，excel的欄位順序就格外關鍵，如果調換資料就會填錯！</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">record_to_excel</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span><span class="n">row</span><span class="p">,</span><span class="n">daily_quotes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#record to excel</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">quotes</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">daily_quotes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#欲填入的列數</span>
+</span></span><span class="line"><span class="cl">        <span class="n">record_row</span> <span class="o">=</span> <span class="n">row</span><span class="o">+</span><span class="n">index</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;A</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;date&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;A</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        <span class="c1">#盤後</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;C</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;after_hours&#34;</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;D</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;after_hours&#34;</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;E</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;after_hours&#34;</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;F</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;after_hours&#34;</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">#一般</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;G</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;H</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;I</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;J</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">quote_change</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">6</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">s</span><span class="o">==</span><span class="s2">&#34;-&#34;</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;B</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quote_change</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;K</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">11</span><span class="p">])</span>
+</span></span></code></pre></div><h1 id="小結">小結</h1>
+<p>今天跟各位分享期貨爬蟲的方法，人工抓取10天資料加上鍵入excel的時間要5–10分鐘，但是短短一百行程式碼，執行起來不到5秒鐘，可以省下瑣碎的時間去進行更有意義的事情，另外，這個程式可以包裝成執行檔，讓沒有Python環境的讀者也可以執行，需要再告知我囉^^
+最後，如果文末任何疏漏之處，不吝指正，我將非常感激，謝謝。</p></article>
+      </div>
+      
+      <div class="column is-hidden-mobile">
+        <div class="sidebar pl-4" id="toc">
+          <div class="post post-toc" id="post-toc">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+  </div><footer class="footer">
+  <div class="content has-text-centered">
+    <p>Powered by <a href="https://gohugo.io">Hugo</a>. Theme <a href="https://github.com/wlh320/hugo-theme-hulga">Hulga</a></p>
+    <p>
+    
+    </p>
+  </div>
+</footer>
+
+
+
+<script src="http://localhost:1313/js/pwa.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+
+<script src="http://localhost:1313/js/hulga.min.js" defer></script>
+
+  
+<link id="hlcss" rel="stylesheet" href="/css/vs.min.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
+  anchors.options = {
+    placement: 'left',
+    
+    icon: '#'
+  };
+  anchors.add('.content h1, .content h2, .content h3');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  });
+</script>
+
+
+  
+
+
+<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.post-toc',
+        
+        contentSelector: '#post-content',
+        
+        headingSelector: 'h1, h2, h3',
+        collapseDepth:  6 ,
+        scrollSmooth: true,
+        positionFixedSelector: '.post-toc',
+        
+        
+        fixedSidebarOffset: 273,
+    });
+</script>
+
+
+</body>
+
+</html>
