@@ -6,8 +6,15 @@
     <description>Recent content in Posts on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>實作單純貝氏分類器 (Naive Bayes Classifier)，並應用於垃圾訊息分類</title>
+      <link>http://localhost:1313/post/naive-bayes-classifier/</link>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/naive-bayes-classifier/</guid>
+      <description>&lt;p&gt;貝氏定理是機率論的一種定理，描述在已知某些條件下，計算某個特定事件發生的機率為何。例如已知某條訊息包含「優惠」這個單詞，使用貝氏定理可以計算出為廣告訊息的機率，進而大幅提高過濾垃圾訊息的精準度，因此時常作為攔截垃圾信件的用途。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>假設檢定基礎觀念</title>
       <link>http://localhost:1313/post/hypothesis-test/</link>
@@ -51,7 +58,7 @@
       <description>&lt;p&gt;本文將介紹如何使用 Python 實作爬取 foodpanda 網站的網路爬蟲，並將爬取結果儲存到 excel 中。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>以 Python 實現推薦系統的協同過濾算法 (User-based Collaborative Filtering)</title>
+      <title>實現推薦系統的協同過濾算法 (User-based Collaborative Filtering)</title>
       <link>http://localhost:1313/post/user-based-recommendation/</link>
       <pubDate>Sat, 04 Jul 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/user-based-recommendation/</guid>
@@ -86,7 +93,7 @@
       <description>&lt;p&gt;在數據挖掘中，相似性度量是個基礎且重要的問題，我們經常想得知兩個個體之間存在的差異大小，藉由一個合適的度量方式，幫助我們執行分群、分類等任務。在眾多度量方式，最耳熟能詳的莫過於&lt;strong&gt;歐式距離&lt;/strong&gt;、&lt;strong&gt;餘弦相似度&lt;/strong&gt;，這篇文章將帶領讀者初探兩者的原理及應用場景。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>以Python打造簡單實用的電影推薦系統 (Content-based Recommendation)</title>
+      <title>簡單實用的電影推薦系統 (Content-based Recommendation)</title>
       <link>http://localhost:1313/post/content-based-recommendation/</link>
       <pubDate>Sun, 09 Feb 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/content-based-recommendation/</guid>

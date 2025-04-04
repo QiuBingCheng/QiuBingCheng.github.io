@@ -1,0 +1,355 @@
+<!DOCTYPE html> 
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C85P61SPWR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C85P61SPWR');
+</script><script>const t = localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t); } </script><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
+  <meta name="theme-color" content="#0969e6"><title>實作單純貝氏分類器 (Naive Bayes Classifier)，並應用於垃圾訊息分類 | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="實作單純貝氏分類器 (Naive Bayes Classifier)，並應用於垃圾訊息分類 - 邱秉誠 (BingCheng)">
+  <meta property="og:type" content="article">
+  
+  <meta property="article:published_time" content=" 2020-08-26T00:00:00&#43;08:00">
+  
+  
+  <meta property="article:modified_time" content=" 2020-08-26T00:00:00&#43;08:00">
+  
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="Sample article showcasing basic Markdown syntax and formatting for HTML elements."><meta name="author" content="Bingcheng">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hulga.min.css">
+  <link rel="manifest" href="/manifest.json">
+</head><body>
+  <div id="main"><section class="hero is-primary shadow-hero ">
+  <div class="hero-head">
+    <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
+  <div class="container">
+    <div class="navbar-brand"><a class="navbar-item " href="/">
+        邱秉誠 (BingCheng)
+      </a>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-end"><div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link" href="#">
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em" height="1em"
+    fill="currentColor"
+    viewBox="0 0 32 32"
+    >
+    <path d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+  </svg>
+  </a>
+  <div class="navbar-dropdown" id="navDropdown">
+    <a class="navbar-item theme-toggle" data-value="light" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"></path></svg>
+      </span>Light</a>
+    <a class="navbar-item theme-toggle" data-value="dark" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"></path></svg>
+      </span>Dark</a>
+    <a class="navbar-item theme-toggle" data-value="system" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"></path></svg>
+      </span>System</a>
+  </div>
+</div>
+
+        <a class="navbar-item" href="/" title="index">Home</a>
+      
+        <a class="navbar-item" href="/archives/" title="archives">Archives</a>
+      
+        <a class="navbar-item" href="/about/" title="about">About</a>
+      
+        <a class="navbar-item" href="/search/" title="search">Search</a>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+  </div>
+  <div class="hero-body">
+    <header class="container has-text-centered" data-pagefind-body>
+      <h1 class="title post-title is-spaced">
+        實作單純貝氏分類器 (Naive Bayes Classifier)，並應用於垃圾訊息分類
+      </h1>
+      <h2 class="subtitle"><time>2020/08/26</time> ・<span class="post-cat mr-2">
+              <a href="/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/">資料分析</a>
+            </span></h2>
+      
+      <div>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E8%B2%9D%E6%B0%8F%E5%AE%9A%E7%90%86/">#貝氏定理</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E5%88%86%E9%A1%9E%E5%99%A8/">#分類器</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/python/">#Python</a>
+        </span>
+      </div>
+      
+    </header>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      
+      <div class="column is-7 is-offset-2">
+      
+        <article class="content" id="post-content" data-pagefind-body><p>貝氏定理是機率論的一種定理，描述在已知某些條件下，計算某個特定事件發生的機率為何。例如已知某條訊息包含「優惠」這個單詞，使用貝氏定理可以計算出為廣告訊息的機率，進而大幅提高過濾垃圾訊息的精準度，因此時常作為攔截垃圾信件的用途。</p>
+<h1 id="貝氏定理">貝氏定理</h1>
+<p>貝氏定理的核心公式如下：</p>
+<p style="text-align: center;">
+  <img src="image.png" alt="圖片描述" width="500">
+</p>
+<p>注意藍色機率部分，上述其實就是條件機率互換的關係而已。在中學階段我們學過條件機率的公式是 $P(A|B)=P(A∩B)/P(B)$，意味著在事件B發生的條件下，事件A發生的機率，而我們將分子P(A∩B)依照條件機率公式替換成 $P(B|A)P(A)$，來達到條件機率的互換，如下。</p>
+<p style="text-align: center;">
+  <img src="image-1.png" alt="圖片描述" width="500">
+</p>
+<p>經過上述的轉換不難發現貝氏定理其實就是從『<strong>給定A事件已發生的條件，B事件發生的條件機率</strong>』轉變成『<strong>給定B事件已發生的條件下，A事件發生的條件機率</strong>』的互換過程而已。公式用常理推斷符合生活上的經驗，比如在已知一個人抽菸，計算他得肺癌的機率，假設為 P(肺癌|抽菸)，如果得肺癌的人越多人有抽菸行為，也就是 P(抽菸|肺癌) 的值越大，則 P(肺癌|抽菸) 的值也會比較大。</p>
+<h1 id="詞袋模型bag-of-words-model">詞袋模型(Bag-of-words model)</h1>
+<p>在正式進入主題之前，我們需要了解一個先備知識，它可以告訴我們如何計算特定類別出現某個單詞的機率。假設出現以下兩個信件標題</p>
+<p style="text-align: center;">
+  <img src="image-2.png" alt="圖片描述">
+</p>
+<p>在不考慮文法及語詞順序的情況下，可以建構出下列不重複的語詞清單</p>
+<p><code>[&quot;開信,&quot;領取&quot;,&quot;限時&quot;,&quot;兩天&quot;,&quot;好禮&quot;,&quot;免費&quot;,&quot;折價券&quot;]</code></p>
+<p>我們重新用向量方式表達，對應的數字表示該單詞出現的次數</p>
+<p style="text-align: center;">
+  <img src="image-3.png" alt="圖片描述">
+</p>
+<p>這就是 詞袋模型 一個簡單的例子，就像拿袋子裝下每個語詞，不考慮順序及文法。</p>
+<p>假設如果要計算某 $c$ 類別信件出現特定語詞的條件機率，我們就先將 $c$ 類別信件分詞，再用上述方式建構出詞袋模型，得到一組長長的一維向量，該單詞的次數，除以所有單詞的次數，就是該類別出現這個單詞的條件機率。</p>
+<h1 id="條件機率">條件機率</h1>
+<p>貝氏定理表示條件機率轉換的關係，<strong>貝氏分類器就是透過貝氏定理計算樣本在不同類別條件下的條件機率，並取得條件機率最大者作為預測類別。</strong></p>
+<p>以 某 $c$ 類別為例。</p>
+<p>若有一則訊息，用詞袋模型可以建構成一維向量 $x=&lt;x_1, x_2….x_m&gt;$，每個元素表示該單詞出現的次數，欲知道代表該訊息向量 $x$ 的條件下，為類別 $c$ 的條件機率，公式表達如下：</p>
+<p style="text-align: center;">
+  <img src="image-4.png" alt="圖片描述">
+</p>
+<p>上述 $P(c|x)$ 是指訊息向量 $x$ 為特定類別 $c$ 的機率，倘若有多個類別，那就逐一將類別 $c$ 替換成不同類別，並且取最大值的那個類別作為預測結果，這就是貝氏分類器的運作原理。</p>
+<p>在這裡有計算上的小技巧，眼尖的讀者會發現，代入不同的類別，影響的只有分子，分母都是固定為 $P(x)$，因此倘若只是單純要比較條件機率的大小，分母可以不用計算，單純比較分子就好！比如只有 $a$ 、$b$ 兩個類別計算各類別的條件機率時，分母都固定為 $P(x)$，因此貝氏分類器就單純比較 $P(x|a)P(a)$ 和 $P(x|b)P(b)$ 兩者之間大小，如果前者值比較大就判給類別 $a$ 作為預測結果，反之亦然。</p>
+<h1 id="垃圾郵件分類實例">垃圾郵件分類實例</h1>
+<p>上面提到，<strong>貝氏分類器就是計算樣本在不同類別條件下的條件機率，並取得條件機率最大者作為預測類別</strong>。</p>
+<p>在垃圾郵件分類的例子，類別就是簡單的分為垃圾郵件類別 $(C_s)$ 及非垃圾郵件 $(C_h)$ 類別，因此根據全機率法則，在計算分母這則訊息向量x機率時，可以拓展成第二列公式，接著我們簡化處理，假設垃圾郵件類別 $(C_s)$ 和非垃圾郵件 $(C_h)$ 類別，他們的事前機率都一樣 $P(C_s)=P(C_h)$，我們可以將其化簡如第三列所示。</p>
+<p style="text-align: center;">
+  <img src="image-5.png" alt="圖片描述">
+</p>
+<p>以例子輔助說明上面公式。</p>
+<p>假設一則訊息由『優惠』、『特價』兩個單詞構成，根據詞袋模型建構成一維向量 $x=&lt;x_1, x_2….x_m&gt;$，計算這則訊息會被歸類到『垃圾訊息類別』的機率根據上述公式表示為：</p>
+<p style="text-align: center;">
+  <img src="image-6.png" alt="圖片描述">
+</p>
+<p><strong>分子表示『垃圾訊息中含有優惠和特價兩個單詞』的機率</strong>；<strong>分母則是『垃圾訊息中含有優惠和特價兩個單詞』加上『非垃圾訊息中含有優惠和特價兩個單詞』的機率</strong>，讀起來很複雜，但其實已經簡化成只有需要兩個計算的地方，且方法一模一樣：P(優惠=1,特價=1|垃圾訊息) 以及 P(優惠=1,特價=1|非垃圾訊息)。</p>
+<p>首先我們來看 P(優惠=1,特價=1|垃圾訊息)，要怎麼計算在已知為垃圾訊息類別條件下，訊息中含有優惠和特價兩個單詞？這是基於<strong>貝氏定理十分重要的假設，特徵之間條件獨立</strong>，根據條件獨立的假設，我們可以逐一攻克，化簡成兩個條件獨立相乘：</p>
+<p style="text-align: center;">
+  <img src="image-7.png" alt="圖片描述">
+</p>
+<p>也就是，在已知訊息為垃圾訊息類別的條件下，同時出現『優惠』和『特價』兩個單詞的機率，就是將在『訊息為垃圾訊息類別的條件下，出現優惠單詞』的機率，乘上『訊息為垃圾訊息類別的條件下，出現特價單詞』的機率，公式可以展開如下：</p>
+<p style="text-align: center;">
+  <img src="image-8.png" alt="圖片描述">
+</p>
+<p>在公式經過重整之後，計算過程變得非常簡單，就是單純計算各類別出現該單詞的條件機率，即可得到答案。</p>
+<p>以 P(優惠=1|垃圾訊息) 為例，意味著垃圾信件類別中出現優惠單詞的機率，回顧 詞袋模型(Bag-of-words model) 章節，我們提到具體如何計算，將垃圾類別信件訊息分詞，建構出詞袋模型，得到一組長長的一維向量，該優惠這個單詞的次數，除以所有單詞的次數，就是該類別出現這個單詞的條件機率。</p>
+<p>因為是單純的二元分類，類別只有垃圾訊息/非垃圾訊息兩種，只要這則訊息是『垃圾訊息』的機率&gt;0.5，『非垃圾訊息』的機率就會&lt;0.5，因此模型便能將其分類到垃圾訊息的類別，如果今天有三個以上的類別，則要把所有類別的條件機率依序算出取最大值者。</p>
+<h1 id="python實現">Python實現</h1>
+<p>以上解釋貝氏定理，接著讓我們用 Python 實作貝氏分類器。這次採用的資料集是 <em>SMS Spam Collection</em>，每一行就是一條訊息，第一個字串(ham or spam)決定該行是否為垃圾訊息。</p>
+<p style="text-align: center;">
+  <img src="image-9.png" alt="圖片描述">
+</p>
+<h2 id="讀取資料集">讀取資料集</h2>
+<p>寫一個讀取函式，會回傳一個訊息列表，列表內是元組，表示訊息及訊息分類(1表示為垃圾訊息)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Reading </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mails</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">is_spam</span><span class="p">,</span><span class="n">message</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">is_spam</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">is_spam</span><span class="o">==</span><span class="s2">&#34;spam&#34;</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mails</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">message</span><span class="p">,</span><span class="n">is_spam</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">mails</span>
+</span></span></code></pre></div><p style="text-align: center;">
+  <img src="image-10.png" alt="圖片描述">
+</p>
+<h2 id="拆分資料集">拆分資料集</h2>
+<p>資料集通常會拆成訓練跟測試，在此寫一個簡易的劃分函式，以82比例分割。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">split_data</span><span class="p">(</span><span class="n">mails</span><span class="p">,</span><span class="n">ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Spliting data..&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">mails</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">train_num</span>  <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.8</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">mails</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">train_X</span> <span class="o">=</span> <span class="p">[</span><span class="n">mail</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">mail</span> <span class="ow">in</span> <span class="n">mails</span><span class="p">[:</span><span class="n">train_num</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">train_y</span> <span class="o">=</span> <span class="p">[</span><span class="n">mail</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">mail</span> <span class="ow">in</span> <span class="n">mails</span><span class="p">[:</span><span class="n">train_num</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">test_X</span> <span class="o">=</span> <span class="p">[</span><span class="n">mail</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">mail</span> <span class="ow">in</span> <span class="n">mails</span><span class="p">[</span><span class="n">train_num</span><span class="p">:]]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">test_y</span> <span class="o">=</span> <span class="p">[</span><span class="n">mail</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">mail</span> <span class="ow">in</span> <span class="n">mails</span><span class="p">[</span><span class="n">train_num</span><span class="p">:]]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="n">train_X</span><span class="p">,</span><span class="n">train_y</span><span class="p">,</span><span class="n">test_X</span><span class="p">,</span><span class="n">test_y</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="訓練">訓練</h2>
+<p>先說明以下變數含意。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>  <span class="c1"># smoothing factor</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">total_count_</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># total word count in class</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">word_count_</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> 
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">word_prob_</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</span></span></code></pre></div><ul>
+<li><code>k</code>。k 是拉普拉斯平滑的係數，是為了解決機率為零的相乘問題，上述有提到<strong>貝氏定理十分重要的假設，特徵之間條件獨立</strong>，同時含有多個單詞的機率，就是算出個別單詞的條件機率相乘而來，如果其中一個單詞機率為0，結果就是0，比如訊息是『買一送一，今日限定優惠，錯過可惜呦~』假設過往垃圾郵件沒有出現『可惜』兩個字，因此機率為0，即便『買一送一』、『優惠』這種單詞出現在垃圾郵件機多高，最終相乘起來仍然是0，因此我們會使用拉普拉斯平滑公式替換成一個趨於零的機率。</li>
+<li><code>total_count_</code>。長度為2的列表，表示垃圾訊息類別/非垃圾訊息類別全部單詞出現的次數。</li>
+<li><code>word_count_</code> 。字典格式。該單詞在垃圾訊息/非垃圾訊息中出現的數量。</li>
+<li><code>word_proba_</code>。單詞在垃圾訊息類別/非垃圾訊息類別出現的頻率。請回顧詞袋模型章節。</li>
+</ul>
+<p>訓練前使用 <code>tokenize</code> 函式對訊息進行預處理，先將其字母全部轉成小寫，再用正規表達式 <code>re.findall(&quot;[a-z]+&quot;, message)</code> 進行斷詞，然後以集合型態返回斷詞結果，有了單詞便可以計算 <code>word_count_</code> 及 <code>total_count_</code>。</p>
+<p>最終目的是要算出 <code>word_prob_</code> 這個變數，一但知道每一單詞分別在垃圾訊息/非垃圾訊息出現的機率，就可以通過連乘計算出單詞組合為垃圾訊息的機率。</p>
+<p style="text-align: center;">
+  <img src="image-11.png" alt="圖片描述">
+</p>
+<p>關於 <code>word_proba_</code> 這個變數的計算很簡單，就是該單詞在垃圾訊息中出現的個數/垃圾訊息全部單詞的個數，就是該單詞出現在垃圾訊息的機率，非垃圾訊息類別同理也是如此，所以主要程式碼就是以下這幾行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">word</span><span class="p">,</span><span class="n">count</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_count_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">word_prob_if_spam</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">+</span><span class="n">count</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">total_count_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">word_prob_if_non_spam</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">+</span><span class="n">count</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">total_count_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">word_prob_</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_prob_if_spam</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">word_prob_</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_prob_if_non_spam</span>
+</span></span></code></pre></div><h2 id="預測">預測</h2>
+<p>將測試訊息進行斷詞處理，迭代上述訓練而得的 <code>word_proba_</code>這個變數，原先公式是進行連乘，但在計算很小的數值時電腦容易造成浮點數下溢的問題，也就是計算結果不會如預期的精準，因此我們通常會取 log 相加，最後再用指數函數還原計算結果。</p>
+<p style="text-align: center;">
+  <img src="image-12.png" alt="圖片描述">
+</p>
+<p>要注意算出來的是垃圾訊息的機率，大於0.5才能判斷為垃圾訊息。</p>
+<h2 id="評估模型">評估模型</h2>
+<p>在二元分類問題，混淆矩陣常用來評估分類模型的好壞，此外精準度 (Precision) 和 召回率 (Recall) 是常被使用的衡量指標。</p>
+<ul>
+<li>
+<p>精準度 (Precision) 指預測為垃圾訊息中，實際上也是垃圾訊息的機率</p>
+</li>
+<li>
+<p>召回率 (Recall) 是指測試資料的垃圾訊息中，被成功偵測出來(預測為垃圾訊息)的機率。</p>
+</li>
+<li>
+<p>以下是這次測試的結果：</p>
+</li>
+</ul>
+<p style="text-align: center;">
+  <img src="image-13.png" alt="圖片描述">
+</p>
+<p>從上表可以發現就算沒有經過特別處理，模型已經表現得可圈可點。</p>
+<p><strong>模型如何改進</strong></p>
+<ul>
+<li>預處理部分，訊息的分詞可更細緻，目前只是粗暴地用英文字母劃分，並未考慮到時態、複數等問題。</li>
+<li>訓練時，單詞可以設下次數門檻，倘若次數少於一定值便捨棄不用，以增加精準度。</li>
+</ul>
+<h1 id="小結">小結</h1>
+<p>貝氏定理是條件機率的轉換過程，透過新事件的資訊來更新後驗機率，它有條件獨立的基本假設，因此在計算條件機率時，是個別單詞在類別條件下的機率連乘而得，儘管這個基本假設脫離現實，但它模型效果通常表現得不錯。</p>
+<p><strong>資料集/完整代碼：</strong>
+<a href="https://github.com/QiuBingCheng/MediumArticle/blob/main/Classifer/naive_bayes.py">Github Code</a></p>
+<h1 id="參考資料">參考資料</h1>
+<ul>
+<li><a href="http://blog.udn.com/nilnimest/124668370">貝氏定理在生活中很有用，可是它到底怎麼算？</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/27906640">机器学习算法实践-朴素贝叶斯(Naive Bayes)</a></li>
+<li><a href="https://ccjou.wordpress.com/2016/02/01/%E6%A2%9D%E4%BB%B6%E6%A9%9F%E7%8E%87%E8%88%87%E8%B2%9D%E6%B0%8F%E5%AE%9A%E7%90%86/">條件機率與貝氏定理</a></li>
+<li>[BOOK] DATA SCIENCE FROM SCRATCH中文版：用PYTHON學資料科學</li>
+<li>[PAPER] Spam Filtering with Naive Bayes — Which Naive Bayes?</li>
+</ul></article>
+      </div>
+      
+      <div class="column is-hidden-mobile">
+        <div class="sidebar pl-4" id="toc">
+          <div class="post post-toc" id="post-toc">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+  </div><footer class="footer">
+  <div class="content has-text-centered">
+    <p>Powered by <a href="https://gohugo.io">Hugo</a>. Theme <a href="https://github.com/wlh320/hugo-theme-hulga">Hulga</a></p>
+    <p>
+    
+    </p>
+  </div>
+</footer>
+
+
+
+<script src="http://localhost:1313/js/pwa.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+
+<script src="http://localhost:1313/js/hulga.min.js" defer></script>
+
+  
+<link id="hlcss" rel="stylesheet" href="/css/vs.min.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
+  anchors.options = {
+    placement: 'left',
+    
+    icon: '#'
+  };
+  anchors.add('.content h1, .content h2, .content h3');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  });
+</script>
+
+
+  
+
+
+<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.post-toc',
+        
+        contentSelector: '#post-content',
+        
+        headingSelector: 'h1, h2, h3',
+        collapseDepth:  6 ,
+        scrollSmooth: true,
+        positionFixedSelector: '.post-toc',
+        
+        
+        fixedSidebarOffset: 273,
+    });
+</script>
+
+
+</body>
+
+</html>

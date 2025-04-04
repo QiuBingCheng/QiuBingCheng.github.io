@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>貝氏定理 on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/tags/%E8%B2%9D%E6%B0%8F%E5%AE%9A%E7%90%86/</link>
+    <description>Recent content in 貝氏定理 on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E8%B2%9D%E6%B0%8F%E5%AE%9A%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>實作單純貝氏分類器 (Naive Bayes Classifier)，並應用於垃圾訊息分類</title>
+      <link>http://localhost:1313/post/naive-bayes-classifier/</link>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/naive-bayes-classifier/</guid>
+      <description>&lt;p&gt;貝氏定理是機率論的一種定理，描述在已知某些條件下，計算某個特定事件發生的機率為何。例如已知某條訊息包含「優惠」這個單詞，使用貝氏定理可以計算出為廣告訊息的機率，進而大幅提高過濾垃圾訊息的精準度，因此時常作為攔截垃圾信件的用途。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

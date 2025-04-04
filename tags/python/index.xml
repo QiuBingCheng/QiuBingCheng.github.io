@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/tags/python/</link>
+    <description>Recent content in Python on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>實作單純貝氏分類器 (Naive Bayes Classifier)，並應用於垃圾訊息分類</title>
+      <link>http://localhost:1313/post/naive-bayes-classifier/</link>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/naive-bayes-classifier/</guid>
+      <description>&lt;p&gt;貝氏定理是機率論的一種定理，描述在已知某些條件下，計算某個特定事件發生的機率為何。例如已知某條訊息包含「優惠」這個單詞，使用貝氏定理可以計算出為廣告訊息的機率，進而大幅提高過濾垃圾訊息的精準度，因此時常作為攔截垃圾信件的用途。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>期貨爬蟲：擷取期貨每日行情資料並寫入 Excel檔案</title>
+      <link>http://localhost:1313/post/option-crawler/</link>
+      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/option-crawler/</guid>
+      <description>&lt;p&gt;臺股期貨沒有提供免費API擷取資料，因此決定手刻一個，順便寫成教學文章，紀錄實作的過程。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>最香的爬蟲教學文 - foodpanda</title>
+      <link>http://localhost:1313/post/food-panda-crawler/</link>
+      <pubDate>Wed, 08 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/food-panda-crawler/</guid>
+      <description>&lt;p&gt;本文將介紹如何使用 Python 實作爬取 foodpanda 網站的網路爬蟲，並將爬取結果儲存到 excel 中。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>實現推薦系統的協同過濾算法 (User-based Collaborative Filtering)</title>
+      <link>http://localhost:1313/post/user-based-recommendation/</link>
+      <pubDate>Sat, 04 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/user-based-recommendation/</guid>
+      <description>&lt;p&gt;今天我要為各位介紹的是協同過濾的其中一種算法，基於使用者的協同過濾推薦 (User-based Collaborative Filtering)，通過不同用戶對 item 的評分來評測用戶之間的相似性，並基於此相似性做出推薦。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>簡單實用的電影推薦系統 (Content-based Recommendation)</title>
+      <link>http://localhost:1313/post/content-based-recommendation/</link>
+      <pubDate>Sun, 09 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/content-based-recommendation/</guid>
+      <description>&lt;p&gt;筆者在大四時擔任資策會數創所工讀生，其中一項任務是負責實作影音平台的推薦系統，概念通俗易懂，沒有使用複雜的演算法或是高深的數學原理，只要有一點距離度量的概念即可(可以參考筆者撰寫的&lt;a href=&#34;http://localhost:1313/post/euclidean-vs-cosine/&#34;&gt;歐氏距離與餘弦相似度的比較&lt;/a&gt;)，因此本篇分享對象適合對於推薦系統剛入門的朋友&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
