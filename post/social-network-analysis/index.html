@@ -1,0 +1,402 @@
+<!DOCTYPE html> 
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C85P61SPWR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C85P61SPWR');
+</script><script>const t = localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t); } </script><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
+  <meta name="theme-color" content="#0969e6"><title>社會網路分析 (Social Network Analysis)的度中心性(degree centrality)、介數中心性 (betweenness centrality) 及接近中心性 (closeness centrality) | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="社會網路分析 (Social Network Analysis)的度中心性(degree centrality)、介數中心性 (betweenness centrality) 及接近中心性 (closeness centrality) - 邱秉誠 (BingCheng)">
+  <meta property="og:type" content="article">
+  
+  <meta property="article:published_time" content=" 2020-09-13T00:00:00&#43;08:00">
+  
+  
+  <meta property="article:modified_time" content=" 2020-09-13T00:00:00&#43;08:00">
+  
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="用Python進行社會網路分析 (Social Network Analysis)"><meta name="author" content="Bingcheng">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hulga.min.css">
+  <link rel="manifest" href="/manifest.json">
+</head><body>
+  <div id="main"><section class="hero is-primary shadow-hero ">
+  <div class="hero-head">
+    <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
+  <div class="container">
+    <div class="navbar-brand"><a class="navbar-item " href="/">
+        邱秉誠 (BingCheng)
+      </a>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-end"><div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link" href="#">
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em" height="1em"
+    fill="currentColor"
+    viewBox="0 0 32 32"
+    >
+    <path d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+  </svg>
+  </a>
+  <div class="navbar-dropdown" id="navDropdown">
+    <a class="navbar-item theme-toggle" data-value="light" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"></path></svg>
+      </span>Light</a>
+    <a class="navbar-item theme-toggle" data-value="dark" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"></path></svg>
+      </span>Dark</a>
+    <a class="navbar-item theme-toggle" data-value="system" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"></path></svg>
+      </span>System</a>
+  </div>
+</div>
+
+        <a class="navbar-item" href="/" title="index">Home</a>
+      
+        <a class="navbar-item" href="/archives/" title="archives">Archives</a>
+      
+        <a class="navbar-item" href="/about/" title="about">About</a>
+      
+        <a class="navbar-item" href="/search/" title="search">Search</a>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+  </div>
+  <div class="hero-body">
+    <header class="container has-text-centered" data-pagefind-body>
+      <h1 class="title post-title is-spaced">
+        社會網路分析 (Social Network Analysis)的度中心性(degree centrality)、介數中心性 (betweenness centrality) 及接近中心性 (closeness centrality)
+      </h1>
+      <h2 class="subtitle"><time>2020/09/13</time> ・<span class="post-cat mr-2">
+              <a href="/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/">資料分析</a>
+            </span></h2>
+      
+      <div>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E7%A4%BE%E6%9C%83%E7%B6%B2%E8%B7%AF%E5%88%86%E6%9E%90/">#社會網路分析</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/python/">#Python</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/networkx/">#Networkx</a>
+        </span>
+      </div>
+      
+    </header>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      
+      <div class="column is-7 is-offset-2">
+      
+        <article class="content" id="post-content" data-pagefind-body><p>社會網路分析（Social Network Analysis, SNA）是根據網路 (Network theory)及 圖論 (Graph theory) 對社會結構進行探索的分析方法。</p>
+<p>中心性（$centrality$）則是社會網路分析中常用到的概念，用來闡述某個節點(人)在網路中的重要程度。一般而言，$centrality$ 有常見的三個衡量標準，就是本文標題揭示的 度中心性 ($degree\ centrality$)、介數中心性 ($betweenness\ centrality$) 及 接近中心性 ($closeness\ centrality$)，本篇文章將會逐一闡述這些衡量標準，並且以射鵰英雄傳的人物關係作為社交網路，以 Python 進行計算。</p>
+<h1 id="前言">前言</h1>
+<p>網路是有物件相互連結的集合，用來表示物件之間對稱或非對稱的關係，通常這些物件被稱為節點 (node) 或頂點 (vertex)。而網路分析被使用到諸多領域，例如生物網路分析 (Biological network analysis)、敘事網絡分析 (Narrative network analysis) 以及今天涉及到的主題-社會網路分析 (Social network analysis)。下文會逐一介紹衡量網路中心性 $centrality$ 的三個指標，其中舉例部分將以射鵰英雄傳的人物關係作為網路，並且可以注意到，這是一個無向圖 (undirected graph)，有向圖的計算方式會另寫一篇文章。</p>
+<h1 id="免責聲明">免責聲明</h1>
+<p>人物關係請忽略一些不合理之處，因為小說人物關係錯綜複雜，故經過調整以利說明，失真之處敬請海涵。</p>
+<p>首先我們先建立 <code>friendships</code> 列表變數，以元組表示人物彼此相互熟識，這裡使用python的 <code>networkx</code> 的套件來呈現人物網路圖，待會實作部分便是使用 <code>friendships</code> 變數作為資料集！</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">friendships</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊康&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;洪七公&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊過&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;周伯通&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;郭嘯天&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;李萍&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">,</span><span class="s2">&#34;黃藥師&#34;</span><span class="p">),(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;楊鐵心&#34;</span><span class="p">),(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;歐陽鋒&#34;</span><span class="p">),(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;穆念慈&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;洪七公&#34;</span><span class="p">,</span><span class="s2">&#34;黃藥師&#34;</span><span class="p">),(</span><span class="s2">&#34;楊過&#34;</span><span class="p">,</span><span class="s2">&#34;小龍女&#34;</span><span class="p">),(</span><span class="s2">&#34;周伯通&#34;</span><span class="p">,</span><span class="s2">&#34;王重陽&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;王重陽&#34;</span><span class="p">,</span><span class="s2">&#34;丘處機&#34;</span><span class="p">),(</span><span class="s2">&#34;李萍&#34;</span><span class="p">,</span><span class="s2">&#34;郭嘯天&#34;</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">draw_basic_network_graph</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">friendships</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">font_family</span><span class="o">=</span><span class="s1">&#39;Source Han Sans TW&#39;</span><span class="p">,</span><span class="n">font_color</span><span class="o">=</span><span class="s2">&#34;yellow&#34;</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s2">&#34;bold&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">draw_basic_network_graph</span><span class="p">(</span><span class="n">friendships</span><span class="p">)</span>
+</span></span></code></pre></div><p style="text-align: center;">
+  <img src="image.png" alt="圖片描述">
+</p>
+<h1 id="度中心性-degree-centrality">度中心性 ($degree\ centrality$)</h1>
+<blockquote>
+<p>In a network graph, degree centrality is measured by the total amount of direct links with the other nodes.</p></blockquote>
+<p>度中心性是最容易計算的衡量標準。對於某個節點來說，度 (degree) 就是指該節點的 $edges$ 數量，也就是該節點與其他節點直接連接的總數。</p>
+<p>用臉書作為例子，某個人的度中心性就是指這個人的好友數量。比如在臉書上A有50個好友，B有3000個好友，我們會說B在臉書的社交網路中有比較大程度的凝聚力，這時會延伸出一個新的問題，如果C在IG上同樣有3000個好友，那麼B和C要如何進行中心性的比較？不同的網路不能直接進行比較，因此通常會經過標準化(standardization)處理。</p>
+<p>如下圖公式所示，分子就是該節點的 $edges$ 數量，而分母的 $n$ 表示所有節點的數量總和。</p>
+<p style="text-align: center;">
+  <img src="image-1.png" alt="圖片描述">
+</p>
+<p>接著，讓我們用射鵰英雄傳的人物關係作為社交網路，來實際用Python計算人物的 $degree\ centrality$。</p>
+<p>上述提到 $degree\ centrality$ 就是在社交網路上該人物朋友的總數，因此迭代 <code>friendships</code> 變數，以 <code>user_friendship_count</code> 字典紀錄朋友數量，每發現一段友誼兩個人物的朋友數量會同時累加一次，(這裡不考慮單方面的關注、追蹤)，標準化處理就是將最後累計的朋友數量除以 <code>(n-1)(n-2)</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">friendships</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊康&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;洪七公&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊過&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;周伯通&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;郭嘯天&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;李萍&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">,</span><span class="s2">&#34;黃藥師&#34;</span><span class="p">),(</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">,</span><span class="s2">&#34;洪七公&#34;</span><span class="p">),(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;楊鐵心&#34;</span><span class="p">),(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;歐陽鋒&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;穆念慈&#34;</span><span class="p">),(</span><span class="s2">&#34;楊過&#34;</span><span class="p">,</span><span class="s2">&#34;小龍女&#34;</span><span class="p">),(</span><span class="s2">&#34;周伯通&#34;</span><span class="p">,</span><span class="s2">&#34;王重陽&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;王重陽&#34;</span><span class="p">,</span><span class="s2">&#34;段智興&#34;</span><span class="p">),(</span><span class="s2">&#34;王重陽&#34;</span><span class="p">,</span><span class="s2">&#34;丘處機&#34;</span><span class="p">),(</span><span class="s2">&#34;李萍&#34;</span><span class="p">,</span><span class="s2">&#34;郭嘯天&#34;</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#計算好友數量</span>
+</span></span><span class="line"><span class="cl"><span class="n">user_friend_count</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">friendship</span> <span class="ow">in</span> <span class="n">friendships</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">user_id</span><span class="p">,</span> <span class="n">friend_id</span> <span class="o">=</span> <span class="n">friendship</span>
+</span></span><span class="line"><span class="cl">    <span class="n">user_friend_count</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">user_friend_count</span><span class="p">[</span><span class="n">friend_id</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#標準化-除以(n-1)(n-2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">total_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">user_friend_count</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="n">user_friend_count_after_standardization</span> <span class="o">=</span> <span class="p">{</span><span class="n">user</span><span class="p">:</span><span class="n">count</span><span class="o">/</span><span class="p">((</span><span class="n">total_count</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">total_count</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">user</span><span class="p">,</span><span class="n">count</span> <span class="ow">in</span> <span class="n">user_friend_count</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</span></span></code></pre></div><p>經過計算發現郭靖、楊康 $degree\ centrality$ 最高，表示這兩個人物在社交網路中扮演著最為重要的角色。</p>
+<p style="text-align: center;">
+  <img src="image-2.png" alt="圖片描述">
+</p>
+<h1 id="介數中心性-betweenness-centrality">介數中心性 ($betweenness\ centrality$)</h1>
+<blockquote>
+<p>Betweenness centrality is to measure one node undertaking mediation role in a network</p></blockquote>
+<p>介數中心性 ($betweenness\ centrality$) 是在衡量一個節點在網路中的仲介效果，倘若該節點以外的節點，彼此之間的最短路徑大多經過該節點，表示 $betweenness\ centrality$ 越大，它就像是一個重要的交通樞紐，透過它你總能在最短路徑抵達欲尋訪的節點。以社交為例，生活圈中總有所謂的社交達人，透過他總能在最短路徑找到你想找的人，至於計算方式則是，該節點在其他節點彼此聯繫時的最短路徑中&quot;被經過&quot;的次數，標準化 (standardization) 處理，則是再除以所有最短路徑數量之和，公式參考自維基百科如下：</p>
+<p style="text-align: center;">
+  <img src="image-3.png" alt="圖片描述">
+</p>
+<p>接著我們開始用Python來實作。我想網路上有很多精妙的解法，但過於簡潔可能不易理解 (包括我自己)，在此我是拆成三個步驟來實現，希望能夠讓讀者更明白程式運作的邏輯。</p>
+<h2 id="找到每個人物的朋友">找到每個人物的朋友</h2>
+<p>首先第一步，我們定義 <code>construct_users_friends</code> 函式，用來建構人物的朋友列表。這個 <code>users</code> 變數得到的結果會如同下方的表格。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">construct_user_friends</span><span class="p">(</span><span class="n">friendships</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        key:userId
+</span></span></span><span class="line"><span class="cl"><span class="s2">        value:friends list
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">users</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">friendship</span> <span class="ow">in</span> <span class="n">friendships</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">user_id</span><span class="p">,</span> <span class="n">friend_id</span> <span class="o">=</span> <span class="n">friendship</span>
+</span></span><span class="line"><span class="cl">        <span class="n">users</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">friend_id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">users</span><span class="p">[</span><span class="n">friend_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">users</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">users</span> <span class="o">=</span> <span class="n">construct_user_friends</span><span class="p">(</span><span class="n">friendships</span><span class="p">)</span>
+</span></span></code></pre></div><p style="text-align: center;">
+  <img src="image-4.png" alt="圖片描述">
+</p>
+<h2 id="找到每個人物與每個人物的最短路徑">找到每個人物與每個人物的最短路徑</h2>
+<p>這裡將定義出 <code>shortest_paths_from</code> 函示，輸入參數是<code>from_user</code> ，表示特定人物，<code>shortest_paths</code> 則是返回變數，表示 <code>from_user</code> 拜訪其他所有人物的最短路徑，例如&quot;郭靖&quot;要拜訪&quot;小龍女&quot;，其最短路徑就是 <code>[&quot;郭靖&quot;, &quot;楊過&quot;,&quot;小龍女&quot;]</code> ，最短路徑可以有兩條以上，例如&quot;郭靖&quot;如果要拜訪&quot;黃藥師&quot;，他可以透過&quot;黃蓉&quot;或者&quot;洪七公&quot;，因此會有兩條最短路徑，<code>[&quot;郭靖&quot;, &quot;黃蓉&quot;,&quot;黃藥師&quot;]</code> 和 <code>[&quot;郭靖&quot;, &quot;洪七公&quot;,&quot;黃藥師&quot;]</code> 。</p>
+<p><code>shortest_paths_from</code> 函示要達到上述目的，透過的演算法是 廣度優先搜尋法 (Breadth-first Search) 的一個實作，簡單來說，程式會先拜訪相鄰的人物，假設是A、B 和 C，再逐一拜訪與ABC相鄰的人物，由廣至深的探索，而已經拜訪過，但是其相鄰點還沒拜訪的人物，會以叫做 <code>visited</code> 的一個序列(queue)表示，序列在 <code>Python</code>是稱作 <code>deque</code> 的資料型態，可以快速地在頭尾加入、取出元素。</p>
+<p>演算法的步驟主要是以下兩點：</p>
+<h3 id="1-拜訪from_user相鄰的人物">1. 拜訪from_user相鄰的人物</h3>
+<p>由於相鄰是直接連接的意思，因此肯定是最短路徑，可以迭代<code>from_user</code> 的朋友，並加入到最短路徑中，對應到的程式碼便是<code>shortest_paths[friend_id] = [cur_path]</code> 。而這些人物都拜訪過，但是其朋友尚未拜訪，因此 <code>visited</code> 同時開始記錄這些人物，對應到的程式碼是 <code>visited.append((cur_path,friend_id))</code>。</p>
+<h3 id="2-開始拜訪朋友的朋友">2. 開始拜訪朋友的朋友</h3>
+<p>這裡將進入到一個迴圈，條件是 <code>visited</code> 為空才會跳出迴圈。每次迴圈會從 <code>visited</code> 取出一個人物，開始拜訪他的朋友，如果他的朋友尚未出現在 <code>shortest_paths</code> 裡面，那就如同第一步驟直接以<code>shortest_paths[friend_of_friend] = [cur_path]</code> 加入到其中，如果已經出現在 <code>shortest_paths</code> ，則進一步判斷是否等於先前儲存的最短路徑長度，如果相等則儲存，否則便不用理會。對應到用來判斷的程式碼是 <code>len(cur_path) == len(shortest_paths[friend_of_friend][0])</code>。</p>
+<p>函式中我有打印重要訊息，實際執行一次就可以非常清楚拜訪的順序，這裡以郭靖作為例子，假如我執行 <code>shortest_paths_from(&quot;郭靖&quot;,users)</code> 函式</p>
+<p style="text-align: center;">
+  <img src="image-5.png" alt="圖片描述">
+</p>
+<p>找到第1次與 黃蓉 最短路徑
+找到第1次與 楊康 最短路徑
+找到第1次與 洪七公 最短路徑
+找到第1次與 楊過 最短路徑
+找到第1次與 周伯通 最短路徑
+找到第1次與 郭嘯天 最短路徑
+找到第1次與 李萍 最短路徑
+<strong>開始拜訪 黃蓉 的朋友</strong>
+找到第1次與 黃藥師 最短路徑</p>
+<p><strong>開始拜訪 黃蓉 的朋友</strong>，這句出現的時機便是從 <code>visited</code>取出郭靖的朋友黃蓉，開始由黃蓉展開鄰近節點的尋訪旅程，因此這就是廣度優先搜尋的精神，先從相鄰點開始，再逐漸擴散到更外圍(朋友的朋友)的關係！</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">shortest_paths_from</span><span class="p">(</span><span class="n">from_user</span><span class="p">,</span> <span class="n">users</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">shortest_paths</span> <span class="o">=</span> <span class="p">{}</span>  
+</span></span><span class="line"><span class="cl">    <span class="n">visited</span>  <span class="o">=</span> <span class="n">deque</span><span class="p">()</span> <span class="c1">#(節點路徑,該節點ID)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">friend_id</span> <span class="ow">in</span> <span class="n">users</span><span class="p">[</span><span class="n">from_user</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cur_path</span> <span class="o">=</span> <span class="p">[</span><span class="n">from_user</span><span class="p">,</span><span class="n">friend_id</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shortest_paths</span><span class="p">[</span><span class="n">friend_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">cur_path</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;找到第1次與 </span><span class="si">{</span><span class="n">friend_id</span><span class="si">}</span><span class="s2"> 最短路徑&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cur_path</span><span class="p">,</span><span class="n">friend_id</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">visited</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">prev_path</span><span class="p">,</span> <span class="n">friend_id</span> <span class="o">=</span> <span class="n">visited</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;開始拜訪 </span><span class="si">{</span><span class="n">friend_id</span><span class="si">}</span><span class="s2"> 的朋友&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#拜訪該節點的朋友</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">friend_of_friend</span> <span class="ow">in</span> <span class="n">users</span><span class="p">[</span><span class="n">friend_id</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#略過from_user本身</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">friend_of_friend</span> <span class="o">==</span> <span class="n">from_user</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">            <span class="n">cur_path</span> <span class="o">=</span> <span class="n">prev_path</span><span class="o">+</span><span class="p">[</span><span class="n">friend_of_friend</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">friend_of_friend</span> <span class="ow">in</span> <span class="n">shortest_paths</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shortest_paths</span><span class="p">[</span><span class="n">friend_of_friend</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">cur_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">shortest_paths</span><span class="p">[</span><span class="n">friend_of_friend</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cur_path</span><span class="p">,</span><span class="n">friend_of_friend</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">path_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shortest_paths</span><span class="p">[</span><span class="n">friend_of_friend</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;找到第</span><span class="si">{</span><span class="n">path_count</span><span class="si">}</span><span class="s2">次與 </span><span class="si">{</span><span class="n">friend_of_friend</span><span class="si">}</span><span class="s2"> 最短路徑&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">shortest_paths</span><span class="p">[</span><span class="n">friend_of_friend</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">cur_path</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;找到第1次與 </span><span class="si">{</span><span class="n">friend_of_friend</span><span class="si">}</span><span class="s2"> 最短路徑&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cur_path</span><span class="p">,</span><span class="n">friend_of_friend</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">shortest_paths</span>
+</span></span></code></pre></div><h2 id="計算人物的-betweenness-centrality">計算人物的 $betweenness\ centrality$</h2>
+<p>執行上面的函式，理應找到每個人物與每個人物之間的最短路徑，儲存變數叫 <code>user_shortest_paths</code>，結果大致如下方圖片所示。</p>
+<p style="text-align: center;">
+  <img src="image-6.png" alt="圖片描述">
+</p>
+<p><code>betweenness_centrality</code> 函示將是我們最後一個步驟，這裡依序取出 <code>user_shortest_paths</code> 最短路徑，至於從哪個人物出發、抵達哪個人物，並非十分重要，理由在於根據公式 開始節點≠結束節點≠欲計算中心性的節點，因此我們真正在意的是從開始節點到結束節點的這些中間節點。</p>
+<p>函示開始會先用三個迴圈，看起來很複雜，其實只是為了取出<code>user_shortest_paths</code> 最裡面的最短路徑而已，取出之後判斷路徑長度如果等於2，就略過這次迴圈，這表示這最短路徑是相鄰朋友，例如 <code>[&quot;郭靖&quot;, &quot;黃蓉&quot;]</code>，除了開頭兩端顯然沒有經過其餘節點，因此便不理會；如果長度大於2，則依序取出中間節點，用字典變數<code>frequency_of_visits</code> 累計加1，最後再用字典推導式除以最短路徑之和 <code>total_shortest_paths</code> 。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">betweenness_centrality</span><span class="p">(</span><span class="n">user_shortest_paths</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Keyword arguments:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        user_shortest_paths - {from_user:{to_user:[[shortest_path],[shortest_path]]}}
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">       user_betweenness_centrality - {user_id:betweenness_centrality}
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">frequency_of_visits</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">total_shortest_paths</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">from_user</span> <span class="ow">in</span> <span class="n">user_shortest_paths</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">to_user</span> <span class="ow">in</span> <span class="n">user_shortest_paths</span><span class="p">[</span><span class="n">from_user</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">user_shortest_paths</span><span class="p">[</span><span class="n">from_user</span><span class="p">][</span><span class="n">to_user</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">frequency_of_visits</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">                <span class="n">total_shortest_paths</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">users</span> <span class="o">=</span> <span class="n">user_shortest_paths</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">user_betweenness_centrality</span> <span class="o">=</span> <span class="p">{</span><span class="n">user</span><span class="p">:</span><span class="n">frequency_of_visits</span><span class="p">[</span><span class="n">user</span><span class="p">]</span><span class="o">/</span><span class="n">total_shortest_paths</span>
+</span></span><span class="line"><span class="cl">                                   <span class="k">for</span> <span class="n">user</span> 
+</span></span><span class="line"><span class="cl">                                   <span class="ow">in</span> <span class="n">users</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">user_betweenness_centrality</span>
+</span></span></code></pre></div><p>得到的結果會如下，郭靖、楊康和周伯通三個人物得到的分數最高，周伯通的排名比較起以 $degree\ centrality$ 指標衡量明顯高一點，是因為 $degree\ centrality$ 單純比較朋友數量，但是 $betweenness\ centrality$ 看重的是擔任最短路徑之橋樑的程度，由下圖可以發現要拜訪到王重陽和丘處機勢必要經過周伯通這條管道，因此便發揮較強烈的仲介效果。</p>
+<p style="text-align: center;">
+  <img src="image-7.png" alt="圖片描述">
+</p>
+<p style="text-align: center;">
+  <img src="image-8.png" alt="圖片描述">
+</p>
+<h2 id="接近中心性-closeness-centrality">接近中心性 (closeness centrality)</h2>
+<blockquote>
+<p>Closeness centrality indicates how close a node is to all other nodes in the network</p></blockquote>
+<p>$closeness\ centrality$ 是指一個節點在網路中的緊密程度，可預期一個節點如果距離其他所有節點越近，它理當會是處於較為中心的位置，這也相當符合人類的視覺感受。$closeness\ centrality$ 計算方式非常簡單，該節點到達其他所有節點的最短路徑長度取平均值，並取其倒數便是 $closeness\ centrality$，以下用Python計算。</p>
+<p>在計算 $betweenness\ centrality$，我們已經建構 <code>user_shortest_paths</code> 變數，直接沿用那個變數當作函式的輸入變數，<code>user_closeness_centrality</code> 是 <code>defaultdict(lambda :[0,0])</code> 型態，在值的部分是列表，索引0儲存的是最短距離；索引1儲存的是次數，這是為了方便計算平均使用的小技巧。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">closeness_centrality</span><span class="p">(</span><span class="n">user_shortest_paths</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">user_closeness_centrality</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">user_shortest_paths</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">to_user</span> <span class="ow">in</span> <span class="n">user_shortest_paths</span><span class="p">[</span><span class="n">user</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">user_closeness_centrality</span><span class="p">[</span><span class="n">user</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">user_shortest_paths</span><span class="p">[</span><span class="n">user</span><span class="p">][</span><span class="n">to_user</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">user_closeness_centrality</span><span class="p">[</span><span class="n">user</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="n">user</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">count</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">count</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">user</span><span class="p">,</span><span class="n">count</span> <span class="ow">in</span> <span class="n">user_closeness_centrality</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">user_closeness_centrality</span> <span class="o">=</span> <span class="n">closeness_centrality</span><span class="p">(</span><span class="n">user_shortest_paths</span><span class="p">)</span>
+</span></span></code></pre></div><p style="text-align: center;">
+  <img src="image-9.png" alt="圖片描述">
+</p>
+<h1 id="小結">小結</h1>
+<p>今天為各位介紹社交網路分析的中心性，它有三個常見的重要指標，分別是 $degree\  centrality$、$betweenness\  centrality$、$closeness\ centrality$，在計算這三個指標時都是以射鵰英雄傳的人物關係無向圖作為網路，其中 $betweenness\  centrality$ 演算法較為複雜，是一個廣度優先搜索的實作，其餘的指標計算上都算簡單也易於理解，希望各位讀者能從中受益，若文中有誤也歡迎指正！</p>
+<p><strong>資料集/完整代碼：</strong>
+<a href="https://github.com/QiuBingCheng/MediumArticle/blob/main/NetworkAnalysis/Centrality%20Evaluation/network_%20analysis.py">Github Code</a></p>
+<h1 id="參考來源">參考來源</h1>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/37626390">社交网络分析(SNA)的中心性(centrality) 度中心性(degree),接近中心性(closeness),中介中心性(betweenness)</a></li>
+<li><a href="">如何简单地理解中心度，什么是closeness、betweenness和degree？</a></li>
+<li><a href="https://www.sciencedirect.com/topics/computer-science/closeness-centrality">Network Structure and Measures</a></li>
+<li><a href="https://www.sciencedirect.com/topics/computer-science/betweenness-centrality">Graph Creation and Analysis for Linking Actors: Application to Social Dat</a></li>
+<li><a href="https://cambridge-intelligence.com/keylines-faqs-social-network-analysis/">Social network analysis 101: centrality measures explained</a></li>
+</ul></article>
+      </div>
+      
+      <div class="column is-hidden-mobile">
+        <div class="sidebar pl-4" id="toc">
+          <div class="post post-toc" id="post-toc">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+  </div><footer class="footer">
+  <div class="content has-text-centered">
+    <p>Powered by <a href="https://gohugo.io">Hugo</a>. Theme <a href="https://github.com/wlh320/hugo-theme-hulga">Hulga</a></p>
+    <p>
+    
+    </p>
+  </div>
+</footer>
+
+
+
+<script src="http://localhost:1313/js/pwa.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+
+<script src="http://localhost:1313/js/hulga.min.js" defer></script>
+
+  
+<link id="hlcss" rel="stylesheet" href="/css/vs.min.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
+  anchors.options = {
+    placement: 'left',
+    
+    icon: '#'
+  };
+  anchors.add('.content h1, .content h2, .content h3');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  });
+</script>
+
+
+  
+
+
+<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.post-toc',
+        
+        contentSelector: '#post-content',
+        
+        headingSelector: 'h1, h2, h3',
+        collapseDepth:  6 ,
+        scrollSmooth: true,
+        positionFixedSelector: '.post-toc',
+        
+        
+        fixedSidebarOffset: 273,
+    });
+</script>
+
+
+</body>
+
+</html>

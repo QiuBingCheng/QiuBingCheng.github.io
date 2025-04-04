@@ -6,8 +6,15 @@
     <description>Recent content in Python on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 13 Sep 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>社會網路分析 (Social Network Analysis)的度中心性(degree centrality)、介數中心性 (betweenness centrality) 及接近中心性 (closeness centrality)</title>
+      <link>http://localhost:1313/post/social-network-analysis/</link>
+      <pubDate>Sun, 13 Sep 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/social-network-analysis/</guid>
+      <description>&lt;p&gt;社會網路分析（Social Network Analysis, SNA）是根據網路(Network theory)及圖論 (Graph theory) 對社會結構進行探索的分析方法。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>實作單純貝氏分類器 (Naive Bayes Classifier)，並應用於垃圾訊息分類</title>
       <link>http://localhost:1313/post/naive-bayes-classifier/</link>

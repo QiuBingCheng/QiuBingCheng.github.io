@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Networkx on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/tags/networkx/</link>
+    <description>Recent content in Networkx on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 13 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/networkx/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>社會網路分析 (Social Network Analysis)的度中心性(degree centrality)、介數中心性 (betweenness centrality) 及接近中心性 (closeness centrality)</title>
+      <link>http://localhost:1313/post/social-network-analysis/</link>
+      <pubDate>Sun, 13 Sep 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/social-network-analysis/</guid>
+      <description>&lt;p&gt;社會網路分析（Social Network Analysis, SNA）是根據網路 (Network theory)及 圖論 (Graph theory) 對社會結構進行探索的分析方法。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
