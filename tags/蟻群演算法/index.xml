@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>啟發式演算法 on 邱秉誠 (BingCheng)</title>
-    <link>http://localhost:1313/tags/%E5%95%9F%E7%99%BC%E5%BC%8F%E6%BC%94%E7%AE%97%E6%B3%95/</link>
-    <description>Recent content in 啟發式演算法 on 邱秉誠 (BingCheng)</description>
+    <title>蟻群演算法 on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/tags/%E8%9F%BB%E7%BE%A4%E6%BC%94%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 蟻群演算法 on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 26 Jan 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/%E5%95%9F%E7%99%BC%E5%BC%8F%E6%BC%94%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/%E8%9F%BB%E7%BE%A4%E6%BC%94%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題(Traveling Salesman Problem, TSP)</title>
       <link>http://localhost:1313/post/ant-colony-optimization/</link>
       <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/ant-colony-optimization/</guid>
       <description>&lt;p&gt;蟻群最佳化演算法有許多的版本，這篇文章會聚焦在最原始的螞蟻系統 (Ant System, AS)，分享如何以 Python 進行演算法的實作，並用台灣22個縣市的經緯度作為測試資料集，規劃出一條踏訪台灣縣市的最短路線，最後以 &lt;code&gt;folium&lt;/code&gt; 套件進行路線的可視化。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>實作粒子群演算法 (Particle Swarm Optimization, PSO)</title>
-      <link>http://localhost:1313/post/particle-swarm-optimization/</link>
-      <pubDate>Sat, 23 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/particle-swarm-optimization/</guid>
-      <description>&lt;p&gt;本篇文章會以 Python 實作粒子群演算法。在啟發式演算法中，粒子群演算法是經典且相對容易實現的演算法，因此適合對啟發式演算法有興趣的讀者參閱。&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

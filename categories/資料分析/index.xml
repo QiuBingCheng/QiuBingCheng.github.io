@@ -6,8 +6,15 @@
     <description>Recent content in 資料分析 on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 Jan 2021 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題(Traveling Salesman Problem, TSP)</title>
+      <link>http://localhost:1313/post/ant-colony-optimization/</link>
+      <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/ant-colony-optimization/</guid>
+      <description>&lt;p&gt;蟻群最佳化演算法有許多的版本，這篇文章會聚焦在最原始的螞蟻系統 (Ant System, AS)，分享如何以 Python 進行演算法的實作，並用台灣22個縣市的經緯度作為測試資料集，規劃出一條踏訪台灣縣市的最短路線，最後以 &lt;code&gt;folium&lt;/code&gt; 套件進行路線的可視化。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>實作粒子群演算法 (Particle Swarm Optimization, PSO)</title>
       <link>http://localhost:1313/post/particle-swarm-optimization/</link>

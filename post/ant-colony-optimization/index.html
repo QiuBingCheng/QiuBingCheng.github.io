@@ -1,0 +1,384 @@
+<!DOCTYPE html> 
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C85P61SPWR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C85P61SPWR');
+</script><script>const t = localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t); } </script><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
+  <meta name="theme-color" content="#0969e6"><title>實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題(Traveling Salesman Problem, TSP) | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題(Traveling Salesman Problem, TSP) - 邱秉誠 (BingCheng)">
+  <meta property="og:type" content="article">
+  
+  <meta property="article:published_time" content=" 2021-01-26T00:00:00&#43;08:00">
+  
+  
+  <meta property="article:modified_time" content=" 2021-01-26T00:00:00&#43;08:00">
+  
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="以 Python 實作蟻群演算法"><meta name="author" content="Bingcheng">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hulga.min.css">
+  <link rel="manifest" href="/manifest.json">
+</head><body>
+  <div id="main"><section class="hero is-primary shadow-hero ">
+  <div class="hero-head">
+    <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
+  <div class="container">
+    <div class="navbar-brand"><a class="navbar-item " href="/">
+        邱秉誠 (BingCheng)
+      </a>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-end"><div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link" href="#">
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em" height="1em"
+    fill="currentColor"
+    viewBox="0 0 32 32"
+    >
+    <path d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+  </svg>
+  </a>
+  <div class="navbar-dropdown" id="navDropdown">
+    <a class="navbar-item theme-toggle" data-value="light" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"></path></svg>
+      </span>Light</a>
+    <a class="navbar-item theme-toggle" data-value="dark" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"></path></svg>
+      </span>Dark</a>
+    <a class="navbar-item theme-toggle" data-value="system" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"></path></svg>
+      </span>System</a>
+  </div>
+</div>
+
+        <a class="navbar-item" href="/" title="index">Home</a>
+      
+        <a class="navbar-item" href="/archives/" title="archives">Archives</a>
+      
+        <a class="navbar-item" href="/about/" title="about">About</a>
+      
+        <a class="navbar-item" href="/search/" title="search">Search</a>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+  </div>
+  <div class="hero-body">
+    <header class="container has-text-centered" data-pagefind-body>
+      <h1 class="title post-title is-spaced">
+        實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題(Traveling Salesman Problem, TSP)
+      </h1>
+      <h2 class="subtitle"><time>2021/01/26</time> ・<span class="post-cat mr-2">
+              <a href="/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/">資料分析</a>
+            </span></h2>
+      
+      <div>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E5%95%9F%E7%99%BC%E5%BC%8F%E6%BC%94%E7%AE%97%E6%B3%95/">#啟發式演算法</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E8%9F%BB%E7%BE%A4%E6%BC%94%E7%AE%97%E6%B3%95/">#蟻群演算法</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/python/">#Python</a>
+        </span>
+      </div>
+      
+    </header>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      
+      <div class="column is-7 is-offset-2">
+      
+        <article class="content" id="post-content" data-pagefind-body><p>蟻群最佳化演算法有許多的版本，這篇文章會聚焦在最原始的螞蟻系統 (Ant System, AS)，分享如何以 Python 進行演算法的實作，並用台灣22個縣市的經緯度作為測試資料集，規劃出一條踏訪台灣縣市的最短路線，最後以 <code>folium</code> 套件進行路線的可視化。</p>
+<h1 id="旅行推銷員問題traveling-salesman-problem-tsp">旅行推銷員問題(traveling salesman problem, TSP)</h1>
+<p>在以 Python 實作粒子群演算法一文中提到，最佳化問題分為連續最佳化問題與組合優化，TSP 是一個尋求最短路徑的組合優化問題。</p>
+<p>TSP 情境是給定城市和城市之間的距離，旅人會踏訪每座城市，最終返回到起始城市，期間同一座城市不能踏訪兩次以上，如何決定踏訪城市的順序，使得總路徑距離最短，即是該情境的問題；或是在工廠的生產線上，機器人從起始的位置出發，前往不同的工作站進行特定的操作，最後再返回到起始的位置，要如何規劃出一條最佳路徑。</p>
+<p>秉持著物件導向的精神，TSP 問題本身亦可成為一個物件。 <code>coordinate</code> 是城市的經緯度，<code>cities_name</code> 如字面上意思，就是城市的名字。<code>get_distance</code> 負責計算兩個城市之間的距離，python 的 <code>Haversine</code> 套件可以計算地理距離，但在此只是為了解釋演算法流程，便採用跟論文相同的歐式距離。</p>
+<p style="text-align: center;">
+  <img src="image.png" alt="圖片描述">
+</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TSPProblem</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">coordinate</span><span class="p">,</span><span class="n">cities_name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">=</span> <span class="n">coordinate</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">cities_name</span> <span class="o">=</span> <span class="n">cities_name</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">get_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">arr1</span><span class="p">,</span><span class="n">arr2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#Euclidean distance</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">arr1</span><span class="o">-</span><span class="n">arr2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">compute_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cities_id</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">total_distance</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cities_id</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">city1</span> <span class="o">=</span> <span class="n">cities_id</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">city2</span> <span class="o">=</span> <span class="n">cities_id</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">cities_id</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">cities_id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">total_distance</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_distance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span><span class="p">[</span><span class="n">city1</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span><span class="p">[</span><span class="n">city2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">total_distance</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">to_cities_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cities_id</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cities_name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cities_id</span><span class="p">]</span>
+</span></span></code></pre></div><h1 id="蟻群最佳化演算法-ant-colony-optimization-aco">蟻群最佳化演算法 (Ant Colony Optimization, ACO)</h1>
+<p>蟻群最佳化演算法是由 Dorigo 等人於 1996 年提出，該演算法的概念是來自生物界中螞蟻覓食的行徑路線，螞蟻會透過費洛蒙 (pheromones) 的分泌來告知同伴合適的路徑，最終誘使大部分的螞蟻會走在同一路徑上。如下論文圖片所示，在螞蟻從 A 抵達 E 的行徑過程中，遇到一個障礙物，螞蟻會先分開兩頭探訪，在 C 側路徑有較短的距離，因此會聚集越多的費洛蒙，螞蟻會逐漸傾向從 C 側經過。</p>
+<p style="text-align: center;">
+  <img src="image-1.png" alt="圖片描述">
+</p>
+<p>蟻群最佳化演算法最早的版本是螞蟻系統 (Ant System, AS)，其後延伸出許多的改良版本，應用最為廣泛是螞蟻族群系統 (Ant Colony System, ACS)，兩者最大的不同之處在於路徑挑選規則及費洛蒙的更新方式。本日將用物件導向設計的精神建構一個螞蟻系統，螞蟻族群系統 (Ant Colony System, ACS)則留在下篇分享。</p>
+<h1 id="螞蟻系統-ant-system-as-演算法流程">螞蟻系統 (Ant System, AS) 演算法流程</h1>
+<p>首先，初始化螞蟻族群、費洛蒙等必要參數。</p>
+<p>一隻螞蟻就是表示一個解，建構每一個解都會進行以下流程：</p>
+<ol>
+<li>隨機挑選起始縣市。</li>
+<li>計算候選縣市清單的合適度。依照<strong>能見度 (visibility)</strong> 及**費洛蒙 (pheromone)**計算合適度。</li>
+<li>使用輪盤法挑選本次欲踏訪縣市。</li>
+<li>更新候選縣市清單。其實就是移除本階段踏訪的縣市。</li>
+<li>重複上述 1–4 動作，直到所有縣市踏訪完畢</li>
+</ol>
+<p>舉例來說，在時間t我隨機挑選起始縣市為雲林，我的候選清單就是台南、高雄、嘉義等21縣市，演算法會評估 21 個縣市的合適度 (fitness)，這個合適度主要是雲林與該縣市的能見度加上雲林到該縣市的費洛蒙值。具體挑選方式為 輪盤法 (roulette wheel selection)，待會介紹。假如挑中的縣市是嘉義市，嘉義市會從候選清單中被移除，在下個時間點 t+1，嘉義市就會變成目前的縣市，候選清單會變成台南、高雄等 20 個縣市，嘉義市會逐一與這 20 個縣市計算合適度，再使用輪盤法挑選，做為下一個踏訪的縣市，如此反覆直到踏訪最後一個城市為止。</p>
+<p style="text-align: center;">
+  <img src="image-2.png" alt="圖片描述">
+</p>
+<p>以上流程就是建構一個解的動作。每隻螞蟻都建構過一次，即是一次 iteration，重複執行直到指定的次數，演算法流程結束。</p>
+<p>經過上述圖文並茂說明，相信讀者對演算法流程有大致的認識，接著讓我們聊聊細節的部份。</p>
+<h2 id="合適度-fitness">合適度 (fitness)</h2>
+<p>合適度是費洛蒙 (pheromone) 乘上能見度 (visibility)。費洛蒙代表該線段有多少螞蟻行徑過，越多則越值越大 (氣味越濃厚)。能見度就是距離的倒數，距離越短則能見度越大。alpha 與 beta 分別代表這兩個因子的權重，要通過試誤法來得知比較適合的權重分配。通常 beta&gt;alpha ，也就是距離會比費洛蒙的濃度還要重要一些。</p>
+<p><img src="image-3.png" alt="alt text"></p>
+<p>以下為兩個極端分配：</p>
+<h3 id="alpha0">alpha=0</h3>
+<p>表示螞蟻選擇距離最短的鄰近縣市作為下一個拜訪縣市。這就是典型的貪婪啟發 (greedy heuristic, GH)</p>
+<h3 id="beta0">beta=0</h3>
+<p>則螞蟻選擇下一踏訪縣市時完全不考量縣市之間距離長短， <strong>僅以費洛蒙濃度作為選擇下一個拜訪縣市之依據</strong>。</p>
+<h2 id="輪盤法roulette-wheel-selection">輪盤法(roulette wheel selection)</h2>
+<p>輪盤法是一種挑選的方式，最早是運用在基因遺傳演算法。每個縣市都會計算合適度，有一種想法就是以合適度最高的縣市做為下個踏訪縣市，<strong>輪盤法的概念是希望能夠提供多樣性，因此用隨機的方式決定</strong>。在此合適度可以轉換成機率的概念，比如說cityA合適度為8.1，cityB 合適度為8.0等等，想像一個由縣市合適度組合的輪盤，隨機投擲飛鏢到輪盤上，<strong>合適度最高的縣市被投中的機率越高，但是合適度低的縣市也有可能被投中，只是被挑中的機率相對來說較低</strong>。</p>
+<p><img src="image-4.png" alt="alt text"></p>
+<h1 id="python程式碼實現">Python程式碼實現</h1>
+<p>因為排版緣故，建議讀者可以先將視窗拉至底部下載完整程式碼，一邊閱讀一邊參照程式碼。</p>
+<p>認識變數
+首先，先來認識演算法中重要的幾個變數。</p>
+<ul>
+<li><code>pop_size</code>：螞蟻的族群大小。</li>
+<li><code>one_solution</code>：一隻螞蟻踏訪城市的順序。例如 <code>[5,2,1,4,3]</code> 表示尋訪第5座城市=&gt;第2座城市..以此類推。</li>
+<li><code>objective_value</code>：所有的螞蟻行徑總距離。</li>
+<li><code>best_solution</code>：所有螞蟻截至目前為止踏訪城市的最佳順序。</li>
+<li><code>pheromone_drop_amount</code>：費洛蒙分泌量。螞蟻行徑時會分泌固定量的賀爾蒙</li>
+<li><code>evaporate_rate</code>：費洛蒙蒸發速度。每隔一段時間費洛蒙會蒸散。</li>
+<li><code>pheromone_map</code>：費洛蒙表。儲存每一條路徑的費洛蒙量，值越大表示表示路徑合適度 (fitness)越高</li>
+<li><code>pheromone_factor</code>：費洛蒙因子。計算路徑合適度 (fitness) 的一項權重，如果該因子越高，表示越看重賀爾蒙的效果。</li>
+<li><code>visibility</code>：能見度 (visibility)或稱啟發值。城市之間距離的倒數。值越大表示路徑合適度 (fitness)越高。</li>
+<li><code>visibility_factor</code>：能見度因子。計算路徑合適度 (fitness) 的一項權重，如果該因子越高，表示越看重能見度的效果。</li>
+</ul>
+<h2 id="初始化">初始化</h2>
+<p><code>one_solution</code> 表示一隻螞蟻拜訪城市的順序，初始化就先以原始城市順序排列，因此是0,1,2..N 。<code>best_objective_value</code> 就是表示截至目前為止的最短距離，預設賦予最大值。<code>visibility</code> 就是城市之間距離的倒數。城市距離以簡單的歐式距離計算，請參照 TSP 章節，這個距離函式為 TSP 物件提供。因為變數繁多，剩下的便不再逐一贅述。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">one_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ants</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ants</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">objective_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ants</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">best_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">best_objective_value</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span><span class="o">.</span><span class="n">max</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">pheromone_map</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">#heuristic_values</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">from_</span>  <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">to</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">from_</span><span class="o">==</span><span class="n">to</span><span class="p">):</span><span class="k">continue</span>
+</span></span><span class="line"><span class="cl">            <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_distance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span><span class="p">[</span><span class="n">from_</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span><span class="p">[</span><span class="n">to</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">visibility</span><span class="p">[</span><span class="n">from_</span><span class="p">][</span><span class="n">to</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">distance</span>
+</span></span></code></pre></div><h2 id="建構一個解">建構一個解</h2>
+<p>一隻螞蟻完成踏訪所有城市的流程，就會是建構一個解，流程即是剛剛提到的三個步驟</p>
+<ol>
+<li><strong>隨機挑選起始城市</strong>。<code>candidates</code> 表示候選城市清單，我們先從 <code>candidates</code> 用 <code>current_city_id = random.choice(candidates)</code>，隨機取出一個城市作為起始城市。</li>
+<li><strong>計算候選縣市清單的合適度</strong>。<code>for t in range(1,self.num_cities-1)</code> 這個外部迴圈就是決定時間點 t 要踏訪的城市，這裡可以注意 range 從1開始，因為第一個起始城市已經在上個步驟決定， <code>for city_id in candidates</code> 這個迴圈就是在計算候選縣市清單中每座縣市的合適度，並用 <code>fitness_list</code> 變數盛裝。
+使用輪盤法挑選本次欲踏訪縣市。本次欲踏訪的縣市以 <code>next_city_id</code> 表示，<code>do_roulette_wheel_selection</code> 這個函示負責輪盤法的操作。將每座縣市的合適度轉為相對機率，其實就是個別合適度除以合適度的和，再隨機產生0–1亂數，一旦累計合適度&gt;=該縣市的合適度，相當於飛鏢投中該區塊，返回該縣市的索引值。</li>
+<li><strong>更新候選縣市清單</strong>。其實就是移除本階段踏訪的縣市。<code>candidates.remove(next_city_id)</code> 從候選城市清單中移除本階段踏訪縣市，以免下個階段重複踏訪。</li>
+<li><strong>重複上述動作</strong>，直到 <code>for t in range(1,self.num_cities-1)</code> 這個外部迴圈結束，候選縣市清單會剩下一個，<code>self.one_solution[-1] = candidates.pop()</code> 直接指派作為最後踏訪縣市。</li>
+</ol>
+<p><strong>輪盤法</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_roulette_wheel_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fitness_list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sum_fitness</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fitness_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">transition_probability</span> <span class="o">=</span> <span class="p">[</span><span class="n">fitness</span><span class="o">/</span><span class="n">sum_fitness</span> <span class="k">for</span> <span class="n">fitness</span> <span class="ow">in</span> <span class="n">fitness_list</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">rand</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sum_prob</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">prob</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">transition_probability</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sum_prob</span> <span class="o">+=</span> <span class="n">prob</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">sum_prob</span><span class="o">&gt;=</span><span class="n">rand</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">i</span>
+</span></span></code></pre></div><p><strong>建構一個解</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">_an_ant_construct_its_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#random choose city as first city </span>
+</span></span><span class="line"><span class="cl">    <span class="n">current_city_id</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">one_solution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_city_id</span>
+</span></span><span class="line"><span class="cl">    <span class="n">candidates</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">current_city_id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">#select best from candidate</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#best</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fitness_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">city_id</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fitness</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pheromone_map</span><span class="p">[</span><span class="n">current_city_id</span><span class="p">][</span><span class="n">city_id</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">pheromone_factor</span><span class="p">)</span><span class="o">*</span>\
+</span></span><span class="line"><span class="cl">                <span class="nb">pow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visibility</span><span class="p">[</span><span class="n">current_city_id</span><span class="p">][</span><span class="n">city_id</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">visibility_factor</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fitness_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">next_city_id</span> <span class="o">=</span> <span class="n">candidates</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">do_roulette_wheel_selection</span><span class="p">(</span><span class="n">fitness_list</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">candidates</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">next_city_id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">one_solution</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_city_id</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">current_city_id</span> <span class="o">=</span> <span class="n">next_city_id</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">one_solution</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">candidates</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span></code></pre></div><h2 id="建構所有解">建構所有解</h2>
+<p>使用迴圈將逐一建構個別螞蟻的解，並計算目標值，目標值就是行徑總距離。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">each_ant_construct_its_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ants</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_an_ant_construct_its_solution</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">):</span>  
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">one_solution</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">objective_value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                
+</span></span></code></pre></div><h2 id="更新費洛蒙">更新費洛蒙</h2>
+<p>費洛蒙會隨時間蒸散，因此需要有 <code>self.pheromone_map *= (1-self.evaporate_rate)</code> 蒸散的動作，之後就是在每隻螞蟻行徑的途中增添費洛蒙。這裡注意踏訪城市需要返回原始城市，因此最後的城市跟第一個城市的路徑也有賀爾蒙添加。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_pheromone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#evaporate hormones all the path</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">pheromone_map</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">evaporate_rate</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    <span class="c1">#Add hormones to the path of the ants</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">solution</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">city1</span> <span class="o">=</span> <span class="n">solution</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">city2</span> <span class="o">=</span> <span class="n">solution</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">j</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">solution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">pheromone_map</span><span class="p">[</span><span class="n">city1</span><span class="p">,</span><span class="n">city2</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pheromone_drop_amount</span>
+</span></span></code></pre></div><h2 id="更新最佳路徑">更新最佳路徑</h2>
+<p><code>best_solution</code> 和 <code>best_objective_value</code> 分別代表最佳路徑及最佳路徑的距離，逐一判斷目前解有無勝過最佳路徑，有則取代。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_best_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">val</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">best_objective_value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">best_solution</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">n</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">best_objective_value</span> <span class="o">=</span> <span class="n">val</span>
+</span></span></code></pre></div><h2 id="執行結果">執行結果</h2>
+<p><img src="image-5.png" alt="alt text"></p>
+<h2 id="可視化">可視化</h2>
+<p><code>folium</code> 套件可以進行地圖的繪製，我已經寫好一個函式 <code>draw_map</code>，這裡要注意<code>location</code> 參數要放置的是 <code>[緯度,經度]</code> 的 list，跟一般經緯度的用語順序正好相反</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">draw_map</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">locations</span><span class="p">,</span><span class="n">names</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">fmap</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">locations</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">locations</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">folium</span><span class="o">.</span><span class="n">PolyLine</span><span class="p">(</span>   
+</span></span><span class="line"><span class="cl">        <span class="n">locations</span><span class="o">=</span><span class="n">locations</span><span class="p">,</span>  
+</span></span><span class="line"><span class="cl">        <span class="n">weight</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">opacity</span><span class="o">=</span><span class="mf">0.8</span> 
+</span></span><span class="line"><span class="cl">         <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">fmap</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">loc</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">locations</span><span class="p">,</span><span class="n">names</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fmap</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">loc</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">                                     <span class="n">popup</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fmap</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>    
+</span></span></code></pre></div><p><img src="image-6.png" alt="alt text"></p>
+<h1 id="總結">總結</h1>
+<p>蟻群最佳化擅長處理組合優化的問題，如同今天舉例的TSP問題，今天分享的是螞蟻系統 (Ant System, AS) 演算法，是蟻群最佳化中最原始的版本，此外，在現實中最被廣泛地應用，其實是螞蟻族群系統 (Ant Colony System, ACS)，AS 與 ACS 最大差別是在挑選規則和費洛蒙的更新，但是核心概念和基本流程差異不大，因此我選擇先分享AS，下次有時間再分享ACS！</p>
+<p><strong>資料集/完整代碼：</strong>
+<a href="https://github.com/QiuBingCheng/MediumArticle/blob/main/HeuristicAlgorithms/ant_system.py">Github Code</a></p></article>
+      </div>
+      
+      <div class="column is-hidden-mobile">
+        <div class="sidebar pl-4" id="toc">
+          <div class="post post-toc" id="post-toc">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  </div><script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+
+<script src="http://localhost:1313/js/hulga.min.js" defer></script>
+
+  
+<link id="hlcss" rel="stylesheet" href="/css/vs.min.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
+  anchors.options = {
+    placement: 'left',
+    
+    icon: '#'
+  };
+  anchors.add('.content h1, .content h2, .content h3');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  });
+</script>
+
+
+  
+
+
+<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.post-toc',
+        
+        contentSelector: '#post-content',
+        
+        headingSelector: 'h1, h2, h3',
+        collapseDepth:  6 ,
+        scrollSmooth: true,
+        positionFixedSelector: '.post-toc',
+        
+        
+        fixedSidebarOffset: 273,
+    });
+</script>
+
+
+</body>
+
+</html>
