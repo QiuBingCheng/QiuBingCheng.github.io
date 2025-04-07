@@ -1,0 +1,304 @@
+<!DOCTYPE html> 
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C85P61SPWR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C85P61SPWR');
+</script><script>const t = localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t); } </script><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
+  <meta name="theme-color" content="#0969e6"><title>實作粒子群演算法 (Particle Swarm Optimization, PSO) | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="實作粒子群演算法 (Particle Swarm Optimization, PSO) - 邱秉誠 (BingCheng)">
+  <meta property="og:type" content="article">
+  
+  <meta property="article:published_time" content=" 2021-01-23T00:00:00&#43;08:00">
+  
+  
+  <meta property="article:modified_time" content=" 2021-01-23T00:00:00&#43;08:00">
+  
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="以 Python 實作粒子群演算法"><meta name="author" content="Bingcheng">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hulga.min.css">
+  <link rel="manifest" href="/manifest.json">
+</head><body>
+  <div id="main"><section class="hero is-primary shadow-hero ">
+  <div class="hero-head">
+    <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
+  <div class="container">
+    <div class="navbar-brand"><a class="navbar-item " href="/">
+        邱秉誠 (BingCheng)
+      </a>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-end"><div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link" href="#">
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em" height="1em"
+    fill="currentColor"
+    viewBox="0 0 32 32"
+    >
+    <path d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+  </svg>
+  </a>
+  <div class="navbar-dropdown" id="navDropdown">
+    <a class="navbar-item theme-toggle" data-value="light" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"></path></svg>
+      </span>Light</a>
+    <a class="navbar-item theme-toggle" data-value="dark" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"></path></svg>
+      </span>Dark</a>
+    <a class="navbar-item theme-toggle" data-value="system" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"></path></svg>
+      </span>System</a>
+  </div>
+</div>
+
+        <a class="navbar-item" href="/" title="index">Home</a>
+      
+        <a class="navbar-item" href="/archives/" title="archives">Archives</a>
+      
+        <a class="navbar-item" href="/about/" title="about">About</a>
+      
+        <a class="navbar-item" href="/search/" title="search">Search</a>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+  </div>
+  <div class="hero-body">
+    <header class="container has-text-centered" data-pagefind-body>
+      <h1 class="title post-title is-spaced">
+        實作粒子群演算法 (Particle Swarm Optimization, PSO)
+      </h1>
+      <h2 class="subtitle"><time>2021/01/23</time> ・<span class="post-cat mr-2">
+              <a href="/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/">資料分析</a>
+            </span></h2>
+      
+      <div>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E5%95%9F%E7%99%BC%E5%BC%8F%E6%BC%94%E7%AE%97%E6%B3%95/">#啟發式演算法</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E7%B2%92%E5%AD%90%E7%BE%A4%E6%BC%94%E7%AE%97%E6%B3%95/">#粒子群演算法</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/python/">#Python</a>
+        </span>
+      </div>
+      
+    </header>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      
+      <div class="column is-7 is-offset-2">
+      
+        <article class="content" id="post-content" data-pagefind-body><p>本篇文章會以 Python 實作粒子群演算法。在啟發式演算法中，粒子群演算法是經典且相對容易實現的演算法，因此適合對啟發式演算法有興趣的讀者參閱。</p>
+<h1 id="粒子群演算法">粒子群演算法</h1>
+<p>粒子群演算法是一種解決最佳化問題 (Optimization problem) 的啟發式演算法，它的概念來自於對生物社會行為的觀察。最早是來類比鳥群的飛行運動，發現候鳥這種生物會受到自我認知及群體的影響，進而左右覓食、捕食的行為。在演算法中，這些個體們被稱為粒子群 (Particles)，每一個粒子則是一個解的代理人 (solution agent)。由於用候鳥群來比擬比較直觀，下文會以候鳥群作為描述對象。</p>
+<h2 id="粒子群演算法流程">粒子群演算法流程</h2>
+<p>粒子群演算法主要有三個流程，完成這三個流程稱為一個代次 (iteration)。</p>
+<ol>
+<li>指派起始位置，並且記錄個體最佳解及群體最佳解</li>
+<li>計算加速度向量，移動候鳥群到新的位置。</li>
+<li>更新個體最佳解及全域最佳解</li>
+</ol>
+<h1 id="最佳化問題">最佳化問題</h1>
+<p>最佳化問題是從所有可行解中尋找最適合的解的問題，它可細分為連續最佳化問題與組合優化。連續優化問題中，主要有 Maximum、Minimum 兩個方向，<strong>本文將以 Minimum 作為目標</strong>，函式則是簡單的平方和，換句話說，每個解都是一組固定長度的陣列，透過呼叫這個函式會有回傳值，在啟發式演算法中又稱為目標值 (objective value)，<strong>演算法的目的就是在尋找使目標值最小的一組解</strong>。</p>
+<p>顯而易見地，這個函式的最佳解為一組值為 0 的陣列。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">compute_objective_value</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">val</span> <span class="o">+=</span> <span class="n">ele</span><span class="o">*</span><span class="n">ele</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">val</span>
+</span></span></code></pre></div><h1 id="python程式碼實現">Python程式碼實現</h1>
+<h2 id="認識變數">認識變數</h2>
+<p>首先，先來認識演算法中重要的幾個變數。</p>
+<ul>
+<li><code>pop_size</code>：母體數量，也就是候鳥族群的大小，本文設定為 5 只是為了方便說明，真實在解決問題不會設定那麼低。</li>
+<li><code>dimension</code>：這個問題的變數數量，本文以 2 個為例。</li>
+<li><code>solution</code>： 一組解 (一隻候鳥的位置)，長度為 <code>dimension</code>，數學表示如 $[x_1,x_2,..x_{dimension}]$。</li>
+<li><code>solutions</code>：這個問題的所有可能解 (solution)，長度為 <code>pop_size</code>。</li>
+<li><code>individual_best_solution</code>：個體最佳解。每個解都會移動位置，試圖往更好的目標值移動，這個變數便是個體截至目前最優的解。</li>
+<li><code>global_best_solution</code>：群體最佳解。個體最佳解中最優良的解</li>
+<li><code>cognition_factor</code>：自我認知的權重。值越高，表示迭代時越傾向往個體最佳解移動，對應到演算法語境，就是候鳥越相信自己過去的最佳經驗。</li>
+<li><code>social_factor</code>：群體經驗權重。值越高，表示演算法越傾向往群體最佳解移動，對應到演算法語境，就是候鳥越相信群體的智慧。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span> <span class="o">=</span> <span class="n">pop_size</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span> <span class="o">=</span> <span class="n">dimension</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">upper_bounds</span> <span class="o">=</span> <span class="n">upper_bounds</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">lower_bounds</span> <span class="o">=</span> <span class="n">lower_bounds</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#current solution</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">individual_best_solution</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#individual best solution</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">individual_best_objective_value</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#individual best val</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">global_best_solution</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#global best solution</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">global_best_objective_value</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span><span class="o">.</span><span class="n">max</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">cognition_factor</span> <span class="o">=</span> <span class="n">cognition_factor</span> <span class="c1">#particle movement follows its own search experience</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">social_factor</span> <span class="o">=</span> <span class="n">social_factor</span>  <span class="c1">#particle movement follows the swarm search experience</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span> <span class="o">=</span> <span class="n">compute_objective_value</span>
+</span></span></code></pre></div><h2 id="初始化">初始化</h2>
+<ol>
+<li>指派界限內的隨機亂數給每一個體。</li>
+<li><code>individual_best_solution</code> 先設定為最初的解。</li>
+<li>從個體最佳解中，找到目標值最好 (也就是最低) 的那組解作為 <code>global_best_solution</code>。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">min_index</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">min_val</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span><span class="o">.</span><span class="n">max</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">solution</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rand_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lower_bounds</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">+</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">upper_bounds</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">lower_bounds</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rand_pos</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># update invidual best solution</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">individual_best_solution</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">objective</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">individual_best_objective_value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">objective</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># record the smallest objective val</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">objective</span> <span class="o">&lt;</span> <span class="n">min_val</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">min_index</span> <span class="o">=</span> <span class="n">i</span>
+</span></span><span class="line"><span class="cl">        <span class="n">min_val</span> <span class="o">=</span> <span class="n">objective</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="c1"># update so far the best solution</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">global_best_solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">global_best_objective_value</span> <span class="o">=</span> <span class="n">min_val</span>
+</span></span></code></pre></div><h2 id="移動候鳥群到新的位置">移動候鳥群到新的位置</h2>
+<p>候鳥群移動會受到自我認知 (<code>cognition_factor</code>)、群體經驗 (<code>social_factor</code>) 影響，乘上一個隨機亂數，分別以 <code>alpha</code> 和 <code>beta</code> 表示因子權重。一隻候鳥 <code>i</code> 的某變數 <code>d</code> 加速度，為下列的和：</p>
+<ul>
+<li><code>alpha * (individual_best_solution[i][d]-solutions[i][d])</code></li>
+<li><code>beta * (global_best_solution[i][d]-solutions[i][d])</code></li>
+</ul>
+<p>候鳥目前的解加上加速度，就是會產生新的解。最後，要確保候鳥的新的位置，要在變數的界限內。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">move_to_new_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">solution</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cognition_factor</span><span class="o">*</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">beta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">social_factor</span><span class="o">*</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">v</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">individual_best_solution</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">])</span><span class="o">+</span>\
+</span></span><span class="line"><span class="cl">                <span class="n">beta</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_best_solution</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">upper_bounds</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">lower_bounds</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
+</span></span></code></pre></div><h2 id="更新最佳解">更新最佳解</h2>
+<p>上述產生新的解，接著要評估新的解的優劣，用一個迴圈逐一計算每個解的目標值，如果該解的目標值，比該個體最佳解還要優良，則個體最佳解會更新，並判斷是否有勝於群體最佳解，如果有則一併更新群體最佳解。</p>
+<p>舉例來說，如果有S1、S2、S3三組解，產生新的位置後，計算三者目標值，其中 S1、S3 的目標值更優良，分別從 (164-&gt;128、26-&gt;8) ，因此則更新 S1、S3 個體最佳解，如下方灰色表格所式。</p>
+<p><img src="image.png" alt="alt text"></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_best_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">solution</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">obj_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">#udpate indivisual solution</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">obj_val</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">individual_best_objective_value</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">individual_best_solution</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">solution</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">individual_best_objective_value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_val</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">obj_val</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_objective_value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">global_best_solution</span> <span class="o">=</span> <span class="n">solution</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">global_best_objective_value</span> <span class="o">=</span> <span class="n">obj_val</span>
+</span></span></code></pre></div><p>到這裡演算法就完成一個代次 (iteration)，我們可以用 20 個 iteration ，觀察解的變化如下，發現個體最佳解會隨著更新逐漸往更好的方向移動，目標值會越降越低。</p>
+<p><img src="image-1.png" alt="alt text"></p>
+<h2 id="啟發式演算法可視化介面">啟發式演算法可視化介面</h2>
+<p>GUI 可以讓使用者方便觀察每次迭代的情形，像是演算法收斂的情形，有沒有陷入局部最佳解等，這種 GUI 用 C# 撰寫會精美實用許多，下次有時間再寫一篇 GUI 的設計教學文。</p>
+<p><img src="image-2.png" alt="alt text"></p>
+<h1 id="總結">總結</h1>
+<p>今天分享一個經典的啟發式演算法 PSO，PSO 優點在易於實現，在維度低時可以有不錯的表現，但在高維度的問題常陷於局部最佳解，通常基因演算法 (genetic algorithm , GA) 是更普遍採用的演算法，下次有機會再寫一篇教學文，如果文中有疏漏錯誤之處，歡迎指正~</p>
+<p><strong>資料集/完整代碼：</strong>
+<a href="https://github.com/QiuBingCheng/MediumArticle/blob/main/HeuristicAlgorithms/particle_swarm_optimization.py">Github Code</a></p></article>
+      </div>
+      
+      <div class="column is-hidden-mobile">
+        <div class="sidebar pl-4" id="toc">
+          <div class="post post-toc" id="post-toc">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  </div><script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+
+<script src="http://localhost:1313/js/hulga.min.js" defer></script>
+
+  
+<link id="hlcss" rel="stylesheet" href="/css/vs.min.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
+  anchors.options = {
+    placement: 'left',
+    
+    icon: '#'
+  };
+  anchors.add('.content h1, .content h2, .content h3');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  });
+</script>
+
+
+  
+
+
+<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.post-toc',
+        
+        contentSelector: '#post-content',
+        
+        headingSelector: 'h1, h2, h3',
+        collapseDepth:  6 ,
+        scrollSmooth: true,
+        positionFixedSelector: '.post-toc',
+        
+        
+        fixedSidebarOffset: 273,
+    });
+</script>
+
+
+</body>
+
+</html>
