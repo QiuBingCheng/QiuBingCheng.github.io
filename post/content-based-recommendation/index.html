@@ -136,28 +136,61 @@
 (提醒資料集和完整程式碼放置文末)。</p>
 <h2 id="1-讀取資料">1. 讀取資料</h2>
 <p>我們使用公開資料集 <a href="https://grouplens.org/datasets/movielens/">MovieLens</a> 來實作，以 pandas 讀取兩個檔案。movies.csv 留下 movieId、genres 兩個欄位，ratings.csv 留下 userId、 movieId，並以 movieId 作為主鍵將兩個檔案合併，如下圖 dataframe 所示。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">movies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;dataset\MovieLens\movies.csv&#34;</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">movies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;dataset\MovieLens\movies.csv&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">movies</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;dataset\MovieLens\ratings.csv&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">movies</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;movieId&#39;</span><span class="p">)</span>
-</span></span></code></pre></div><p><img src="image-1.png" alt="alt text"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="image-1.png" alt="alt text"></p>
 <h2 id="2-萃取影片特徵">2. 萃取影片特徵</h2>
 <p>影片只有一個特徵，叫做genres(類型)，一部影片可以擁有多個類型，<strong>將影片類型以離散數字的0與1表示</strong>，<strong>如果本部影片的屬性包含該類型(比如動作、喜劇等)，則在該特徵是1，否則為0</strong>。善用pandas的內建函式，使用 <code>movies[&quot;genres&quot;].str.get_dummies('|')</code> 就可以將原先以 <code>|</code> 分隔的特徵類型，編碼成 0 和 1 的格式了。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#movie vector</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#movie vector</span>
 </span></span><span class="line"><span class="cl"><span class="n">dummies</span> <span class="o">=</span> <span class="n">movies</span><span class="p">[</span><span class="s2">&#34;genres&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">movie_vec</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">movies</span><span class="p">,</span> <span class="n">dummies</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">movie_vec</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;genres&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">movie_vec</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&#34;movieId&#34;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span></span></code></pre></div><p><img src="image-2.png" alt="alt text"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="image-2.png" alt="alt text"></p>
 <h2 id="3-萃取用戶特徵">3. 萃取用戶特徵</h2>
 <p>用戶特徵則是觀看紀錄中的影片類型，取平均值表示。假設 user1 有10條觀看紀錄，其中動作類型佔4條，則在動作類型這個特徵為0.4分。這種聚合運算請多加善用<code>groupby</code>函式。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#user vector </span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#user vector </span>
 </span></span><span class="line"><span class="cl"><span class="n">dummies</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&#34;genres&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">user_vec</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">dummies</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">user_vec</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;movieId&#39;</span><span class="p">,</span> <span class="s1">&#39;genres&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">user_vec</span> <span class="o">=</span> <span class="n">user_vec</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&#34;userId&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</span></span></code></pre></div><p><img src="image-3.png" alt="alt text"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="image-3.png" alt="alt text"></p>
 <h2 id="4-建構用戶-影片相似度矩陣">4. 建構用戶-影片相似度矩陣</h2>
 <p>既然用戶、影片特徵一致，接著便容易許多。常見相似性度量有歐式距離、餘弦相似度等，相關應用場景這裡不多贅述。回歸到最初目的，輸入影片的ID，得到一組影片特徵向量，逐一計算與用戶特徵向量的相似度，列出相似度最高的前幾名即是可能的受眾名單，反之亦然。</p>
 <p><strong>用戶-影片相似度矩陣的用途為何?</strong></p>
@@ -167,17 +200,41 @@
 <p>今日要找出與user1相似度最高的20個影片，方法是<strong>得到user1特徵向量，逐一計算與影片特徵向量的相似度，列出相似度最高的前20名</strong>。</p>
 <p>很顯然的，無論情境1-影片找人還是情境2-人找影片，<strong>兩個情境真正耗時之處在於逐一計算與用戶跟影片兩者特徵向量的相似度，倘若我事先就構成用戶-影片相似度矩陣，ID檢索時就能直接以sort排列索取出最相似的名單，以降低頻繁計算造成伺服器負擔</strong>。</p>
 <p>我們使用 sklearn 的函示 <code>cosine_similarity</code> 來幫助我們計算cosine相似度。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#user movie similar matrix</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#user movie similar matrix</span>
 </span></span><span class="line"><span class="cl"><span class="n">user_movie_similarity_matrix</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">user_vec</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">movie_vec</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">user_movie_similarity_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">user_movie_similarity_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">user_vec</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">movie_vec</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-</span></span></code></pre></div><p>用戶-影片相似度矩陣如下圖，index為userId；columns name是movieId，因此 <code>user_movie_matrix[i,j]</code> 表示user i 和 movie j 的相似度。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>用戶-影片相似度矩陣如下圖，index為userId；columns name是movieId，因此 <code>user_movie_matrix[i,j]</code> 表示user i 和 movie j 的相似度。</p>
 <p><img src="image-4.png" alt="alt text"></p>
 <h2 id="5-獲取推薦名單">5. 獲取推薦名單</h2>
 <p>承接上步構成用戶-影片相似度矩陣，任一用戶及任一影片的相似度已然悉知，以ID檢索時直接以sort排列並索取最相似的名單即可。</p>
 <p>我們現在終於可以達到最初目的了。</p>
 <p><strong>輸入影片的ID，返回最相似的用戶名單</strong>。使用<code>get_the_most_similar_movies</code> 函式中<code>user_movie_matrix.loc[user_id,:]</code> 儲存的就是該user與所有影片的相似度，使用 <code>np.argsort</code> 函式獲取排序索引，用 <code>np.argsort</code> 預設是遞增排序，因此我們要記得先使用 <code>[::-1]</code> 翻轉索引陣列，才會是由相似度高到低排序歐！’</p>
 <p><strong>輸入用戶的ID，返回最相似的影片名單</strong>。使用<code>get_the_most_similar_users</code> 函式，其中<code>user_movie_matrix.loc[:,movie_id]</code> 儲存的就是該movie與所有用戶的相似度，一樣使用 <code>np.argsort</code> 函式獲取排列索引並進行反轉，得到由相似度高到低的影片清單。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_the_most_similar_movies</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">user_movie_matrix</span><span class="p">,</span><span class="n">num</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_the_most_similar_movies</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">user_movie_matrix</span><span class="p">,</span><span class="n">num</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Find the top-n movies most similar to the user&#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">user_vec</span> <span class="o">=</span> <span class="n">user_movie_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> 
 </span></span><span class="line"><span class="cl">    <span class="n">sorted_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">user_vec</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="n">num</span><span class="p">]</span>
@@ -188,7 +245,9 @@
 </span></span><span class="line"><span class="cl">    <span class="n">movie_vec</span> <span class="o">=</span> <span class="n">user_movie_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">movie_id</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> 
 </span></span><span class="line"><span class="cl">    <span class="n">sorted_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">movie_vec</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="n">num</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">user_movie_matrix</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">sorted_index</span><span class="p">])</span>  
-</span></span></code></pre></div><h1 id="小結">小結</h1>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="小結">小結</h1>
 <p>本篇實作經過極度簡化，在實務上的處理必然複雜許多，影片特徵不只類型，還有導演、演員、語言、得獎紀錄等，但是核心概念相差無幾，<strong>人的特徵就是觀看紀錄的影片特徵取平均的結果，在相同維度下人跟影片便容易計算相似度，進而洗出欲推薦的影片/用戶名單</strong>，往後會逐一介紹其他常見的推薦系統。</p>
 <p><strong>資料集/完整代碼：</strong>
 <a href="https://github.com/QiuBingCheng/MediumArticle/blob/main/Recommendation%20System/content_based_system.py">Github Code</a></p></article>

@@ -122,7 +122,24 @@
 <h1 id="免責聲明">免責聲明</h1>
 <p>人物關係請忽略一些不合理之處，因為小說人物關係錯綜複雜，故經過調整以利說明，失真之處敬請海涵。</p>
 <p>首先我們先建立 <code>friendships</code> 列表變數，以元組表示人物彼此相互熟識，這裡使用python的 <code>networkx</code> 的套件來呈現人物網路圖，待會實作部分便是使用 <code>friendships</code> 變數作為資料集！</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">friendships</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊康&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;洪七公&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊過&#34;</span><span class="p">),</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">friendships</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊康&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;洪七公&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊過&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;周伯通&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;郭嘯天&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;李萍&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">,</span><span class="s2">&#34;黃藥師&#34;</span><span class="p">),(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;楊鐵心&#34;</span><span class="p">),(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;歐陽鋒&#34;</span><span class="p">),(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;穆念慈&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;洪七公&#34;</span><span class="p">,</span><span class="s2">&#34;黃藥師&#34;</span><span class="p">),(</span><span class="s2">&#34;楊過&#34;</span><span class="p">,</span><span class="s2">&#34;小龍女&#34;</span><span class="p">),(</span><span class="s2">&#34;周伯通&#34;</span><span class="p">,</span><span class="s2">&#34;王重陽&#34;</span><span class="p">),</span>
@@ -135,7 +152,9 @@
 </span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl"><span class="n">draw_basic_network_graph</span><span class="p">(</span><span class="n">friendships</span><span class="p">)</span>
-</span></span></code></pre></div><p style="text-align: center;">
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p style="text-align: center;">
   <img src="image.png" alt="圖片描述">
 </p>
 <h1 id="度中心性-degree-centrality">度中心性 ($degree\ centrality$)</h1>
@@ -149,7 +168,27 @@
 </p>
 <p>接著，讓我們用射鵰英雄傳的人物關係作為社交網路，來實際用Python計算人物的 $degree\ centrality$。</p>
 <p>上述提到 $degree\ centrality$ 就是在社交網路上該人物朋友的總數，因此迭代 <code>friendships</code> 變數，以 <code>user_friendship_count</code> 字典紀錄朋友數量，每發現一段友誼兩個人物的朋友數量會同時累加一次，(這裡不考慮單方面的關注、追蹤)，標準化處理就是將最後累計的朋友數量除以 <code>(n-1)(n-2)</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">friendships</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊康&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;洪七公&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊過&#34;</span><span class="p">),</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">friendships</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊康&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;洪七公&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;楊過&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;周伯通&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;郭嘯天&#34;</span><span class="p">),(</span><span class="s2">&#34;郭靖&#34;</span><span class="p">,</span><span class="s2">&#34;李萍&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">,</span><span class="s2">&#34;黃藥師&#34;</span><span class="p">),(</span><span class="s2">&#34;黃蓉&#34;</span><span class="p">,</span><span class="s2">&#34;洪七公&#34;</span><span class="p">),(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;楊鐵心&#34;</span><span class="p">),(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;歐陽鋒&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="s2">&#34;楊康&#34;</span><span class="p">,</span><span class="s2">&#34;穆念慈&#34;</span><span class="p">),(</span><span class="s2">&#34;楊過&#34;</span><span class="p">,</span><span class="s2">&#34;小龍女&#34;</span><span class="p">),(</span><span class="s2">&#34;周伯通&#34;</span><span class="p">,</span><span class="s2">&#34;王重陽&#34;</span><span class="p">),</span>
@@ -165,7 +204,9 @@
 </span></span><span class="line"><span class="cl"><span class="c1">#標準化-除以(n-1)(n-2)</span>
 </span></span><span class="line"><span class="cl"><span class="n">total_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">user_friend_count</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl"><span class="n">user_friend_count_after_standardization</span> <span class="o">=</span> <span class="p">{</span><span class="n">user</span><span class="p">:</span><span class="n">count</span><span class="o">/</span><span class="p">((</span><span class="n">total_count</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">total_count</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">user</span><span class="p">,</span><span class="n">count</span> <span class="ow">in</span> <span class="n">user_friend_count</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-</span></span></code></pre></div><p>經過計算發現郭靖、楊康 $degree\ centrality$ 最高，表示這兩個人物在社交網路中扮演著最為重要的角色。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>經過計算發現郭靖、楊康 $degree\ centrality$ 最高，表示這兩個人物在社交網路中扮演著最為重要的角色。</p>
 <p style="text-align: center;">
   <img src="image-2.png" alt="圖片描述">
 </p>
@@ -179,7 +220,25 @@
 <p>接著我們開始用Python來實作。我想網路上有很多精妙的解法，但過於簡潔可能不易理解 (包括我自己)，在此我是拆成三個步驟來實現，希望能夠讓讀者更明白程式運作的邏輯。</p>
 <h2 id="找到每個人物的朋友">找到每個人物的朋友</h2>
 <p>首先第一步，我們定義 <code>construct_users_friends</code> 函式，用來建構人物的朋友列表。這個 <code>users</code> 變數得到的結果會如同下方的表格。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">construct_user_friends</span><span class="p">(</span><span class="n">friendships</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">construct_user_friends</span><span class="p">(</span><span class="n">friendships</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
 </span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
 </span></span></span><span class="line"><span class="cl"><span class="s2">        key:userId
@@ -193,7 +252,9 @@
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">users</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">users</span> <span class="o">=</span> <span class="n">construct_user_friends</span><span class="p">(</span><span class="n">friendships</span><span class="p">)</span>
-</span></span></code></pre></div><p style="text-align: center;">
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p style="text-align: center;">
   <img src="image-4.png" alt="圖片描述">
 </p>
 <h2 id="找到每個人物與每個人物的最短路徑">找到每個人物與每個人物的最短路徑</h2>
@@ -218,7 +279,40 @@
 <strong>開始拜訪 黃蓉 的朋友</strong>
 找到第1次與 黃藥師 最短路徑</p>
 <p><strong>開始拜訪 黃蓉 的朋友</strong>，這句出現的時機便是從 <code>visited</code>取出郭靖的朋友黃蓉，開始由黃蓉展開鄰近節點的尋訪旅程，因此這就是廣度優先搜尋的精神，先從相鄰點開始，再逐漸擴散到更外圍(朋友的朋友)的關係！</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">shortest_paths_from</span><span class="p">(</span><span class="n">from_user</span><span class="p">,</span> <span class="n">users</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">shortest_paths_from</span><span class="p">(</span><span class="n">from_user</span><span class="p">,</span> <span class="n">users</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">shortest_paths</span> <span class="o">=</span> <span class="p">{}</span>  
 </span></span><span class="line"><span class="cl">    <span class="n">visited</span>  <span class="o">=</span> <span class="n">deque</span><span class="p">()</span> <span class="c1">#(節點路徑,該節點ID)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">friend_id</span> <span class="ow">in</span> <span class="n">users</span><span class="p">[</span><span class="n">from_user</span><span class="p">]:</span>
@@ -247,14 +341,44 @@
 </span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;找到第1次與 </span><span class="si">{</span><span class="n">friend_of_friend</span><span class="si">}</span><span class="s2"> 最短路徑&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">                <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cur_path</span><span class="p">,</span><span class="n">friend_of_friend</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">shortest_paths</span>
-</span></span></code></pre></div><h2 id="計算人物的-betweenness-centrality">計算人物的 $betweenness\ centrality$</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="計算人物的-betweenness-centrality">計算人物的 $betweenness\ centrality$</h2>
 <p>執行上面的函式，理應找到每個人物與每個人物之間的最短路徑，儲存變數叫 <code>user_shortest_paths</code>，結果大致如下方圖片所示。</p>
 <p style="text-align: center;">
   <img src="image-6.png" alt="圖片描述">
 </p>
 <p><code>betweenness_centrality</code> 函示將是我們最後一個步驟，這裡依序取出 <code>user_shortest_paths</code> 最短路徑，至於從哪個人物出發、抵達哪個人物，並非十分重要，理由在於根據公式 開始節點≠結束節點≠欲計算中心性的節點，因此我們真正在意的是從開始節點到結束節點的這些中間節點。</p>
 <p>函示開始會先用三個迴圈，看起來很複雜，其實只是為了取出<code>user_shortest_paths</code> 最裡面的最短路徑而已，取出之後判斷路徑長度如果等於2，就略過這次迴圈，這表示這最短路徑是相鄰朋友，例如 <code>[&quot;郭靖&quot;, &quot;黃蓉&quot;]</code>，除了開頭兩端顯然沒有經過其餘節點，因此便不理會；如果長度大於2，則依序取出中間節點，用字典變數<code>frequency_of_visits</code> 累計加1，最後再用字典推導式除以最短路徑之和 <code>total_shortest_paths</code> 。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">betweenness_centrality</span><span class="p">(</span><span class="n">user_shortest_paths</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
 </span></span></span><span class="line"><span class="cl"><span class="s2">    Keyword arguments:
@@ -278,7 +402,9 @@
 </span></span><span class="line"><span class="cl">                                   <span class="k">for</span> <span class="n">user</span> 
 </span></span><span class="line"><span class="cl">                                   <span class="ow">in</span> <span class="n">users</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">user_betweenness_centrality</span>
-</span></span></code></pre></div><p>得到的結果會如下，郭靖、楊康和周伯通三個人物得到的分數最高，周伯通的排名比較起以 $degree\ centrality$ 指標衡量明顯高一點，是因為 $degree\ centrality$ 單純比較朋友數量，但是 $betweenness\ centrality$ 看重的是擔任最短路徑之橋樑的程度，由下圖可以發現要拜訪到王重陽和丘處機勢必要經過周伯通這條管道，因此便發揮較強烈的仲介效果。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到的結果會如下，郭靖、楊康和周伯通三個人物得到的分數最高，周伯通的排名比較起以 $degree\ centrality$ 指標衡量明顯高一點，是因為 $degree\ centrality$ 單純比較朋友數量，但是 $betweenness\ centrality$ 看重的是擔任最短路徑之橋樑的程度，由下圖可以發現要拜訪到王重陽和丘處機勢必要經過周伯通這條管道，因此便發揮較強烈的仲介效果。</p>
 <p style="text-align: center;">
   <img src="image-7.png" alt="圖片描述">
 </p>
@@ -290,7 +416,21 @@
 <p>Closeness centrality indicates how close a node is to all other nodes in the network</p></blockquote>
 <p>$closeness\ centrality$ 是指一個節點在網路中的緊密程度，可預期一個節點如果距離其他所有節點越近，它理當會是處於較為中心的位置，這也相當符合人類的視覺感受。$closeness\ centrality$ 計算方式非常簡單，該節點到達其他所有節點的最短路徑長度取平均值，並取其倒數便是 $closeness\ centrality$，以下用Python計算。</p>
 <p>在計算 $betweenness\ centrality$，我們已經建構 <code>user_shortest_paths</code> 變數，直接沿用那個變數當作函式的輸入變數，<code>user_closeness_centrality</code> 是 <code>defaultdict(lambda :[0,0])</code> 型態，在值的部分是列表，索引0儲存的是最短距離；索引1儲存的是次數，這是為了方便計算平均使用的小技巧。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">closeness_centrality</span><span class="p">(</span><span class="n">user_shortest_paths</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">closeness_centrality</span><span class="p">(</span><span class="n">user_shortest_paths</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">user_closeness_centrality</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">user_shortest_paths</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">to_user</span> <span class="ow">in</span> <span class="n">user_shortest_paths</span><span class="p">[</span><span class="n">user</span><span class="p">]:</span>
@@ -300,7 +440,9 @@
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="n">user</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">count</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">count</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">user</span><span class="p">,</span><span class="n">count</span> <span class="ow">in</span> <span class="n">user_closeness_centrality</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">user_closeness_centrality</span> <span class="o">=</span> <span class="n">closeness_centrality</span><span class="p">(</span><span class="n">user_shortest_paths</span><span class="p">)</span>
-</span></span></code></pre></div><p style="text-align: center;">
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p style="text-align: center;">
   <img src="image-9.png" alt="圖片描述">
 </p>
 <h1 id="小結">小結</h1>

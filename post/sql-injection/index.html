@@ -118,10 +118,24 @@
 <p>SQL 是一種應用程式與資料庫之間溝通的術語，利用SQL可以對資料庫進行插入(Insert)、讀取(Read)、更新(Update)、刪除(Delete)等常見的操作。SQL指令種類繁多，在此僅針對下文SQL injection章節有使用到的語法進行說明。</p>
 <h2 id="sql的select敘述">SQL的SELECT敘述</h2>
 <p>SELECT是SQL檢視資料庫內容的語法。該SQL語法架構是：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table</span><span class="w">
-</span></span></span></code></pre></div><p>假設資料庫有一張名為Customers的表格，存放客戶的名字、居住城市等欄位，今天想從中擷取特定欄位資訊，便可使用下面語法獲取：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">CustomerName</span><span class="p">,</span><span class="w"> </span><span class="n">City</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><h2 id="sql語法的註解">SQL語法的註解</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>假設資料庫有一張名為Customers的表格，存放客戶的名字、居住城市等欄位，今天想從中擷取特定欄位資訊，便可使用下面語法獲取：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">CustomerName</span><span class="p">,</span><span class="w"> </span><span class="n">City</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="sql語法的註解">SQL語法的註解</h2>
 <p>註解是SQL使用者寫下的註記，資料庫伺服器會自動略過註解後的文字不會執行，註解符號視資料庫版本而有所差異，常見有以下三種：</p>
 <ol>
 <li><code>/*</code></li>
@@ -133,10 +147,19 @@
 <h2 id="sql-語法的聯集">SQL 語法的聯集</h2>
 <p>聯集(UNION)是用來結合兩個以上的select敘述查詢集合。</p>
 <p>假設資料庫有一張名為Customers的表格，存放客戶的名字、居住城市等欄位，此外還有另一張名為Supplier的表格，也存放類似的欄位資訊，可以使用以下的SQL語法，將兩個各自的查詢結果合併起來。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">CustomerName</span><span class="p">,</span><span class="w"> </span><span class="n">City</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">CustomerName</span><span class="p">,</span><span class="w"> </span><span class="n">City</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Customers</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">UNION</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">ContactName</span><span class="p">,</span><span class="w"> </span><span class="n">City</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Suppliers</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><p>使用UNION查詢，要小心有以下兩點限制:</p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用UNION查詢，要小心有以下兩點限制:</p>
 <ol>
 <li>每一SELECT敘述的欄位數量必須一致。</li>
 <li>每一SELECT敘述的欄位必須有相似的資料型態。</li>
@@ -149,32 +172,78 @@
 <h2 id="範例1-非法登入網站">範例1-非法登入網站</h2>
 <p>首章提及資料庫會自動忽略註解的文字，以下範例說明駭客如何利用註解特性來通過帳密驗證機制以非法登入網站。</p>
 <p>一個具備會員登入系統的網站，後端程式(如PHP語言)會驗證表單的帳號及密碼的正確性，以判斷該User是否為合法的會員。一個簡單直觀的SQL語法如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account</span><span class="o">=</span><span class="s1">&#39;$name&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">password</span><span class="o">=</span><span class="s1">&#39;$password&#39;</span><span class="w">
-</span></span></span></code></pre></div><p>如果只在帳號輸入欄位輸入「<code>' or 1=1 /*</code>」，SQL語法會變成：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="cm">/*&#39; AND password=&#39;&#39;
-</span></span></span></code></pre></div><p>藉由在字串中夾帶特殊字元，便可以改變SQL語法邏輯進而登入網站。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account</span><span class="o">=</span><span class="s1">&#39;$name&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">password</span><span class="o">=</span><span class="s1">&#39;$password&#39;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果只在帳號輸入欄位輸入「<code>' or 1=1 /*</code>」，SQL語法會變成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="cm">/*&#39; AND password=&#39;&#39;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>藉由在字串中夾帶特殊字元，便可以改變SQL語法邏輯進而登入網站。</p>
 <h2 id="範例2-非法取得資料庫內容">範例2-非法取得資料庫內容</h2>
 <p>SQL injection除了發生在登入表單的場景，也可能發生在網頁的參數上，以UNION聯集方式取得資料庫內容。</p>
 <p>比方說，在經營部落格的讀者可能會發現，你的網頁網址會有如下的格式:</p>
 <p><code>http://example.com/blog/post/1</code></p>
 <p>「post/」後面的數字1，即是該篇貼文專屬的ID。後端程式解析GET Method的參數取得該獨一無二的ID，便能透過SQL語法，在資料庫檢索出吻合該ID的相關欄位資訊，像是文章標題、作者、內文等。</p>
 <p>假設資料表名稱為<em>BLOGPOSTS</em>，後端SQL語法大致如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-PHP" data-lang="PHP"><span class="line"><span class="cl"><span class="nx">SELECT</span> <span class="nx">author</span><span class="p">,</span><span class="nx">title</span><span class="p">,</span><span class="nx">content</span> <span class="nx">FROM</span> <span class="nx">BLOGPOSTS</span> <span class="nx">where</span> <span class="nx">id</span><span class="o">=</span><span class="nv">$id</span>
-</span></span></code></pre></div><p>駭客如果將id參數，設為</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="mi">0</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="w"> </span><span class="k">COLUMN_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">DATA_TYPE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span><span class="w">
-</span></span></span></code></pre></div><p>後端接收的SQL語法將變成：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">author</span><span class="p">,</span><span class="n">title</span><span class="p">,</span><span class="n">content</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">BLOGPOSTS</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">=</span><span class="mi">0</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="w"> </span><span class="k">COLUMN_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">DATA_TYPE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span><span class="w">
-</span></span></span></code></pre></div><p>因此，只要UNION中的SELECT敘述欄位數量一致，就是合法的SQL語法，便能獲取資料庫的INFORMATION_SCHEMA(資訊結構描述)中的相關訊息，掌握這些訊息，將有利駭客進行更深入的攻擊。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-PHP" data-lang="PHP"><span class="line"><span class="cl"><span class="nx">SELECT</span> <span class="nx">author</span><span class="p">,</span><span class="nx">title</span><span class="p">,</span><span class="nx">content</span> <span class="nx">FROM</span> <span class="nx">BLOGPOSTS</span> <span class="nx">where</span> <span class="nx">id</span><span class="o">=</span><span class="nv">$id</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>駭客如果將id參數，設為</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="mi">0</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="w"> </span><span class="k">COLUMN_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">DATA_TYPE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>後端接收的SQL語法將變成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">author</span><span class="p">,</span><span class="n">title</span><span class="p">,</span><span class="n">content</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">BLOGPOSTS</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">=</span><span class="mi">0</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="w"> </span><span class="k">COLUMN_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">DATA_TYPE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因此，只要UNION中的SELECT敘述欄位數量一致，就是合法的SQL語法，便能獲取資料庫的INFORMATION_SCHEMA(資訊結構描述)中的相關訊息，掌握這些訊息，將有利駭客進行更深入的攻擊。</p>
 <h2 id="防範sql-injection方法">防範SQL injection方法</h2>
 <h3 id="1過濾輸入值">1.過濾輸入值</h3>
 <p>在PHP語言中有 <code>mysqli_real_escape_string</code> 函式可以將\x00、\n、&rsquo;、&ldquo;等特殊字元進行轉譯，但利用編碼的漏洞仍然可以來實現輸入任意密碼就能登錄的SQL injection。</p>
 <p>目前比較受到推崇的方法是使用PDO (<strong>PHP Data Objects</strong>)。PDO是PHP連接資料庫的使用介面，採用預處理的方式，事先創建 SQL 語句模板並發送到資料庫，預留的值使用參數「?」 標記，資料庫將自動檢查數據格式，並轉換特殊字元，如此能確保參數不會汙染SQL執行語句，保持SQL的結構性。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-PHP" data-lang="PHP"><span class="line"><span class="cl"> <span class="nv">$query</span> <span class="o">=</span> <span class="s2">&#34;SELECT * FROM USER where account=? and password=?&#34;</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-PHP" data-lang="PHP"><span class="line"><span class="cl"> <span class="nv">$query</span> <span class="o">=</span> <span class="s2">&#34;SELECT * FROM USER where account=? and password=?&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$pdo</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="nv">$query</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="na">bindParam</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nv">$account</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="na">bindParam</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nv">$password</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">();</span>
-</span></span></code></pre></div><h3 id="2控制資料庫存取程度">2.控制資料庫存取程度</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2控制資料庫存取程度">2.控制資料庫存取程度</h3>
 <p>為使用者依照權限大小分類，給予使用者滿足其工作的最低權限，或是針對資料庫無須進行更新刪除的場合，僅使用資料庫的視圖view以降低入侵傷害。</p>
 <h3 id="3避免透漏錯誤資訊">3.避免透漏錯誤資訊</h3>
 <p>駭客能夠利用錯誤資訊進行SQL injection，因此竭力避免網站打印出SQL錯誤資訊，比如數據格式錯誤、字段不匹配等，暴露程式的SQL語句。</p>

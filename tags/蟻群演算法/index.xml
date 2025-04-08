@@ -9,7 +9,7 @@
     <lastBuildDate>Tue, 26 Jan 2021 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/%E8%9F%BB%E7%BE%A4%E6%BC%94%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題(Traveling Salesman Problem, TSP)</title>
+      <title>實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題 (Traveling Salesman Problem, TSP)</title>
       <link>http://localhost:1313/post/ant-colony-optimization/</link>
       <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/ant-colony-optimization/</guid>

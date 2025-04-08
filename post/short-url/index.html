@@ -164,7 +164,22 @@
 <p>作法方面我採用發號策略，來避免雜湊函數的碰撞問題；而框架部分，因為縮短網址服務架構比較簡單，因此我採用輕量級的Flask框架，能夠快速構建一個小型的網站；雲端平台則是 Heroku ，因為 Heroku 部屬十分簡單，加上有免費方案，即使有容量、使用頻率等諸多限制，對於一個非商業用途的專案來說是綽綽有餘。</p>
 <h2 id="進制轉換">進制轉換</h2>
 <p>縮短網址服務的核心，就是如何將長網址透過某種算法轉成短網址，這裡採取上述提到的發號策略，ALPHABET 就是&quot;<strong>0–9 a-z A-Z</strong>&ldquo;合計62個字元，產生短網址的方法就是將每次地遞增1的號碼 (10進制) 轉到 62 進制。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">base62_encode</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="n">ALPHABET</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">base62_encode</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="n">ALPHABET</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;10進制轉62進制&#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">alphabet</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -175,9 +190,45 @@
 </span></span><span class="line"><span class="cl">        <span class="n">num</span> <span class="o">=</span> <span class="n">num</span> <span class="o">//</span> <span class="n">base</span>
 </span></span><span class="line"><span class="cl">        <span class="n">arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alphabet</span><span class="p">[</span><span class="n">rem</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">arr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-</span></span></code></pre></div><h2 id="資料庫">資料庫</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="資料庫">資料庫</h2>
 <p>資料庫是建構兩張表格，Url是存放長短網址的映射關係，他的Id就是遞增的流水號，(Flask框架會自動將數值類型的主鍵設定為自動遞增)；第二張表格是 Tracing，會存放使用者發出請求時的後端擷取的資訊，例如IP位址、Port等。這裡的追蹤碼 (tracing_code) 其實有點取巧，我見識過提供專業的短網址服務網站，他們的追蹤碼是另外生成的，但這裡我只是單純的以轉制成62進位的結果作為追蹤碼，因此其實就是短網址最尾端的那串英數字。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Url</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Url</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;url&#39;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">Id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -207,7 +258,9 @@
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">location</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">user_agent</span> <span class="o">=</span> <span class="n">user_agent</span>
-</span></span></code></pre></div><h2 id="日期時間">日期時間</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="日期時間">日期時間</h2>
 <p>在儲存日期格式要特別小心，因為資料庫的DateTime欄位，其實是沒有時區概念的，對資料庫而言日期不過是一個符合特定格式的物件，因此在建立日期資料時，我會使用<code>datetime.utcnow().replace(tzinfo=timezone.utc)</code>，先將當前時間轉換 UTC 的時間，等到要從資料庫擷取日期資料時，再視需求決定要轉換成何種時區，例如台灣的話便是使用 <code>astimezone(timezone(timedelta(hours=8)))</code> 。</p>
 <h1 id="主程式">主程式</h1>
 <p>我大致講解一下主程式的邏輯。</p>

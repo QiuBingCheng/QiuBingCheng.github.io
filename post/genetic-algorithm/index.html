@@ -1,0 +1,531 @@
+<!DOCTYPE html> 
+<html lang="en-us"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C85P61SPWR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C85P61SPWR');
+</script><script>const t = localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t); } </script><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
+  <meta name="theme-color" content="#0969e6"><title>實作基因演算法 (Genetic Algorithm , GA) 並解決工作指派問題 (Job Assignment Problem, JAP) | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="實作基因演算法 (Genetic Algorithm , GA) 並解決工作指派問題 (Job Assignment Problem, JAP) - 邱秉誠 (BingCheng)">
+  <meta property="og:type" content="article">
+  
+  <meta property="article:published_time" content=" 2021-01-30T00:00:00&#43;08:00">
+  
+  
+  <meta property="article:modified_time" content=" 2021-01-30T00:00:00&#43;08:00">
+  
+  <meta name="keywords" content="Blog">
+  <meta name="description" content="以 Python 實作基因演算法"><meta name="author" content="Bingcheng">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hulga.min.css">
+  <link rel="manifest" href="/manifest.json">
+</head><body>
+  <div id="main"><section class="hero is-primary shadow-hero ">
+  <div class="hero-head">
+    <nav class="navbar is-primary" role="navigation" aria-label="dropdown navigation">
+  <div class="container">
+    <div class="navbar-brand"><a class="navbar-item " href="/">
+        邱秉誠 (BingCheng)
+      </a>
+      <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-end"><div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link" href="#">
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em" height="1em"
+    fill="currentColor"
+    viewBox="0 0 32 32"
+    >
+    <path d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+  </svg>
+  </a>
+  <div class="navbar-dropdown" id="navDropdown">
+    <a class="navbar-item theme-toggle" data-value="light" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"></path></svg>
+      </span>Light</a>
+    <a class="navbar-item theme-toggle" data-value="dark" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"></path></svg>
+      </span>Dark</a>
+    <a class="navbar-item theme-toggle" data-value="system" href="#">
+      <span class="ticon">
+      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"></path></svg>
+      </span>System</a>
+  </div>
+</div>
+
+        <a class="navbar-item" href="/" title="index">Home</a>
+      
+        <a class="navbar-item" href="/archives/" title="archives">Archives</a>
+      
+        <a class="navbar-item" href="/about/" title="about">About</a>
+      
+        <a class="navbar-item" href="/search/" title="search">Search</a>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+  </div>
+  <div class="hero-body">
+    <header class="container has-text-centered" data-pagefind-body>
+      <h1 class="title post-title is-spaced">
+        實作基因演算法 (Genetic Algorithm , GA) 並解決工作指派問題 (Job Assignment Problem, JAP)
+      </h1>
+      <h2 class="subtitle"><time>2021/01/30</time> ・<span class="post-cat mr-2">
+              <a href="/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/">資料分析</a>
+            </span></h2>
+      
+      <div>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E5%95%9F%E7%99%BC%E5%BC%8F%E6%BC%94%E7%AE%97%E6%B3%95/">#啟發式演算法</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/%E5%9F%BA%E5%9B%A0%E6%BC%94%E7%AE%97%E6%B3%95/">#基因演算法</a>
+        </span>
+        <span class="post-tag mr-2 post-cat">
+          <a href="/tags/python/">#Python</a>
+        </span>
+      </div>
+      
+    </header>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      
+      <div class="column is-7 is-offset-2">
+      
+        <article class="content" id="post-content" data-pagefind-body><p>這篇文章會介紹啟發式演算法中的基因演算法，分享如何以 Python 進行實作，並解決工作指派問題。</p>
+<p><strong>提醒</strong>
+本文第一次出現的專有詞彙會以中英雙語同時表述，後文則是盡量以英文為主。會傾向用英文表述是因為中文翻譯大相逕庭，況且中文不是原文，偶爾會出現詞不達意的情形。
+對於 Python 基法語法還不熟悉的可以先參考這篇 Python 基本教學，裡面會簡單介紹一些我常使用到的 Python 語法。
+以下正文開始~</p>
+<h1 id="工作指派問題-job-assignment-problem-jap">工作指派問題 (Job Assignment Problem, JAP)</h1>
+<p>工作指派問題是一種最佳化問題中的<strong>組合優化問題</strong>。工作指派問題經過大幅簡化描述如下，假設有N件任務要處理，手邊有N個代理人(agent)可以指派，每個代理人必須處理任意一件任務，每個任務也必須被任意一個代理人處理，試問如何指派使得總成本最低。</p>
+<p>以這次測試的資料集為例。假設手中有 8 台機器、 8 件工作，每台機器皆可以處理任何工作，考量機型特性等因素，不同機台擅長不同的加工模式，因此造成機器處理不同工作的時間有所差異，<strong>要如何分配工作到不同的機台，使得機器加工的總時間最少，即為本次問題的目標。</strong></p>
+<p style="text-align: center;">
+  <img src="image.png" alt="圖片描述">
+</p>
+<p>在程式設計上仍然以物件導向精神封裝成類別，這時可以看得出來 <code>compute_objective_value</code>是共同函數，下次可以試著寫一個 Problem 的父類別，分別由TSP、JAP等類別繼承為子類別，再覆寫這個函式~。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">JAPProblem</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">job_machine</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">job_machine</span> <span class="o">=</span> <span class="n">job_machine</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">number_of_jobs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">job_machine</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">compute_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">jobs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">job</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">total_time</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">job_machine</span><span class="p">[</span><span class="n">job</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">total_time</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="基因演算法-genetic-algorithm-ga">基因演算法 (Genetic Algorithm, GA)</h1>
+<p>基因演算法是一種受到自然選擇 (natural selection) 機制所啟發的演算法。自然選擇解釋生物如何適應環境，基於生物中個體的某種優勢或劣勢，導致生存能力存在差異，進而影響繁殖能力，使得特徵逐漸被保存或者淘汰。基因演算法便是在模擬自然選擇的機制，將解比擬成一條染色體 (chromosome)，模仿生物學中交配 (crossover)、突變 (mutation) 等現象，並根據適應度 (fitness) 的高低，決定染色體的去留，達到去蕪存菁的效果。</p>
+<p>通俗地說，<strong>基因演算法就是在特定大小的解集合中，透過增添亂數、兩兩排列組合等操作來改變/產生新的解，並從中挑選較好的解保留到下個世代中，以確保解變異的方向能夠逐漸收斂</strong>。</p>
+<h2 id="染色體的編碼方式-representation-and-encoding">染色體的編碼方式 (Representation and Encoding)</h2>
+<p>上述提到基因演算法是將解比擬成一條染色體，常見的編碼方式如下：</p>
+<h3 id="二進位-binary-representation-and-encoding">二進位 (Binary Representation and Encoding)</h3>
+<p>二進位是最常見的編碼方式，每條染色體都是由0、1組成。整數、實數的最佳化問題也可以轉換成二進位來處理。</p>
+<h3 id="整數-integer-representation-and-encoding">整數 (Integer Representation and Encoding)</h3>
+<p>染色體是由一連串的整數表達，適合用來表示組合優化問題的解，例如旅行推銷員問題(TSP)，染色體就是由城市的id組成，或是<strong>本文要解決的工作指派問題就是使用整數編碼形式，染色體就是每台機器要處理的工作id組成</strong>，以下舉例說明。</p>
+<p style="text-align: center;">
+  <img src="image-1.png" alt="圖片描述">
+</p>
+<h3 id="實數-real-representation-and-encoding">實數 (Real Representation and Encoding)</h3>
+<p>直接用實數表達染色體的基因，每個變數應該要有上界及下界，常用來表達連續優化問題的解。可以參考<a href="/post/particle-swarm-optimizaiton">實作粒子群演算法</a>一文。</p>
+<p>在<a href="/post/ant-colony-optimization">蟻群最佳化演算法的實作</a> 一文中有提到，<strong>蟻群最佳化演算法擅長處理如旅行推銷員問題等組合優化問題</strong>，對於連續優化問題比較力不從心。相形之下，基因演算法能夠勝任的地方便十分廣泛，連續優化問題、組合優化問題都有學者研究出相對應的改良版本，具體運用在多目標優化、設施規劃、排程、存貨控制，還有本次欲解決的工作指派問題等，因此在眾多啟發式演算法中，基因演算法時常是處理最佳化問題的第一選擇。</p>
+<h2 id="基因演算法流程">基因演算法流程</h2>
+<p>基因演算法有許多版本，筆者會先簡單介紹最經典的原始版本，再來介紹本文採納的演算法版本流程。</p>
+<h3 id="經典基因演算法流程">經典基因演算法流程</h3>
+<p style="text-align: center;">
+  <img src="image-2.png" alt="圖片描述">
+</p>
+<p>經典的基因演算法流程如圖所示，首先根據設定的母體 (population) 大小初始化，並以輪盤法 (roulette wheel selection) 隨機挑選染色體成為父母 (parent)，適應度 (fitness) 越高的染色體被挑選的機率越大，同一染色體可能被挑選兩次 (如Chromosome2) ，因此字面上是挑選，實際行為更像選擇並複製染色體。parent會隨機兩兩交配 (crossover) 產生後代 (offspring)，offspring再進行突變 (mutation)，mutate後的offspring成為下一個代次新的 population，如此反覆進行，直到達到中止條件。</p>
+<h3 id="菁英挑選策略演算法">菁英挑選策略演算法</h3>
+<p style="text-align: center;">
+  <img src="image-3.png" alt="圖片描述">
+</p>
+<p>還有一種非常熱門的版本，就是使用到<strong>菁英挑選策略 (Elitism Selection)</strong>，最初從 population 中根據適應值大小挑選染色體成為父母 (parent)，parent 會隨機兩兩交配 (crossover) 產生後代(offspring)，offspring 再進行突變 (mutation)，此時<strong>挑選中的parent 會與 mutate 後的 offspring 成為下一個代次新的population</strong>，因此菁英挑選策略最大優點是可以盡量維持住優秀染色體，不進行任何的突變，但也容易陷入局部最佳解~。</p>
+<p>在演算法中的 parent selection、crossover、mutation等流程都有許多的版本可以嘗試，詳請可以參考 <code>Pygad</code>，這個簡單易用的GA套件，已經實作許多的不同的方法！</p>
+<h3 id="本文基因演算法流程">本文基因演算法流程</h3>
+<p>本文要實作的又是另一版本，用意在擴大解的空間，以隨機方式從原始的population 挑選 parent 進行 crossover 產生 offspring，並且讓原始的 population 和 offspring 擁有相同的機率進行 mutation 產生新的 offspring，最後在從全部染色體 (原始的population+offspring+Mutated offspring) 中以輪盤法挑選染色體成為下個代次的 population，如下圖所示。</p>
+<p style="text-align: center;">
+  <img src="image-4.png" alt="圖片描述">
+</p>
+<p>本文實作的演算法大致流程如下：</p>
+<ol>
+<li><strong>初始化 (initiate)</strong>。根據 population 大小進行 population初始化。</li>
+<li><strong>交配 (crossover)</strong>。從 population 隨機抽取幾對染色體作為parent進行crossover產生新的offspring。</li>
+<li><strong>突變 (mutation)</strong>。從 population 隨機抽取幾條染色體進行突變產生新的offspring。</li>
+<li><strong>計算適應度 (fitness)</strong>。計算所有染色體 (population 加上新的offspring)的fitness。</li>
+<li><strong>更新最佳解</strong>。倘若此代次最佳解的 fitness 勝過歷史最佳解(so far the best)，則更新歷史最佳解。</li>
+<li><strong>挑選 (selection)</strong>。根據所有染色體的 fitness以輪盤法進行挑選，成為下個代次的 population。</li>
+</ol>
+<p>相信讀者此時對演算法流程有大致的認識，接著讓我們談談細節的部份。</p>
+<h3 id="交配-crossover">交配 (crossover)</h3>
+<p>同時擷取兩個染色體的基因，重新排列組合成新的染色體。不同的染色體編碼形式有不同的 crossover 方法。本文採納的染色體是整數編碼方式，採取的是D. Goldberg and R. Lingle等人提出的 <strong>Partially matched crossover(PMX)</strong>。 PMX 擁有比大多數的 crossover 方法還要優異的表現，致使它成為使用頻率最高的方法。</p>
+<p>PMX 的圖解流程在下方，流程大抵就是一對 parent 交換特定區段的基因成為 offspring。在某些情況，整數編碼形式的解是不允許數字重複(例如本文欲解決的工作指派問題，一個工作不能同時給兩個以上的機器處理)，因此要記住交換時的映射關係，如果圖解流程的第3點所示。至於為什麼數字2、4沒有在映射關係內，因為這兩個數字同時存在parent的交換區段(粉紅色)中，這表示在非交換區段(淺藍色)中不會再出現數字2、4，因此自然也不會有映射關係。</p>
+<p><strong>注意</strong></p>
+<p>這裡的parent 1、parent 2 分別指父母的意思，並非有兩對parent。</p>
+<p style="text-align: center;">
+  <img src="image-5.png" alt="圖片描述">
+</p>
+<p>在此羅列其他常見的 crossover 方式 (基於整數編碼) 供讀者參閱。</p>
+<ul>
+<li>Order crossover (OX)</li>
+<li>Position-based Crossover</li>
+<li>Order-based Crossover</li>
+<li>Cycle Crossover(CX)</li>
+</ul>
+<h3 id="突變-mutation">突變 (mutation)</h3>
+<p>改變原本的染色體基因，增加染色體的多樣性，用意在擴大搜尋解的空間。以二進位編碼為例，就是將某些基因從0變成1，或是從1突變成0。本次採用的突變方式為 <strong>Inversion mutation</strong>，適用於染色體為二進位或整數編碼形式，是將染色體特定區間的基因逆序排列。例如在區間2-5逆序排列染色體 <code>[0,1,2,3,4,5,6,7]</code> 的結果則是 <code>[0,1,5,4,3,2,6,7]</code> (索引值從0開始)。</p>
+<p style="text-align: center;">
+  <img src="image-6.png" alt="圖片描述">
+</p>
+<p>在此羅列其他常見的 mutation 方式供讀者參閱：</p>
+<ul>
+<li>Displacement mutation (DM)</li>
+<li>Inversion mutation operator (SIM)</li>
+<li>Scramble mutation (SM)</li>
+</ul>
+<h3 id="適應度-fitness">適應度 (fitness)</h3>
+<p>評估染色體的生存能力，也就是評估這個解的優劣，用來作為判斷染色體是否能成為下個代次的 population 的重要依據。公式如下：</p>
+<p style="text-align: center;">
+  <img src="image-7.png" alt="圖片描述">
+</p>
+<h3 id="挑選-selection">挑選 (selection)</h3>
+<p>挑選策略分為 Deterministic 和 Stochastic 兩種，以下分別闡述</p>
+<ul>
+<li>Deterministic。顧名思義就是確定型的選法，完全依照適應度高低進行選取。</li>
+<li>Stochastic。隨機型的選法。依照適應度的高低有不同的機率被選取，一種著名的方法為輪盤法 (roulette wheel selection)，讀者可以參閱 <a href="/post/ant-colony-optimization">實作蟻群最佳化演算法</a> 一文。</li>
+</ul>
+<h1 id="python-程式碼實現">Python 程式碼實現</h1>
+<p><strong>認識變數</strong></p>
+<p>首先，先來認識演算法中重要的幾個變數。</p>
+<ul>
+<li><code>pop_size</code>： population 的數量。</li>
+<li><code>chromosomes</code>：所有染色體。數量為 population size 加上offspring size。</li>
+<li><code>selected_chromosomes</code>：表示在 selection 階段被挑選作為下個代次的 population 的染色體。事實上這只是在計算上的一個暫時變數，在存取 population 時會以 <code>chromosomes[:pop_size]</code> 存取population</li>
+<li><code>best_chromosome</code>：截止目前fitness最高的染色體。</li>
+<li><code>number_of_genes</code>：一條染色體的基因數量。也就是這個解的變數個數，以這次的工作指派問題為例就是指機台數量。</li>
+<li><code>fitness</code>：染色體適應度。計算公式如上節所示。</li>
+<li><code>objective_values</code>：目標值。機台加工總時間。</li>
+<li><code>indexs</code>：染色體的索引。在 crossover、mutation 階段，是以隨機方式從 population 抽取作為 parent，因此藉由 shuffle 該變數得到隨機抽取的效果。</li>
+</ul>
+<h2 id="初始化initiate">初始化(initiate)</h2>
+<p><code>chromosomes</code> 初始化時要注意，值必須在 <code>[0,number_of_genes-1]</code> 區間，且絕對不可重複，再次強調，一個工作只能被一台機器處理。為了增加多樣性，會以 <code>np.random.shuffle(self.chromosomes[i])</code> 打亂原始順序。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">selected_chromosomes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_genes</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">indexs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">total_size</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_genes</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_genes</span><span class="p">):</span>  
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+</span></span><span class="line"><span class="cl">        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">total_size</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_genes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_size</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">best_chromosome</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_genes</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">best_fitness</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="交配-crossover-1">交配 (crossover)</h2>
+<p>首先使用 <code>self.shuffle_index(self.pop_size)</code> 將 population 長度的索引重新隨機排序。每次 crossover 都會產生兩個 children，因此第一對 parent 產生的 offspring，位置會是 <code>pop_size</code>、<code>pop_size+1</code>，第二對 parent 產生的 offspring，位置會是 <code>pop_size+2</code>、<code>pop_size+3</code>，以此類推。因此這裡也可以注意到一點，<code>crossver_size</code> 一定是偶數，因為每次 crossver 都會產生兩個children。</p>
+<p style="text-align: center;">
+  <img src="image-8.png" alt="圖片描述">
+</p>
+<p><code>partial_mapped_crossover</code> 流程在上面章節有介紹，用程式實現其實有難度也不好解釋，因此這裡不具體講解實現過程，讀者可以參閱程式碼揣摩，不懂在寫信詢問。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">perform_crossover_operation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">child1_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span>
+</span></span><span class="line"><span class="cl">    <span class="n">child2_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="o">+</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count_of_crossover</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">crossover_size</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count_of_crossover</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">parent1_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indexs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">parent2_index</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indexs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">crossover_type</span> <span class="o">==</span> <span class="n">CrossoverType</span><span class="o">.</span><span class="n">PartialMappedCrossover</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">partial_mapped_crossover</span><span class="p">(</span><span class="n">parent1_index</span><span class="p">,</span><span class="n">parent2_index</span><span class="p">,</span><span class="n">child1_index</span><span class="p">,</span><span class="n">child2_index</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">[</span><span class="n">child1_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[</span><span class="n">child1_index</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">[</span><span class="n">child2_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[</span><span class="n">child2_index</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">child1_index</span> <span class="o">+=</span><span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">child2_index</span> <span class="o">+=</span><span class="mi">2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="突變-mutation-1">突變 (mutation)</h2>
+<p>這裡一樣先用 <code>self.shuffle_index(self.pop_size)</code> 將 population 長度的索引重新隨機排序。第一對 parent 產生的 offspring，位置會是 <code>pop_size+crossover_size</code>、<code>pop_size+crossover_size+1</code>，第二對 parent 產生的 offspring，位置則是<code>pop_size+crossover_size+2</code>、<code>pop_size+crossover_size+3</code>，以此類推。至於 mutation 採取的是 Inversion 方法，將染色體特定區間的基因逆序排列成為新的 offspring，具體請看 <code>inversion_mutation</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">perform_mutation_operation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">crossover_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">child1_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">crossover_size</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_size</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_type</span><span class="o">==</span><span class="n">MutationType</span><span class="o">.</span><span class="n">Inversion</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">parent1_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indexs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">inversion_mutation</span><span class="p">(</span><span class="n">parent1_index</span><span class="p">,</span><span class="n">child1_index</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">[</span><span class="n">child1_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[</span><span class="n">child1_index</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">child1_index</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="計算適應度-fitness">計算適應度 (fitness)</h2>
+<p>首先計算 <code>objective_values</code>，由於 crossover 和 mutation 產生offspring 同時，也一併計算 <code>objective_value</code>，因此這裡只要計算population 的即可。然後再計算所有染色體的 fitness。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">chromosome</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="n">min_obj_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">max_obj_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">range_obj_val</span> <span class="o">=</span> <span class="n">max_obj_val</span><span class="o">-</span><span class="n">min_obj_val</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">obj</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_values</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">least_fitness_factor</span><span class="o">*</span><span class="n">range_obj_val</span><span class="p">,</span><span class="nb">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">))</span><span class="o">+</span>\
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="n">max_obj_val</span><span class="o">-</span><span class="n">obj</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="更新最佳解">更新最佳解</h2>
+<p>取得本次 iteration 最佳解，如果有大於 <code>best_fitnes</code> 則取代之</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_best_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">best_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_fitness</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">[</span><span class="n">best_index</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">best_fitness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">[</span><span class="n">best_index</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">gene</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[</span><span class="n">best_index</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">best_chromosome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="挑選-selection-1">挑選 (selection)</h2>
+<p>從 population 和 offspring 中挑選下一代的 population。這裡分為Deterministic 和 Stochastic 兩種。Deterministic 就是直接 sort排列，再取前面最高的幾條染色體成為新一代的 population，Stochastic 就是以輪盤法進行選取。</p>
+<p><code>selected_chromosomes</code> 在此派上用場，因為使用輪盤法是針對所有染色體反覆進行隨機抽取，因此便不能直接用 <code>chromosomes</code> 直接賦值，先賦值到 <code>selected_chromosomes</code>，最後在轉移至 <code>chromosomes</code> 變數。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">perform_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_type</span> <span class="o">==</span> <span class="n">SelectionType</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_type</span> <span class="o">==</span> <span class="n">SelectionType</span><span class="o">.</span><span class="n">Stochastic</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">do_roulette_wheel_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_genes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">selected_chromosomes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_genes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_chromosomes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="執行結果">執行結果</h2>
+<p>執行結果因模型參數而不同，可以調整的模型參數有 population size、selection type、crossover type 、crossover rate、 mutation type、 mutation rate 等，每次參數的調整都會影響模型的表現，需要透過試誤法來得知最合適的參數。</p>
+<p style="text-align: center;">
+  <img src="image-9.png" alt="圖片描述">
+</p>
+<h1 id="總結">總結</h1>
+<p>基因演算法是一種受到自然選擇 (natural selection) 機制所啟發的演算法，透過交配 (crossover)、突變 (mutation) 等操作，根據適應度來挑選適合生存的個體，如此迭代一步一步逼近最佳解。雖然在數學上難以證明該種演算法尋解的能力，但在實務上卻是非常強大的工具，在諸多啟發式演算法中表現十分出色。今天為讀者介紹基因演算法，並且用Python進行實作，希望各位讀者能有所獲益~，文中有任何問題都可以留言告知我，謝囉。</p>
+<p><strong>資料集/完整代碼：</strong>
+<a href="https://github.com/QiuBingCheng/MediumArticle/blob/main/HeuristicAlgorithms/genetic_algorithm.py">Github Code</a></p></article>
+      </div>
+      
+      <div class="column is-hidden-mobile">
+        <div class="sidebar pl-4" id="toc">
+          <div class="post post-toc" id="post-toc">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  </div><script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+
+<script src="http://localhost:1313/js/hulga.min.js" defer></script>
+
+  
+<link id="hlcss" rel="stylesheet" href="/css/vs.min.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script><script>
+  anchors.options = {
+    placement: 'left',
+    
+    icon: '#'
+  };
+  anchors.add('.content h1, .content h2, .content h3');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  });
+</script>
+
+
+  
+
+
+<link rel="stylesheet" type="text/css" href="http://localhost:1313/css/toc.min.css"><script src="https://cdn.jsdelivr.net/npm/tocbot@4.25.0/dist/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.post-toc',
+        
+        contentSelector: '#post-content',
+        
+        headingSelector: 'h1, h2, h3',
+        collapseDepth:  6 ,
+        scrollSmooth: true,
+        positionFixedSelector: '.post-toc',
+        
+        
+        fixedSidebarOffset: 273,
+    });
+</script>
+
+
+</body>
+
+</html>

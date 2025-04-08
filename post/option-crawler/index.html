@@ -153,24 +153,63 @@
 <p>只有兩個吻合，一個是我們要抓的 <strong>臺股期貨 (TX)</strong> 行情表、另一個是<strong>價差行情表</strong>。待會我們用class名稱作為條件搜尋時，就擷取第一張表格即可。</p>
 <h2 id="爬取">爬取</h2>
 <p>至此，我們已經成功找到元素了，接著就是requests套件發出post請求，並且使用熱騰騰的濃湯(BeautifulSoup)為我們解析網頁元素，如果解析後結果的table變數，是如下圖所示，那就表示成功爬取囉！</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 </span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span><span class="s2">&#34;https://www.taifex.com.tw/cht/3/futDailyMarketReport&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="n">myobj</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;queryDate&#39;</span><span class="p">:</span> <span class="s2">&#34;2020/8/05&#34;</span><span class="p">,</span> <span class="s2">&#34;MarketCode&#34;</span><span class="p">:</span><span class="s2">&#34;1&#34;</span><span class="p">,</span><span class="s2">&#34;commodity_id&#34;</span><span class="p">:</span><span class="s2">&#34;TX&#34;</span><span class="p">,</span><span class="s2">&#34;queryType&#34;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">myobj</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="s2">&#34;html.parser&#34;</span><span class="p">)</span>   
 </span></span><span class="line"><span class="cl"><span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;table&#34;</span><span class="p">,</span><span class="n">class_</span><span class="o">=</span><span class="s2">&#34;table_f&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><p><img src="image-8.png" alt="alt text"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="image-8.png" alt="alt text"></p>
 <h2 id="萃取交易行情">萃取交易行情</h2>
 <p>擷取整張表格，接著我們進行細部的資料擷取，<code>tr</code> 表示表格的每一列，我們要擷取的是表格的第二列，因此索引值是 1(python索引從0開始)，代碼是 <code>find_all(&quot;tr&quot;)[1]</code>，再繼續使用 <code>find_all(&quot;td&quot;)</code> 擷取該列所有的儲存格。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">row</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&#34;tr&#34;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&#34;td&#34;</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">row</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&#34;tr&#34;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&#34;td&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
-</span></span></code></pre></div><p><strong>萃取行情表格的第二列</strong></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>萃取行情表格的第二列</strong></p>
 <p><img src="image-9.png" alt="alt text"></p>
 <p><strong>row</strong></p>
 <p><img src="image-10.png" alt="alt text"></p>
 <p>截至目前為止，盤後交易時段已經順利擷取，至於一般交易時段方法如出一轍，唯一差異只是 <code>MarketCode</code>，盤後交易是1；一般交易是0。我們將其包成函式方便調用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_daily_quotes</span><span class="p">(</span><span class="n">date</span><span class="p">,</span><span class="n">market_code</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_daily_quotes</span><span class="p">(</span><span class="n">date</span><span class="p">,</span><span class="n">market_code</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
 </span></span></span><span class="line"><span class="cl"><span class="s2">    market_code
 </span></span></span><span class="line"><span class="cl"><span class="s2">    1=盤後
@@ -184,12 +223,29 @@
 </span></span><span class="line"><span class="cl">    <span class="n">row</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&#34;tr&#34;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&#34;td&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">row</span>
-</span></span></code></pre></div><h2 id="爬取一段期間的每日行情">爬取一段期間的每日行情</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="爬取一段期間的每日行情">爬取一段期間的每日行情</h2>
 <p>經過上述的嘗試，我們成功抓取單日的每日行情。在寫入excel檔之前，我們回想一下剛剛提到的一個場景，平日可能上班/上課繁忙忘了每日更新，那中間遺漏的部分，豈不也要手動抓取嗎？因此首先，<strong>我們先取得 excel 的最新紀錄，確定最新的那筆紀錄的日期，再寫一個輔助函式，能夠從最新日期直到今日的這段期間，都要執行擷取每日行情的爬蟲任務，確保紀錄沒有缺漏</strong>。</p>
 <p>註記：這裡的日期格式為<strong>年/月/日 (周幾)</strong> ，中間必須有空格，我會用 <code>split</code> 函式擷取前面的年/月/日，如果沒有符合格式會報錯，請參考我的 <em>options.xlsx</em> 檔案。</p>
 <h3 id="取得-excel-的最新紀錄日期">取得 excel 的最新紀錄日期</h3>
 <p><img src="image-11.png" alt="alt text"></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_last_date</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_last_date</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;get excel last date...&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">ws</span><span class="o">.</span><span class="n">max_row</span><span class="o">+</span><span class="mi">2</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">#inspect date</span>
@@ -200,18 +256,56 @@
 </span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">last_date</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">last_date</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span></code></pre></div><h3 id="取得最新紀錄日期至今日的這段日期列表">取得最新紀錄日期至今日的這段日期列表</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="取得最新紀錄日期至今日的這段日期列表">取得最新紀錄日期至今日的這段日期列表</h3>
 <p>我們需要得到最新一筆紀錄至今日這段間的確切日期，<code>get_date_during_the_period</code> 負責的就是這個工作，例如從 <em>2020/7/31</em> 開始到 <em>2020/8/6</em>，則會回傳這段日期的列表，就是這麼簡單。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_date_during_the_period</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_date_during_the_period</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">.</span><span class="n">days</span><span class="o">+</span><span class="mi">1</span>  <span class="c1">#相差幾天(包含起始日)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">duration</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[</span><span class="n">start</span><span class="o">+</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">duration</span><span class="p">)]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">None</span>
-</span></span></code></pre></div><p><img src="image-12.png" alt="alt text"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="image-12.png" alt="alt text"></p>
 <h3 id="執行擷取每日行情的爬蟲任務">執行擷取每日行情的爬蟲任務</h3>
 <p>而 <code>get_daily_quotes_by_date_list</code> 則是將上面獲取的那段日期，用一個迴圈依序取出，代入到剛剛<code>get_daily_quotes</code> 函式，此時會得到一個列表，裡面是字典形式，包含日期、盤後交易資料、一般交易資料。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_daily_quotes_by_date_list</span><span class="p">(</span><span class="n">dates</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_daily_quotes_by_date_list</span><span class="p">(</span><span class="n">dates</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">weekday_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s2">&#34;(週一)&#34;</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="s2">&#34;(週二)&#34;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s2">&#34;(週三)&#34;</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="s2">&#34;(週四)&#34;</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="s2">&#34;(週五)&#34;</span><span class="p">,</span><span class="mi">5</span><span class="p">:</span><span class="s2">&#34;(週六)&#34;</span><span class="p">,</span><span class="mi">6</span><span class="p">:</span><span class="s2">&#34;(週日)&#34;</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="n">daily_quotes</span> <span class="o">=</span> <span class="p">[]</span>
@@ -231,11 +325,41 @@
 </span></span><span class="line"><span class="cl">            <span class="k">continue</span>
 </span></span><span class="line"><span class="cl">        <span class="n">daily_quotes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">daily_quotes</span>
-</span></span></code></pre></div><p><img src="image-13.png" alt="alt text"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="image-13.png" alt="alt text"></p>
 <h2 id="寫入excel檔案">寫入excel檔案</h2>
 <p>資料已經獲取完畢，剩下來的工作便是寫入excel檔案。因為都是整數的緣故，這裡型態直接用 int 轉換，單純閱讀無所謂，但如果是要在 excel 加上自己的公式，用字串型態就會產生錯誤，因此這裡要特別小心。</p>
 <p><code>Worksheet</code> 物件支援多種索引方式，有一種是沿用 excel原生的索引風格，例如A2、B5等，這次範例便是使用該索引方式，excel的欄位順序就格外關鍵，如果調換資料就會填錯！</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">record_to_excel</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span><span class="n">row</span><span class="p">,</span><span class="n">daily_quotes</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">record_to_excel</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span><span class="n">row</span><span class="p">,</span><span class="n">daily_quotes</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">#record to excel</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">quotes</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">daily_quotes</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">#欲填入的列數</span>
@@ -259,7 +383,9 @@
 </span></span><span class="line"><span class="cl">        <span class="n">quote_change</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">6</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">s</span><span class="o">==</span><span class="s2">&#34;-&#34;</span><span class="p">)])</span>
 </span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;B</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quote_change</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;K</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">11</span><span class="p">])</span>
-</span></span></code></pre></div><h1 id="小結">小結</h1>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="小結">小結</h1>
 <p>今天跟各位分享期貨爬蟲的方法，人工抓取10天資料加上鍵入excel的時間要5–10分鐘，但是短短一百行程式碼，執行起來不到5秒鐘，可以省下瑣碎的時間去進行更有意義的事情，另外，這個程式可以包裝成執行檔，讓沒有Python環境的讀者也可以執行，需要再告知我囉^^
 最後，如果文末任何疏漏之處，不吝指正，我將非常感激，謝謝。</p></article>
       </div>

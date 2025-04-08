@@ -138,17 +138,43 @@
 <h1 id="python代碼實現">Python代碼實現</h1>
 <h2 id="1-讀取資料">1. 讀取資料</h2>
 <p>本文採用的資料集與上次雷同，按照慣例，資料集和完整程式碼放置文末。上次實作，我們是利用電影的類型來做為相似度衡量的基準，但在這次我們採用的是使用者對電影的評分，因此先使用drop函數將genres欄位剔除，並將電影的資料與使用者觀看紀錄進行合併，合併結果如下圖所示。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">movies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;dataset\MovieLens\movies.csv&#34;</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">movies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;dataset\MovieLens\movies.csv&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">movies</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&#34;genres&#34;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;dataset\MovieLens\ratings.csv&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&#34;timestamp&#34;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">movies</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;movieId&#39;</span><span class="p">)</span>
-</span></span></code></pre></div><p><img src="image-1.png" alt="alt text"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="image-1.png" alt="alt text"></p>
 <h2 id="2-找到與使用者相似的人">2. 找到與使用者相似的人</h2>
 <p><strong>我們以共同觀賞過的電影其評分的相似度作為指標，相似度越高，表示在電影的品味上越接近</strong>。例如使用者A對電影1的評分是5、電影2評分是1；使用者B對電影的評分是4.8、電影B評分是0.8，則這兩個使用者是相似的，因為同樣都喜歡電影A、不喜歡電影B。相似度有很多衡量方式，在電影評分的情境上由於我們不在乎絕對值的大小，在意的是方向的差異，因此採用餘弦相似度來衡量 (可以參考筆者撰寫的<a href="/post/euclidean-vs-cosine">歐氏距離與餘弦相似度的比較</a>)。</p>
 <h3 id="21-計算使用者與其他使用者的相似度">2.1 計算使用者與其他使用者的相似度</h3>
 <p>在這裡我們借助兩個輔助函式，第一個是 <code>find_common_movie</code>，該函式會取得使用者共同看過的電影ID，之後再利用<code>cal_similarity_for_movie_ratings</code> 輔助函式，計算這些共同看過的電影ID的餘弦相似度，其他使用者ID及相似度分別以 <code>user_ids</code> 和 <code>similarities</code> 表示。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1"># Calculate the similarity between the user and other users</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1"># Calculate the similarity between the user and other users</span>
 </span></span><span class="line"><span class="cl"><span class="n">similarities</span> <span class="o">=</span> <span class="p">[]</span>
 </span></span><span class="line"><span class="cl"><span class="n">user_ids</span> <span class="o">=</span> <span class="p">[]</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">other_user</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">userId</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
@@ -159,32 +185,69 @@
 </span></span><span class="line"><span class="cl">    <span class="n">sim</span> <span class="o">=</span> <span class="n">cal_similarity_for_movie_ratings</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">other_user</span><span class="p">,</span><span class="n">common_movies</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">similarities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sim</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">user_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">other_user</span><span class="p">)</span>
-</span></span></code></pre></div><h3 id="22-取得其他使用者中相似度最高的前n位">2.2 取得其他使用者中相似度最高的前n位</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="22-取得其他使用者中相似度最高的前n位">2.2 取得其他使用者中相似度最高的前n位</h3>
 <p>為什麼不選擇相似度最高的那位就好？因為越多位推薦的可靠度越高，試想一個跟你一樣品味的人說電影A好看，以及10位跟你一樣品味的人說電影A好看，哪一種推薦效果較好？顯然是後者。</p>
 <p>我們使用np.argsort函式針對相似度大小進行排序(注意 <code>np.argsort</code> 是排序結果的索引，並非值)，由於 <code>argsort</code> 排序預設是遞增排序，我們在後面加上 <code>[::-1]</code> 反轉序列，並且取前num位，得到列表變數 <code>most_similar_users</code> ，該使用者與其他使用者最相似的前 num 位 Id。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1"># Find top n similar users</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1"># Find top n similar users</span>
 </span></span><span class="line"><span class="cl"><span class="n">similarities</span><span class="p">,</span><span class="n">user_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">similarities</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">user_ids</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">sorted_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">similarities</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="n">num</span><span class="p">])</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">most_similar_users</span> <span class="o">=</span> <span class="n">user_ids</span><span class="p">[</span><span class="n">sorted_index</span><span class="p">]</span> 
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Top-</span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s2"> similar users: </span><span class="si">{</span><span class="n">most_similar_users</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><h2 id="3-找到這群相似者中評價最高的前幾部電影">3. 找到這群相似者中評價最高的前幾部電影</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-找到這群相似者中評價最高的前幾部電影">3. 找到這群相似者中評價最高的前幾部電影</h2>
 <p>至此，我們已經找到最相似的前num位使用者，接著便是羅列出這些最相似的使用者已經觀看過，但是該使用者沒有看過的電影，並在這些電影中篩選評價較佳的前幾部作為推薦標的。</p>
 <p>具體的做法如下，我們先使用 <code>not_seen_cond</code> 作為該使用者未看過的電影的篩選條件，<code>similar_cond</code> 則是最相似的使用者已經觀看過的電影的篩選條件，兩者篩選條件的交集結果儲存在<code>not_seen_movies_ratings</code> dataframe 中。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1"># Find the movies the user hasn&#39;t seen and the similar users have seen.</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1"># Find the movies the user hasn&#39;t seen and the similar users have seen.</span>
 </span></span><span class="line"><span class="cl"><span class="n">seen_movies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&#34;userId&#34;</span><span class="p">]</span><span class="o">==</span><span class="n">user</span><span class="p">,</span><span class="s2">&#34;movieId&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">not_seen_cond</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&#34;movieId&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">seen_movies</span><span class="p">)</span><span class="o">==</span><span class="kc">False</span>
 </span></span><span class="line"><span class="cl"><span class="n">similar_cond</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&#34;userId&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">most_similar_users</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">not_seen_movies_ratings</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">not_seen_cond</span> <span class="o">&amp;</span> <span class="n">similar_cond</span><span class="p">][[</span><span class="s2">&#34;movieId&#34;</span><span class="p">,</span><span class="s2">&#34;rating&#34;</span><span class="p">]]</span>
-</span></span></code></pre></div><p>截至目前為止，我們有了最相似的前 num 位使用者的觀看紀錄，我們要從中取得評價最高的幾部影片，一個直觀想法就是將影片評分取平均值，觀察這些最相似的使用者普遍推薦哪部影片。舉個簡單例子就是，你有AB兩個電影共同愛好者，你沒看過《與神同行》，A評價《與神同行》5分，B評價《與神同行》4分，於是就折衷取平均值，以4.5分表示推薦分數。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>截至目前為止，我們有了最相似的前 num 位使用者的觀看紀錄，我們要從中取得評價最高的幾部影片，一個直觀想法就是將影片評分取平均值，觀察這些最相似的使用者普遍推薦哪部影片。舉個簡單例子就是，你有AB兩個電影共同愛好者，你沒看過《與神同行》，A評價《與神同行》5分，B評價《與神同行》4分，於是就折衷取平均值，以4.5分表示推薦分數。</p>
 <p>我們使用 <code>groupby(&quot;movieId&quot;)</code>，將這些最相似使用者對影片的評分取平均，並用 <code>sort_values</code> 對 ratings 進行遞減排序，藉此找到平均評分中最高的前 top_n 部影片，結果儲存在<code>top_ratings</code> ，推薦結果如圖所示。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1"># Find average ratings by the most similar users</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1"># Find average ratings by the most similar users</span>
 </span></span><span class="line"><span class="cl"><span class="n">average_ratings</span> <span class="o">=</span> <span class="n">not_seen_movies_ratings</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&#34;movieId&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">average_ratings</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">top_ratings</span> <span class="o">=</span> <span class="n">average_ratings</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&#34;rating&#34;</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">top_n</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="n">top_ratings</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Top-</span><span class="si">{</span><span class="n">top_n</span><span class="si">}</span><span class="s2"> average ratings by the most simiilar users:&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">top_ratings</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-</span></span></code></pre></div><p><img src="image-2.png" alt="alt text"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="image-2.png" alt="alt text"></p>
 <h1 id="小結">小結</h1>
 <p>推薦系統的協同過濾，旨在以擁有共同經驗的群體的喜好來推薦使用者感興趣的資訊，算法本身並不困難，相信讀者照著本文流程走，都能快速掌握核心的概念，未來我會繼續講解其他推薦系統的算法，要是讀者有任何疑問都可以告知我，我會盡可能為你解惑的^^。</p>
 <p><strong>資料集/完整代碼</strong>： <a href="https://github.com/QiuBingCheng/MediumArticle/tree/main/Recommendation%20System">Github Code</a></p>

@@ -128,12 +128,23 @@
 <h1 id="最佳化問題">最佳化問題</h1>
 <p>最佳化問題是從所有可行解中尋找最適合的解的問題，它可細分為連續最佳化問題與組合優化。連續優化問題中，主要有 Maximum、Minimum 兩個方向，<strong>本文將以 Minimum 作為目標</strong>，函式則是簡單的平方和，換句話說，每個解都是一組固定長度的陣列，透過呼叫這個函式會有回傳值，在啟發式演算法中又稱為目標值 (objective value)，<strong>演算法的目的就是在尋找使目標值最小的一組解</strong>。</p>
 <p>顯而易見地，這個函式的最佳解為一組值為 0 的陣列。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">compute_objective_value</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">compute_objective_value</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">val</span> <span class="o">+=</span> <span class="n">ele</span><span class="o">*</span><span class="n">ele</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">val</span>
-</span></span></code></pre></div><h1 id="python程式碼實現">Python程式碼實現</h1>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="python程式碼實現">Python程式碼實現</h1>
 <h2 id="認識變數">認識變數</h2>
 <p>首先，先來認識演算法中重要的幾個變數。</p>
 <ul>
@@ -146,7 +157,25 @@
 <li><code>cognition_factor</code>：自我認知的權重。值越高，表示迭代時越傾向往個體最佳解移動，對應到演算法語境，就是候鳥越相信自己過去的最佳經驗。</li>
 <li><code>social_factor</code>：群體經驗權重。值越高，表示演算法越傾向往群體最佳解移動，對應到演算法語境，就是候鳥越相信群體的智慧。</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span> <span class="o">=</span> <span class="n">pop_size</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span> <span class="o">=</span> <span class="n">pop_size</span>
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span> <span class="o">=</span> <span class="n">dimension</span>
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">upper_bounds</span> <span class="o">=</span> <span class="n">upper_bounds</span>
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">lower_bounds</span> <span class="o">=</span> <span class="n">lower_bounds</span>
@@ -160,13 +189,43 @@
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">cognition_factor</span> <span class="o">=</span> <span class="n">cognition_factor</span> <span class="c1">#particle movement follows its own search experience</span>
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">social_factor</span> <span class="o">=</span> <span class="n">social_factor</span>  <span class="c1">#particle movement follows the swarm search experience</span>
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span> <span class="o">=</span> <span class="n">compute_objective_value</span>
-</span></span></code></pre></div><h2 id="初始化">初始化</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="初始化">初始化</h2>
 <ol>
 <li>指派界限內的隨機亂數給每一個體。</li>
 <li><code>individual_best_solution</code> 先設定為最初的解。</li>
 <li>從個體最佳解中，找到目標值最好 (也就是最低) 的那組解作為 <code>global_best_solution</code>。</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">min_index</span> <span class="o">=</span> <span class="mi">0</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">min_index</span> <span class="o">=</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl"><span class="n">min_val</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span><span class="o">.</span><span class="n">max</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">):</span>
@@ -190,14 +249,31 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># update so far the best solution</span>
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">global_best_solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">global_best_objective_value</span> <span class="o">=</span> <span class="n">min_val</span>
-</span></span></code></pre></div><h2 id="移動候鳥群到新的位置">移動候鳥群到新的位置</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="移動候鳥群到新的位置">移動候鳥群到新的位置</h2>
 <p>候鳥群移動會受到自我認知 (<code>cognition_factor</code>)、群體經驗 (<code>social_factor</code>) 影響，乘上一個隨機亂數，分別以 <code>alpha</code> 和 <code>beta</code> 表示因子權重。一隻候鳥 <code>i</code> 的某變數 <code>d</code> 加速度，為下列的和：</p>
 <ul>
 <li><code>alpha * (individual_best_solution[i][d]-solutions[i][d])</code></li>
 <li><code>beta * (global_best_solution[i][d]-solutions[i][d])</code></li>
 </ul>
 <p>候鳥目前的解加上加速度，就是會產生新的解。最後，要確保候鳥的新的位置，要在變數的界限內。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">move_to_new_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">move_to_new_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">solution</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cognition_factor</span><span class="o">*</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">        <span class="n">beta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">social_factor</span><span class="o">*</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
@@ -208,11 +284,29 @@
 </span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
 </span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">upper_bounds</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">lower_bounds</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
-</span></span></code></pre></div><h2 id="更新最佳解">更新最佳解</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="更新最佳解">更新最佳解</h2>
 <p>上述產生新的解，接著要評估新的解的優劣，用一個迴圈逐一計算每個解的目標值，如果該解的目標值，比該個體最佳解還要優良，則個體最佳解會更新，並判斷是否有勝於群體最佳解，如果有則一併更新群體最佳解。</p>
 <p>舉例來說，如果有S1、S2、S3三組解，產生新的位置後，計算三者目標值，其中 S1、S3 的目標值更優良，分別從 (164-&gt;128、26-&gt;8) ，因此則更新 S1、S3 個體最佳解，如下方灰色表格所式。</p>
 <p><img src="image.png" alt="alt text"></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_best_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_best_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">solution</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">obj_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        
@@ -224,7 +318,9 @@
 </span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">obj_val</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_objective_value</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">global_best_solution</span> <span class="o">=</span> <span class="n">solution</span>
 </span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">global_best_objective_value</span> <span class="o">=</span> <span class="n">obj_val</span>
-</span></span></code></pre></div><p>到這裡演算法就完成一個代次 (iteration)，我們可以用 20 個 iteration ，觀察解的變化如下，發現個體最佳解會隨著更新逐漸往更好的方向移動，目標值會越降越低。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>到這裡演算法就完成一個代次 (iteration)，我們可以用 20 個 iteration ，觀察解的變化如下，發現個體最佳解會隨著更新逐漸往更好的方向移動，目標值會越降越低。</p>
 <p><img src="image-1.png" alt="alt text"></p>
 <h2 id="啟發式演算法可視化介面">啟發式演算法可視化介面</h2>
 <p>GUI 可以讓使用者方便觀察每次迭代的情形，像是演算法收斂的情形，有沒有陷入局部最佳解等，這種 GUI 用 C# 撰寫會精美實用許多，下次有時間再寫一篇 GUI 的設計教學文。</p>

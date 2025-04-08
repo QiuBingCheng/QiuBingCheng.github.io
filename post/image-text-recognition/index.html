@@ -131,7 +131,21 @@
 <p>用以下範例圖片測試：</p>
 <p><img src="image-2.png" alt="alt text"></p>
 <h2 id="3-代碼實現">3. 代碼實現</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytesseract</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytesseract</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#指定剛剛下載tesseract.exe的完整路徑</span>
 </span></span><span class="line"><span class="cl"><span class="n">pytesseract</span><span class="o">.</span><span class="n">pytesseract</span><span class="o">.</span><span class="n">tesseract_cmd</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Program Files\Tesseract-OCR\tesseract.exe&#39;</span>
@@ -141,7 +155,9 @@
 </span></span><span class="line"><span class="cl"><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-</span></span></code></pre></div><h2 id="4-結果">4. 結果</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4-結果">4. 結果</h2>
 <p><code>哈囉你好嗎,衷心感謝,珍’</code></p>
 <h1 id="google-cloud-vision-api">Google Cloud Vision API</h1>
 <p>在使用API之前要申請 Google Cloud Platform 帳號，操作十分直覺，這裡就不贅述，讀者可以先申請看看，有問題再詢問我。</p>
@@ -149,9 +165,17 @@
 <p>使用 Google cloud 服務需要帳戶金鑰，按下建立會自動下載一個json檔案，裏頭就是金鑰，必須妥善保管。</p>
 <p><img src="image-3.png" alt="alt text"></p>
 <h2 id="2-安裝套件">2. 安裝套件</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">pip</span> <span class="n">install</span> <span class="n">google</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">core</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">pip</span> <span class="n">install</span> <span class="n">google</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">core</span>
 </span></span><span class="line"><span class="cl"><span class="n">pip</span> <span class="n">install</span> <span class="n">google</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">vision</span>
-</span></span></code></pre></div><h2 id="3-運行代碼">3. 運行代碼</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-運行代碼">3. 運行代碼</h2>
 <p>取自Google Cloud Vision API官方文件簡化而成：</p>
 <h2 id="4-結果-1">4. 結果</h2>
 <p><code>哈囉你好嗎,哀心感謝,珍重再見~</code></p>

@@ -143,7 +143,22 @@
 <h1 id="實作">實作</h1>
 <h2 id="讀取資料集">讀取資料集</h2>
 <p>首先歷遍 clean data 內所有歌手的歌詞，每位歌手的歌詞以字串形式連接，裝納進 <code>singers</code> 這個字典中，得到的結果會如下圖所示。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">storage_folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">#每位歌手的歌詞以字串形式連接</span>
@@ -154,7 +169,9 @@
 </span></span><span class="line"><span class="cl">            <span class="n">lyric</span> <span class="o">+=</span> <span class="n">content</span>
 </span></span><span class="line"><span class="cl">        <span class="n">singer</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;.&#34;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">        <span class="n">singers</span><span class="p">[</span><span class="n">singer</span><span class="p">]</span> <span class="o">=</span> <span class="n">lyric</span>
-</span></span></code></pre></div><p><strong>singers</strong></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>singers</strong></p>
 <p><img src="image-4.png" alt="alt text"></p>
 <h2 id="以-jieba-套件分詞">以 jieba 套件分詞</h2>
 <p>tf-idf實現是本文重點，礙於篇幅限制，關於jieba套件用法在此不表，會另外寫一篇講解。我將分詞的動作直接包裝成 <code>WordSegment</code> 類別去呼叫，這裡發生了三件事情：</p>
@@ -163,15 +180,38 @@
 <li><code>read_stop_words</code>。讀取停用詞，停用詞是不必要、無意義的語詞，比如說『然後』、『因此』、『了』等語助詞。</li>
 <li><code>remove_stop_words</code>。移除上述讀取的停用詞。</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">ws</span> <span class="o">=</span> <span class="n">WordSegment</span><span class="p">(</span><span class="n">singers</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span><span class="n">stop_words_path</span><span class="o">=</span><span class="n">stop_words_path</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">ws</span> <span class="o">=</span> <span class="n">WordSegment</span><span class="p">(</span><span class="n">singers</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span><span class="n">stop_words_path</span><span class="o">=</span><span class="n">stop_words_path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">ws</span><span class="o">.</span><span class="n">read_dictionary</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">ws</span><span class="o">.</span><span class="n">read_stop_words</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">ws</span><span class="o">.</span><span class="n">remove_stop_words</span><span class="p">()</span>
-</span></span></code></pre></div><p><strong>分詞結果</strong></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>分詞結果</strong></p>
 <p><img src="image-5.png" alt="alt text"></p>
 <h2 id="統計詞頻">統計詞頻</h2>
 <p><code>words_count</code> 是列表，依序代表周杰倫、林俊傑、五月天，列表內是字典，表示歌手語詞的次數，有了次數之後便能統計 <code>words_frequency</code> 頻率。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">words_count</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">words_count</span> <span class="o">=</span> <span class="p">[]</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">text_files</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="p">{}</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
@@ -180,10 +220,36 @@
 </span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="n">count</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">    <span class="n">words_count</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
-</span></span></code></pre></div><p><img src="image-6.png" alt="alt text"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="image-6.png" alt="alt text"></p>
 <h2 id="統計逆文件頻率">統計逆文件頻率</h2>
 <p><code>occurrences_of_word</code> 是一個字典，鍵值是語詞，值則是該語詞在幾個歌手歌詞中出現過，比如說『中世紀』語詞只有周杰倫的歌詞才有，映射關係就是{&ldquo;中世紀&rdquo;:1}，得到這層映射關係，我們便可用迴圈逐一取得歌手歌詞的語詞，除以文件數量(也就是歌詞文本數量，在此是3)，再將結果取以10為底的對數。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1">#先取得每個語詞在歌手歌詞中&#34;出現過&#34;的次數</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1">#先取得每個語詞在歌手歌詞中&#34;出現過&#34;的次數</span>
 </span></span><span class="line"><span class="cl"><span class="n">all_words</span> <span class="o">=</span> <span class="p">[]</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words_count</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">all_words</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
@@ -203,16 +269,31 @@
 </span></span><span class="line"><span class="cl">        <span class="n">occurrences</span> <span class="o">=</span> <span class="n">occurrences_of_word</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">        <span class="n">invFre</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">words_count</span><span class="p">)</span><span class="o">/</span><span class="n">occurrences</span><span class="p">),</span><span class="mi">4</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="n">inverse_document_frequency</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">invFre</span><span class="p">)</span>
-</span></span></code></pre></div><h2 id="詞頻x逆文件頻率">詞頻x逆文件頻率</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="詞頻x逆文件頻率">詞頻x逆文件頻率</h2>
 <p>最後，得到的詞頻和逆文件頻率要記得相乘，得到的<code>all_tf_idf</code>，就是三位歌手的 tf-idf 的值了！</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1">##tf*idf</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1">##tf*idf</span>
 </span></span><span class="line"><span class="cl"><span class="n">all_tf_idf</span> <span class="o">=</span> <span class="p">[]</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">words</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">words_frequency</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">tf_idf</span> <span class="o">=</span> <span class="p">{}</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span><span class="p">,</span><span class="n">freq</span> <span class="ow">in</span> <span class="n">words</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">        <span class="n">tf_idf</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">freq</span><span class="o">*</span><span class="n">inverse_document_frequency</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">word</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="n">all_tf_idf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf_idf</span><span class="p">)</span>
-</span></span></code></pre></div><h1 id="視覺化呈現">視覺化呈現</h1>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="視覺化呈現">視覺化呈現</h1>
 <p>以下是使用 WordCloud 套件視覺化的效果。
 身為周杰倫的腦殘粉，每個語詞看到都會忍不住響起旋律哈哈，周杰倫三個字佔比會那麼重，可不是我沒把歌曲作者資訊刪除，有興趣者請聽周杰倫的完美主義便知道:)。</p>
 <p>這也是值得探討的地方，如果一首歌反覆出現同一個語詞，詞頻會很高，一首歌的語詞數量相較於一篇文章短許多，即便除以總文本語詞數量仍無法客觀衡量，而另一個逆文件頻率也面臨到相同的問題，在文本數量 (歌手數量) 不夠多的情況，逆文件頻率也無法精準衡量&quot;獨特性&quot;。</p>

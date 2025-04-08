@@ -11,8 +11,8 @@
 </script><script>const t = localStorage.getItem('bulma-theme'); if (t !== null) { document.documentElement.setAttribute('data-theme', t); } </script><meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="msapplication-TileColor" content="#0969e6">
-  <meta name="theme-color" content="#0969e6"><title>實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題(Traveling Salesman Problem, TSP) | 邱秉誠 (BingCheng)</title>
-  <meta property="og:title" content="實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題(Traveling Salesman Problem, TSP) - 邱秉誠 (BingCheng)">
+  <meta name="theme-color" content="#0969e6"><title>實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題 (Traveling Salesman Problem, TSP) | 邱秉誠 (BingCheng)</title>
+  <meta property="og:title" content="實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題 (Traveling Salesman Problem, TSP) - 邱秉誠 (BingCheng)">
   <meta property="og:type" content="article">
   
   <meta property="article:published_time" content=" 2021-01-26T00:00:00&#43;08:00">
@@ -88,7 +88,7 @@
   <div class="hero-body">
     <header class="container has-text-centered" data-pagefind-body>
       <h1 class="title post-title is-spaced">
-        實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題(Traveling Salesman Problem, TSP)
+        實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題 (Traveling Salesman Problem, TSP)
       </h1>
       <h2 class="subtitle"><time>2021/01/26</time> ・<span class="post-cat mr-2">
               <a href="/categories/%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90/">資料分析</a>
@@ -123,7 +123,30 @@
 <p style="text-align: center;">
   <img src="image.png" alt="圖片描述">
 </p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TSPProblem</span><span class="p">:</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TSPProblem</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">coordinate</span><span class="p">,</span><span class="n">cities_name</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">=</span> <span class="n">coordinate</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">cities_name</span> <span class="o">=</span> <span class="n">cities_name</span>
@@ -142,7 +165,9 @@
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">to_cities_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cities_id</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cities_name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cities_id</span><span class="p">]</span>
-</span></span></code></pre></div><h1 id="蟻群最佳化演算法-ant-colony-optimization-aco">蟻群最佳化演算法 (Ant Colony Optimization, ACO)</h1>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="蟻群最佳化演算法-ant-colony-optimization-aco">蟻群最佳化演算法 (Ant Colony Optimization, ACO)</h1>
 <p>蟻群最佳化演算法是由 Dorigo 等人於 1996 年提出，該演算法的概念是來自生物界中螞蟻覓食的行徑路線，螞蟻會透過費洛蒙 (pheromones) 的分泌來告知同伴合適的路徑，最終誘使大部分的螞蟻會走在同一路徑上。如下論文圖片所示，在螞蟻從 A 抵達 E 的行徑過程中，遇到一個障礙物，螞蟻會先分開兩頭探訪，在 C 側路徑有較短的距離，因此會聚集越多的費洛蒙，螞蟻會逐漸傾向從 C 側經過。</p>
 <p style="text-align: center;">
   <img src="image-1.png" alt="圖片描述">
@@ -193,7 +218,31 @@
 </ul>
 <h2 id="初始化">初始化</h2>
 <p><code>one_solution</code> 表示一隻螞蟻拜訪城市的順序，初始化就先以原始城市順序排列，因此是0,1,2..N 。<code>best_objective_value</code> 就是表示截至目前為止的最短距離，預設賦予最大值。<code>visibility</code> 就是城市之間距離的倒數。城市距離以簡單的歐式距離計算，請參照 TSP 章節，這個距離函式為 TSP 物件提供。因為變數繁多，剩下的便不再逐一贅述。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">one_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ants</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ants</span><span class="p">):</span>
@@ -213,7 +262,9 @@
 </span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">from_</span><span class="o">==</span><span class="n">to</span><span class="p">):</span><span class="k">continue</span>
 </span></span><span class="line"><span class="cl">            <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_distance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span><span class="p">[</span><span class="n">from_</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span><span class="p">[</span><span class="n">to</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">visibility</span><span class="p">[</span><span class="n">from_</span><span class="p">][</span><span class="n">to</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">distance</span>
-</span></span></code></pre></div><h2 id="建構一個解">建構一個解</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="建構一個解">建構一個解</h2>
 <p>一隻螞蟻完成踏訪所有城市的流程，就會是建構一個解，流程即是剛剛提到的三個步驟</p>
 <ol>
 <li><strong>隨機挑選起始城市</strong>。<code>candidates</code> 表示候選城市清單，我們先從 <code>candidates</code> 用 <code>current_city_id = random.choice(candidates)</code>，隨機取出一個城市作為起始城市。</li>
@@ -223,7 +274,21 @@
 <li><strong>重複上述動作</strong>，直到 <code>for t in range(1,self.num_cities-1)</code> 這個外部迴圈結束，候選縣市清單會剩下一個，<code>self.one_solution[-1] = candidates.pop()</code> 直接指派作為最後踏訪縣市。</li>
 </ol>
 <p><strong>輪盤法</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_roulette_wheel_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fitness_list</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_roulette_wheel_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fitness_list</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">sum_fitness</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fitness_list</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">transition_probability</span> <span class="o">=</span> <span class="p">[</span><span class="n">fitness</span><span class="o">/</span><span class="n">sum_fitness</span> <span class="k">for</span> <span class="n">fitness</span> <span class="ow">in</span> <span class="n">fitness_list</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    
@@ -233,8 +298,36 @@
 </span></span><span class="line"><span class="cl">        <span class="n">sum_prob</span> <span class="o">+=</span> <span class="n">prob</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">sum_prob</span><span class="o">&gt;=</span><span class="n">rand</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">i</span>
-</span></span></code></pre></div><p><strong>建構一個解</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">_an_ant_construct_its_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>建構一個解</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">_an_ant_construct_its_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">)]</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">#random choose city as first city </span>
 </span></span><span class="line"><span class="cl">    <span class="n">current_city_id</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span>
@@ -256,9 +349,23 @@
 </span></span><span class="line"><span class="cl">        
 </span></span><span class="line"><span class="cl">        <span class="n">current_city_id</span> <span class="o">=</span> <span class="n">next_city_id</span>
 </span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">one_solution</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">candidates</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-</span></span></code></pre></div><h2 id="建構所有解">建構所有解</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="建構所有解">建構所有解</h2>
 <p>使用迴圈將逐一建構個別螞蟻的解，並計算目標值，目標值就是行徑總距離。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">each_ant_construct_its_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">each_ant_construct_its_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_ants</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_an_ant_construct_its_solution</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">):</span>  
@@ -266,9 +373,25 @@
 </span></span><span class="line"><span class="cl">            
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">objective_value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_objective_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">                
-</span></span></code></pre></div><h2 id="更新費洛蒙">更新費洛蒙</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="更新費洛蒙">更新費洛蒙</h2>
 <p>費洛蒙會隨時間蒸散，因此需要有 <code>self.pheromone_map *= (1-self.evaporate_rate)</code> 蒸散的動作，之後就是在每隻螞蟻行徑的途中增添費洛蒙。這裡注意踏訪城市需要返回原始城市，因此最後的城市跟第一個城市的路徑也有賀爾蒙添加。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_pheromone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_pheromone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">#evaporate hormones all the path</span>
 </span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">pheromone_map</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">evaporate_rate</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            
@@ -278,20 +401,56 @@
 </span></span><span class="line"><span class="cl">            <span class="n">city1</span> <span class="o">=</span> <span class="n">solution</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">            <span class="n">city2</span> <span class="o">=</span> <span class="n">solution</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">j</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">solution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">pheromone_map</span><span class="p">[</span><span class="n">city1</span><span class="p">,</span><span class="n">city2</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pheromone_drop_amount</span>
-</span></span></code></pre></div><h2 id="更新最佳路徑">更新最佳路徑</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="更新最佳路徑">更新最佳路徑</h2>
 <p><code>best_solution</code> 和 <code>best_objective_value</code> 分別代表最佳路徑及最佳路徑的距離，逐一判斷目前解有無勝過最佳路徑，有則取代。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_best_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_best_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_value</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">val</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">best_objective_value</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cities</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">best_solution</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">n</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">            
 </span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">best_objective_value</span> <span class="o">=</span> <span class="n">val</span>
-</span></span></code></pre></div><h2 id="執行結果">執行結果</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="執行結果">執行結果</h2>
 <p><img src="image-5.png" alt="alt text"></p>
 <h2 id="可視化">可視化</h2>
 <p><code>folium</code> 套件可以進行地圖的繪製，我已經寫好一個函式 <code>draw_map</code>，這裡要注意<code>location</code> 參數要放置的是 <code>[緯度,經度]</code> 的 list，跟一般經緯度的用語順序正好相反</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">draw_map</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">locations</span><span class="p">,</span><span class="n">names</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">draw_map</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">locations</span><span class="p">,</span><span class="n">names</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="n">fmap</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">locations</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">locations</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
@@ -308,7 +467,9 @@
 </span></span><span class="line"><span class="cl">                                     <span class="n">popup</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">    <span class="n">fmap</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>    
-</span></span></code></pre></div><p><img src="image-6.png" alt="alt text"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="image-6.png" alt="alt text"></p>
 <h1 id="總結">總結</h1>
 <p>蟻群最佳化擅長處理組合優化的問題，如同今天舉例的TSP問題，今天分享的是螞蟻系統 (Ant System, AS) 演算法，是蟻群最佳化中最原始的版本，此外，在現實中最被廣泛地應用，其實是螞蟻族群系統 (Ant Colony System, ACS)，AS 與 ACS 最大差別是在挑選規則和費洛蒙的更新，但是核心概念和基本流程差異不大，因此我選擇先分享AS，下次有時間再分享ACS！</p>
 <p><strong>資料集/完整代碼：</strong>

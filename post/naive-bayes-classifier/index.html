@@ -178,7 +178,21 @@
 </p>
 <h2 id="讀取資料集">讀取資料集</h2>
 <p>寫一個讀取函式，會回傳一個訊息列表，列表內是元組，表示訊息及訊息分類(1表示為垃圾訊息)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Reading </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">...&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">mails</span> <span class="o">=</span> <span class="p">[]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -188,12 +202,29 @@
 </span></span><span class="line"><span class="cl">            <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">            <span class="n">mails</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">message</span><span class="p">,</span><span class="n">is_spam</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">mails</span>
-</span></span></code></pre></div><p style="text-align: center;">
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p style="text-align: center;">
   <img src="image-10.png" alt="圖片描述">
 </p>
 <h2 id="拆分資料集">拆分資料集</h2>
 <p>資料集通常會拆成訓練跟測試，在此寫一個簡易的劃分函式，以82比例分割。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">split_data</span><span class="p">(</span><span class="n">mails</span><span class="p">,</span><span class="n">ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">split_data</span><span class="p">(</span><span class="n">mails</span><span class="p">,</span><span class="n">ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Spliting data..&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">mails</span><span class="p">)</span>
@@ -204,13 +235,25 @@
 </span></span><span class="line"><span class="cl">    <span class="n">test_X</span> <span class="o">=</span> <span class="p">[</span><span class="n">mail</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">mail</span> <span class="ow">in</span> <span class="n">mails</span><span class="p">[</span><span class="n">train_num</span><span class="p">:]]</span>
 </span></span><span class="line"><span class="cl">    <span class="n">test_y</span> <span class="o">=</span> <span class="p">[</span><span class="n">mail</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">mail</span> <span class="ow">in</span> <span class="n">mails</span><span class="p">[</span><span class="n">train_num</span><span class="p">:]]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="n">train_X</span><span class="p">,</span><span class="n">train_y</span><span class="p">,</span><span class="n">test_X</span><span class="p">,</span><span class="n">test_y</span><span class="p">)</span>
-</span></span></code></pre></div><h2 id="訓練">訓練</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="訓練">訓練</h2>
 <p>先說明以下變數含意。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>  <span class="c1"># smoothing factor</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>  <span class="c1"># smoothing factor</span>
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">total_count_</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># total word count in class</span>
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">word_count_</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> 
 </span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">word_prob_</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
-</span></span></code></pre></div><ul>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
 <li><code>k</code>。k 是拉普拉斯平滑的係數，是為了解決機率為零的相乘問題，上述有提到<strong>貝氏定理十分重要的假設，特徵之間條件獨立</strong>，同時含有多個單詞的機率，就是算出個別單詞的條件機率相乘而來，如果其中一個單詞機率為0，結果就是0，比如訊息是『買一送一，今日限定優惠，錯過可惜呦~』假設過往垃圾郵件沒有出現『可惜』兩個字，因此機率為0，即便『買一送一』、『優惠』這種單詞出現在垃圾郵件機多高，最終相乘起來仍然是0，因此我們會使用拉普拉斯平滑公式替換成一個趨於零的機率。</li>
 <li><code>total_count_</code>。長度為2的列表，表示垃圾訊息類別/非垃圾訊息類別全部單詞出現的次數。</li>
 <li><code>word_count_</code> 。字典格式。該單詞在垃圾訊息/非垃圾訊息中出現的數量。</li>
@@ -222,13 +265,25 @@
   <img src="image-11.png" alt="圖片描述">
 </p>
 <p>關於 <code>word_proba_</code> 這個變數的計算很簡單，就是該單詞在垃圾訊息中出現的個數/垃圾訊息全部單詞的個數，就是該單詞出現在垃圾訊息的機率，非垃圾訊息類別同理也是如此，所以主要程式碼就是以下這幾行：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">word</span><span class="p">,</span><span class="n">count</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_count_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">word</span><span class="p">,</span><span class="n">count</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_count_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">    <span class="n">word_prob_if_spam</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">+</span><span class="n">count</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">total_count_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">    <span class="n">word_prob_if_non_spam</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">+</span><span class="n">count</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">total_count_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">word_prob_</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_prob_if_spam</span>
 </span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">word_prob_</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_prob_if_non_spam</span>
-</span></span></code></pre></div><h2 id="預測">預測</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="預測">預測</h2>
 <p>將測試訊息進行斷詞處理，迭代上述訓練而得的 <code>word_proba_</code>這個變數，原先公式是進行連乘，但在計算很小的數值時電腦容易造成浮點數下溢的問題，也就是計算結果不會如預期的精準，因此我們通常會取 log 相加，最後再用指數函數還原計算結果。</p>
 <p style="text-align: center;">
   <img src="image-12.png" alt="圖片描述">

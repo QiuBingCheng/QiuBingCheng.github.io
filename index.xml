@@ -16,7 +16,14 @@
       <description>&lt;h1 id=&#34;學歷&#34;&gt;學歷&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;台灣大學　工業工程所　2020/9 - 2022/7&lt;/li&gt;&#xA;&lt;li&gt;台灣科技大學　工業管理系　2016/9 - 2020/7&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;工作經歷&#34;&gt;工作經歷&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;台灣積體電路製造公司 整合製造工程師 2022/12 - 現在&lt;/li&gt;&#xA;&lt;li&gt;台灣積體電路製造公司 整合製造實習生 2021/7 - 2021/8&lt;/li&gt;&#xA;&lt;li&gt;資訊工業策進會 數位服務創新所工讀生 2019/9 - 2020/1&lt;/li&gt;&#xA;&lt;li&gt;聚陽實業 資訊部門實習生 2019/7 - 2019/8&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;聯絡方式&#34;&gt;聯絡方式&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;信箱: &lt;a href=&#34;mailto:bingchengqiu@protonmail.com&#34;&gt;bingchengqiu@protonmail.com&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
     </item>
     <item>
-      <title>實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題(Traveling Salesman Problem, TSP)</title>
+      <title>實作基因演算法 (Genetic Algorithm , GA) 並解決工作指派問題 (Job Assignment Problem, JAP)</title>
+      <link>http://localhost:1313/post/genetic-algorithm/</link>
+      <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/genetic-algorithm/</guid>
+      <description>&lt;p&gt;這篇文章會介紹啟發式演算法中的基因演算法，分享如何以 Python 進行實作，並解決工作指派問題。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>實作蟻群演算法 (Ant Colony Optimization, ACO) 並解決旅行商人問題 (Traveling Salesman Problem, TSP)</title>
       <link>http://localhost:1313/post/ant-colony-optimization/</link>
       <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/ant-colony-optimization/</guid>
