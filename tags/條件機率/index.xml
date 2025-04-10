@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>條件機率 on 邱秉誠 (BingCheng)</title>
+    <link>http://localhost:1313/tags/%E6%A2%9D%E4%BB%B6%E6%A9%9F%E7%8E%87/</link>
+    <description>Recent content in 條件機率 on 邱秉誠 (BingCheng)</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 26 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E6%A2%9D%E4%BB%B6%E6%A9%9F%E7%8E%87/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>貝氏定理 (Bayes’ Theorem)</title>
+      <link>http://localhost:1313/post/bayes-theorem/</link>
+      <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/bayes-theorem/</guid>
+      <description>&lt;p&gt;貝式定理是很重要的統計工具，可以視為條件機率的轉換過程，白話來說&#xA;$P(A|B)$ 可以推導出 $P(B|A)$；$P(B|A)$ 可以推導出 $P(A|B)$，看在現實生活中你知道什麼已知條件機率，就可以推導出相對的條件機率囉！&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

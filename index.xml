@@ -16,6 +16,13 @@
       <description>&lt;h1 id=&#34;學歷&#34;&gt;學歷&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;台灣大學　工業工程所　2020/9 - 2022/7&lt;/li&gt;&#xA;&lt;li&gt;台灣科技大學　工業管理系　2016/9 - 2020/7&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;工作經歷&#34;&gt;工作經歷&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;台灣積體電路製造公司 整合製造工程師 2022/12 - 現在&lt;/li&gt;&#xA;&lt;li&gt;台灣積體電路製造公司 整合製造實習生 2021/7 - 2021/8&lt;/li&gt;&#xA;&lt;li&gt;資訊工業策進會 數位服務創新所工讀生 2019/9 - 2020/1&lt;/li&gt;&#xA;&lt;li&gt;聚陽實業 資訊部門實習生 2019/7 - 2019/8&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;聯絡方式&#34;&gt;聯絡方式&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;信箱: &lt;a href=&#34;mailto:bingchengqiu@protonmail.com&#34;&gt;bingchengqiu@protonmail.com&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
     </item>
     <item>
+      <title>貝氏定理 (Bayes’ Theorem)</title>
+      <link>http://localhost:1313/post/bayes-theorem/</link>
+      <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/bayes-theorem/</guid>
+      <description>&lt;p&gt;貝式定理是很重要的統計工具，可以視為條件機率的轉換過程，白話來說&#xA;$P(A|B)$ 可以推導出 $P(B|A)$；$P(B|A)$ 可以推導出 $P(A|B)$，看在現實生活中你知道什麼已知條件機率，就可以推導出相對的條件機率囉！&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>實作基因演算法 (Genetic Algorithm , GA) 並解決工作指派問題 (Job Assignment Problem, JAP)</title>
       <link>http://localhost:1313/post/genetic-algorithm/</link>
       <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
