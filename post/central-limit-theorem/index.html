@@ -122,21 +122,21 @@
 <p><strong>$\bar{X}$ 的期望值</strong></p>
 <p>$$
 \begin{aligned}
-\mu_{\bar{X}} &amp;= E(\bar{X}) = E\left(\frac{x_1 + x_2 + x_3 + \cdots + x_n}{n} \right) \
-&amp;= \frac{1}{n} \left( E(x_1) + E(x_2) + \cdots + E(x_n) \right) \
-&amp;= \frac{1}{n} (n \mu) \
+\mu_{\bar{X}} &amp;= E(\bar{X}) = E\left(\frac{x_1 + x_2 + x_3 + \cdots + x_n}{n} \right) \\
+&amp;= \frac{1}{n} \left( E(x_1) + E(x_2) + \cdots + E(x_n) \right) \\
+&amp;= \frac{1}{n} (n \mu) \\
 &amp;= \mu
 \end{aligned}
 $$</p>
 <p>估計式的期望值等於母體參數，因此是不偏估計 (unbiased estimator)。</p>
 <p><strong>$\bar{X}$ 的變異數</strong></p>
 <p>$$
-\begin{align*}
-\sigma^2_{\bar{X}} &amp;= Var\left( \frac{x_1 + x_2 + x_3 + \cdots + x_n}{n} \right) \
-&amp;= \frac{1}{n^2} Var(x_1 + x_2 + x_3 + \cdots + x_n) \
-&amp;= \frac{1}{n^2} (n \sigma^2) \
+\begin{aligned}
+\sigma^2_{\bar{X}} &amp;= Var\left( \frac{x_1 + x_2 + x_3 + \cdots + x_n}{n} \right) \\
+&amp;= \frac{1}{n^2} Var(x_1 + x_2 + x_3 + \cdots + x_n) \\
+&amp;= \frac{1}{n^2} (n \sigma^2) \\
 &amp;= \frac{\sigma^2}{n}
-\end{align*}
+\end{aligned}
 $$</p>
 <p>經過上述推導，明白 $\bar{X}$ 會服從母體平均值為 $μ$、母體標準差為 $σ/\sqrt{n}$ 的常態分佈。因此 z-score 重新表示如下：</p>
 <p>$$
@@ -232,22 +232,34 @@ $$</p>
   };
   anchors.add('.content h1, .content h2, .content h3');
 </script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+  integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"
+  integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"
+  integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script><script>
   document.addEventListener("DOMContentLoaded", function () {
     renderMathInElement(document.body, {
       
       delimiters: [
-        {left: "$$", right: "$$", display: true},
-        {left: "$", right: "$", display: false},
-        {left: "\\(", right: "\\)", display: false},
-        {left: "\\[", right: "\\]", display: true}
-      ]
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+      macros: {
+        "\\displaystyle": "\\textstyle"
+      },
+      trust: true,
+      throwOnError: false,
     });
   });
 </script>
-
 
   
 

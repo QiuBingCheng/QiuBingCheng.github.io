@@ -6,8 +6,15 @@
     <description>Recent content in 統計學 on 邱秉誠 (BingCheng)</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/%E7%B5%B1%E8%A8%88%E5%AD%B8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>最大概似估計 (Maximum Likelihood Estimation, MLE)</title>
+      <link>http://localhost:1313/post/maximum-likelihood-estimation/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/maximum-likelihood-estimation/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;最大概似估計是一種估計模型參數的方法&lt;/strong&gt;。適用時機在於手邊有模型，但是模型參數有無限多種，透過真實觀察到的樣本資訊，想辦法導出最有可能產生這些樣本結果的模型參數，也就是&lt;strong&gt;挑選使其概似性 (Likelihood) 最高的一組模型參數&lt;/strong&gt;，這系列找參數的過程稱為最大概似估計法。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>中央極限定理 (Central Limit Theorem , CLT)</title>
       <link>http://localhost:1313/post/central-limit-theorem/</link>

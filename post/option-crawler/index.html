@@ -382,7 +382,7 @@
 </span></span><span class="line"><span class="cl">        
 </span></span><span class="line"><span class="cl">        <span class="n">quote_change</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">6</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">s</span><span class="o">==</span><span class="s2">&#34;-&#34;</span><span class="p">)])</span>
 </span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;B</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quote_change</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;K</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">11</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ws</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;</span><span class="err">K</span><span class="si">{</span><span class="n">record_row</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quotes</span><span class="p">[</span><span class="s2">&#34;normal&#34;</span><span class="p">][</span><span class="mi">11</span><span class="p">])</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="小結">小結</h1>
@@ -415,22 +415,34 @@
   };
   anchors.add('.content h1, .content h2, .content h3');
 </script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script><script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+  integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"
+  integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"
+  integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script><script>
   document.addEventListener("DOMContentLoaded", function () {
     renderMathInElement(document.body, {
       
       delimiters: [
-        {left: "$$", right: "$$", display: true},
-        {left: "$", right: "$", display: false},
-        {left: "\\(", right: "\\)", display: false},
-        {left: "\\[", right: "\\]", display: true}
-      ]
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+      macros: {
+        "\\displaystyle": "\\textstyle"
+      },
+      trust: true,
+      throwOnError: false,
     });
   });
 </script>
-
 
   
 
