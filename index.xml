@@ -16,6 +16,13 @@
       <description>&lt;h1 id=&#34;學歷&#34;&gt;學歷&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;台灣大學　工業工程所　2020/9 - 2022/7&lt;/li&gt;&#xA;&lt;li&gt;台灣科技大學　工業管理系　2016/9 - 2020/7&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;工作經歷&#34;&gt;工作經歷&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;台灣積體電路製造公司 整合製造工程師 2022/12 - 現在&lt;/li&gt;&#xA;&lt;li&gt;台灣積體電路製造公司 整合製造實習生 2021/7 - 2021/8&lt;/li&gt;&#xA;&lt;li&gt;資訊工業策進會 數位服務創新所工讀生 2019/9 - 2020/1&lt;/li&gt;&#xA;&lt;li&gt;聚陽實業 資訊部門實習生 2019/7 - 2019/8&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;聯絡方式&#34;&gt;聯絡方式&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;信箱: &lt;a href=&#34;mailto:bingchengqiu@protonmail.com&#34;&gt;bingchengqiu@protonmail.com&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
     </item>
     <item>
+      <title>簡單線性回歸的顯著性檢定 (Significance test)</title>
+      <link>http://localhost:1313/post/linear-regression-significance-test/</link>
+      <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/linear-regression-significance-test/</guid>
+      <description>&lt;p&gt;本文介紹線性回歸的顯著性檢定，並輔以 &lt;a href=&#34;https://archive.ics.uci.edu/dataset/9/auto+mpg&#34;&gt;Auto MPG Data Set&lt;/a&gt; 作為實例分析。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>回歸分析 (Regression analysis) 的 R平方 (R squared) 與 調整後R平方 (Adjusted R squared)</title>
       <link>http://localhost:1313/post/r-square-index/</link>
       <pubDate>Sat, 20 Mar 2021 00:00:00 +0000</pubDate>
