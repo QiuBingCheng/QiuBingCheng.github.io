@@ -16,7 +16,7 @@
       <description>&lt;p&gt;本文介紹線性回歸的顯著性檢定，並輔以 &lt;a href=&#34;https://archive.ics.uci.edu/dataset/9/auto+mpg&#34;&gt;Auto MPG Data Set&lt;/a&gt; 作為實例分析。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>回歸分析 (Regression analysis) 的 R平方 (R squared) 與 調整後R平方 (Adjusted R squared)</title>
+      <title>簡單線性回歸 (Simple Linear Regression) 的公式推導 (Formula Derivation)</title>
       <link>http://localhost:1313/post/simple-linear-regression-formula/</link>
       <pubDate>Sun, 14 Mar 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/simple-linear-regression-formula/</guid>
